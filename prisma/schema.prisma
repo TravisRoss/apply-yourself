@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum ApplicationStatus {
+  applied
+  interview
+  offer
+  rejected
+}
+
+enum JobType {
+  full_time   @map("full-time")
+  part_time   @map("part-time")
+  contract
+  freelance
+  internship
+  other
+}
+
+enum Source {
+  linkedin
+  indeed
+  glassdoor
+  levels_fyi      @map("levels.fyi")
+  ycombinator
+  wellfound
+  company_website @map("company-website")
+  referral
+  recruiter
+  job_fair        @map("job-fair")
+  other
+}
+
+enum InterviewType {
+  video_call @map("video-call")
+  phone
+  in_person  @map("in-person")
+  take_home  @map("take-home")
+  panel
+  other
+}
+
+enum InterviewRound {
+  hr
+  recruiter_screen @map("recruiter-screen")
+  technical
+  system_design    @map("system-design")
+  behavioral
+  manager
+  final
+  other
+}
+
+enum ContactRole {
+  recruiter
+  hiring_manager @map("hiring-manager")
+  interviewer
+  referral
+  other
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model Application {
+  id          String            @id @default(uuid())
+  company     String
+  position    String
+  status      ApplicationStatus @default(applied)
+  appliedDate DateTime          @map("applied_date")
+  source      Source
+  jobType     JobType           @map("job_type")
+  location    String?
+  salary      String?
+  url         String?
+  notes       String?
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+
+  interviews Interview[]
+  contacts   Contact[]
+
+  @@map("applications")
+}
+
+model Interview {
+  id            String         @id @default(uuid())
+  applicationId String         @map("application_id")
+  application   Application    @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  date          DateTime
+  type          InterviewType
+  round         InterviewRound
+  notes         String?
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+
+  @@map("interviews")
+}
+
+model Contact {
+  id          String      @id @default(uuid())
+  company     String
+  name        String
+  role        ContactRole
+  email       String?
+  linkedinUrl String?     @map("linkedin_url")
+  notes       String?
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  applications Application[]
+
+  @@map("contacts")
+}
