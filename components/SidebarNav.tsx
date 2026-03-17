@@ -28,7 +28,14 @@ export default function SidebarNav() {
       {navLinks.map((link) => (
         <SidebarMenuItem key={link.title}>
           <SidebarMenuButton asChild isActive={link.href === pathname}>
-            <Link href={link.href}>
+            <Link
+              href={link.href}
+              className={
+                link.href === pathname
+                  ? "text-foreground"
+                  : "text-muted-foreground"
+              }
+            >
               <link.icon />
               {link.title}
             </Link>
