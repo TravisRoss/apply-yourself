@@ -24,8 +24,8 @@ export default function StatCard({
     <Card className="w-full bg-background">
       <CardHeader>
         <CardTitle className="flex items-center justify-between text-sm font-medium text-muted-foreground">
-          {title}
-          <Icon className="h-4 w-4" />
+          <h3>{title}</h3>
+          <Icon className="h-4 w-4" aria-hidden="true" />
         </CardTitle>
       </CardHeader>
       <CardContent className="text-2xl font-semibold">
