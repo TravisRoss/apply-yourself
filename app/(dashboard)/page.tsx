@@ -1,16 +1,46 @@
 import StatCard from "@/components/StatCard"
+import { Button } from "@/components/ui/button"
+import { Calendar, FileText, Gift, TrendingUp } from "lucide-react"
 
 const stats = [
-  { title: "Applied", value: "10", footerText: "+12% from last month" },
-  { title: "Interviews", value: "5", footerText: "-2% from last month" },
-  { title: "Offers", value: "3", footerText: "+5% from last month" },
-  { title: "Response Rate", value: "2", footerText: "+3% from last month" },
+  {
+    title: "Total Applied",
+    icon: FileText,
+    total: "10",
+    count: 12,
+    countLabel: "this week",
+    percentage: 5,
+  },
+  {
+    title: "Interviews",
+    icon: Calendar,
+    total: "8",
+    count: 10,
+    countLabel: "this week",
+    percentage: 3,
+  },
+  {
+    title: "Offers",
+    icon: Gift,
+    total: "5",
+    count: 8,
+    countLabel: "pending response",
+    percentage: 50,
+  },
+  {
+    title: "Response Rate",
+    icon: TrendingUp,
+    total: "90%",
+    count: 12,
+    countLabel: "this week",
+    percentage: -5,
+  },
 ]
 
 export default function DashboardPage() {
   return (
     <div className="p-8 pt-4">
-      <h1 className="mb-1 text-xl font-semibold">Overview</h1>
+      <h1 className="mb-1 text-xl font-semibold text-foreground">Overview</h1>
       <p className="text-sm text-muted-foreground">
         Track every job you&apos;ve applied to.
       </p>
@@ -19,10 +49,19 @@ export default function DashboardPage() {
           <StatCard
             key={stat.title}
             title={stat.title}
-            value={stat.value}
-            footerText={stat.footerText}
+            icon={stat.icon}
+            total={stat.total}
+            count={stat.count}
+            countLabel={stat.countLabel}
+            percentage={stat.percentage}
           />
         ))}
+      </div>
+      <div className="flex items-center justify-between pt-8">
+        <h2 className="text-lg font-semibold">Recent Applications</h2>
+        <Button variant="ghost" className="text-muted-foreground">
+          View all
+        </Button>
       </div>
     </div>
   )
