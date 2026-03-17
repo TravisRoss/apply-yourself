@@ -21,7 +21,7 @@ export default function StatCard({
   percentageLabel = "from last month",
 }: StatCardProps) {
   return (
-    <Card className="w-full bg-background">
+    <Card className="w-full bg-card">
       <CardHeader>
         <CardTitle className="flex items-center justify-between text-sm font-medium text-muted-foreground">
           <h3>{title}</h3>
