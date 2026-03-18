@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -17,8 +18,8 @@ enum ApplicationStatus {
 }
 
 enum JobType {
-  full_time   @map("full-time")
-  part_time   @map("part-time")
+  full_time @map("full-time")
+  part_time @map("part-time")
   contract
   freelance
   internship
@@ -29,21 +30,21 @@ enum Source {
   linkedin
   indeed
   glassdoor
-  levels_fyi      @map("levels.fyi")
+  levels_fyi @map("levels.fyi")
   ycombinator
   wellfound
   company_website @map("company-website")
   referral
   recruiter
-  job_fair        @map("job-fair")
+  job_fair @map("job-fair")
   other
 }
 
 enum InterviewType {
   video_call @map("video-call")
   phone
-  in_person  @map("in-person")
-  take_home  @map("take-home")
+  in_person @map("in-person")
+  take_home @map("take-home")
   panel
   other
 }
@@ -52,7 +53,7 @@ enum InterviewRound {
   hr
   recruiter_screen @map("recruiter-screen")
   technical
-  system_design    @map("system-design")
+  system_design @map("system-design")
   behavioral
   manager
   final
@@ -118,4 +119,67 @@ model Contact {
   applications Application[]
 
   @@map("contacts")
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }
