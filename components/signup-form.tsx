@@ -121,6 +121,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     size="icon-xs"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff /> : <Eye />}
@@ -144,6 +145,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     size="icon-xs"
+                    aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? <EyeOff /> : <Eye />}
