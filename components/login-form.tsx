@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,7 +17,12 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group"
 import Link from "next/link"
 import { signInWithProvider } from "@/lib/sign-in"
 import { useForm } from "react-hook-form"
@@ -24,12 +30,15 @@ import { SignInFormData, signInSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
+import { Eye, EyeOff } from "lucide-react"
+import { Input } from "./ui/input"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false)
 
   const {
     register,
@@ -93,13 +102,24 @@ export function LoginForm({
                     Forgot your password?
                   </Link>
                 </div>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  {...register("password")}
-                  aria-invalid={!!errors.password}
-                />
+                <InputGroup>
+                  <InputGroupInput
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    required
+                    {...register("password")}
+                    aria-invalid={!!errors.password}
+                  />
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupButton
+                      size="icon-xs"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff /> : <Eye />}
+                    </InputGroupButton>
+                  </InputGroupAddon>
+                </InputGroup>
                 <FieldError errors={[errors.password]} />
               </Field>
               <Field>
@@ -116,7 +136,7 @@ export function LoginForm({
                   Login with Google
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <Link href="#">Sign up</Link>
+                  Don&apos;t have an account? <Link href="/sign-up">Sign up</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

@@ -8,15 +8,13 @@ async function fillForm(
     password: string
   }> = {}
 ) {
-  // insert the test user into the db
-
   const values = {
     email: "jane@example.com",
     password: "password123",
     ...overrides,
   }
   await page.getByLabel("Email").fill(values.email)
-  await page.getByLabel("Password").fill(values.password)
+  await page.getByLabel("Password", { exact: true }).fill(values.password)
 }
 
 test.beforeEach(async ({ page }) => {
@@ -26,7 +24,7 @@ test.beforeEach(async ({ page }) => {
 test.describe("sign-in form", () => {
   test("renders all fields", async ({ page }) => {
     await expect(page.getByLabel("Email")).toBeVisible()
-    await expect(page.getByLabel("Password")).toBeVisible()
+    await expect(page.getByLabel("Password", { exact: true })).toBeVisible()
     await expect(
       page.getByRole("button", { name: "Login", exact: true })
     ).toBeVisible()
@@ -41,7 +39,7 @@ test.describe("sign-in form", () => {
       "aria-invalid",
       "true"
     )
-    await expect(page.getByLabel("Password")).toHaveAttribute(
+    await expect(page.getByLabel("Password", { exact: true })).toHaveAttribute(
       "aria-invalid",
       "true"
     )
@@ -63,11 +61,40 @@ test.describe("sign-in form", () => {
     await expect(passwordInput).toHaveAttribute("type", "text")
   })
 
-  test("redirects to home on successful sign-in", async ({ page }) => {
-    await prisma.
-    await fillForm(page)
-    await page.getByRole("button", { name: "login-submit" }).click()
+  test("clicking Login with Google initiates Google OAuth", async ({ page }) => {
+    const authRequest = page.waitForRequest((req) =>
+      req.url().includes("/api/auth/sign-in/social")
+    )
 
-    await expect(page).toHaveURL("/")
+    await page.getByRole("button", { name: "Login with Google" }).click()
+
+    await expect(authRequest).resolves.toBeDefined()
+  })
+
+  test("has a link to the sign-up page", async ({ page }) => {
+    await page.getByRole("link", { name: "Sign up" }).click()
+    await expect(page).toHaveURL("/sign-up")
+  })
+
+  test.describe("redirects to home on successful sign-in", () => {
+    let email: string
+
+    test.beforeEach(async ({ request }) => {
+      email = `test+${Date.now()}@example.com`
+      await request.post("/api/auth/sign-up/email", {
+        data: { name: "Jane Doe", email, password: "password123" },
+      })
+    })
+
+    test.afterEach(async () => {
+      await prisma.user.delete({ where: { email } })
+    })
+
+    test("redirects to home", async ({ page }) => {
+      await fillForm(page, { email })
+      await page.getByRole("button", { name: "Login", exact: true }).click()
+
+      await expect(page).toHaveURL("/")
+    })
   })
 })
