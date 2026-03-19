@@ -31,12 +31,12 @@ import { signUp } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { signInWithProvider } from "@/lib/sign-in"
 import { Eye, EyeOff } from "lucide-react"
-import { Spinner } from "./ui/spinner"
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const {
     register,
     handleSubmit,
@@ -164,15 +164,20 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <FieldGroup>
               <Field>
                 {errors.root && <FieldError>{errors.root.message}</FieldError>}
-                <Button type="submit">
-                  {isSubmitting ? <Spinner /> : "Create Account"}
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Creating account..." : "Create Account"}
                 </Button>
                 <Button
                   variant="outline"
                   type="button"
-                  onClick={() => signInWithProvider("google")}
+                  onClick={async () => {
+                    setIsGoogleLoading(true)
+                    await signInWithProvider("google")
+                    setIsGoogleLoading(false)
+                  }}
+                  disabled={isGoogleLoading}
                 >
-                  Sign in with Google
+                  {isGoogleLoading ? "Signing in with Google..." : "Sign in with Google"}
                 </Button>
                 <FieldDescription className="px-6 text-center">
                   Already have an account? <Link href="/sign-in">Sign in</Link>

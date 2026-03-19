@@ -39,6 +39,7 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
 
   const {
     register,
@@ -93,15 +94,7 @@ export function LoginForm({
                 <FieldError errors={[errors.email]} />
               </Field>
               <Field data-invalid={!!errors.password}>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <Link
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </Link>
-                </div>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
                 <InputGroup>
                   <InputGroupInput
                     id="password"
@@ -124,16 +117,20 @@ export function LoginForm({
               </Field>
               <Field>
                 {errors.root && <FieldError errors={[errors.root]} />}
-                <Button type="submit">
+                <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting ? "Logging in..." : "Login"}
                 </Button>
                 <Button
                   variant="outline"
                   type="button"
-                  onClick={() => signInWithProvider("google")}
-                  aria-label="login-submit"
+                  onClick={async () => {
+                    setIsGoogleLoading(true)
+                    await signInWithProvider("google")
+                    setIsGoogleLoading(false)
+                  }}
+                  disabled={isGoogleLoading}
                 >
-                  Login with Google
+                  {isGoogleLoading ? "Logging in with Google..." : "Login with Google"}
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <Link href="/sign-up">Sign up</Link>

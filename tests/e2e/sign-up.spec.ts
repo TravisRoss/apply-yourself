@@ -85,14 +85,41 @@ test.describe("sign-up form", () => {
     await expect(passwordInput).toHaveAttribute("type", "text")
   })
 
-  test("shows error when email is already registered", async ({ page }) => {
-    await fillForm(page, { email: "existing@example.com" })
-    await page.getByRole("button", { name: "Create Account" }).click()
+  test.describe("shows error when email is already registered", () => {
+    let email: string
 
-    await expect(page.getByLabel("Email")).toHaveAttribute(
-      "aria-invalid",
-      "true"
+    test.beforeEach(async ({ request }) => {
+      email = `test+${Date.now()}@example.com`
+      await request.post("/api/auth/sign-up/email", {
+        data: { name: "Jane Doe", email, password: "password123" },
+      })
+    })
+
+    test.afterEach(async () => {
+      await prisma.user.delete({ where: { email } })
+    })
+
+    test("shows error", async ({ page }) => {
+      await fillForm(page, { email })
+      await page.getByRole("button", { name: "Create Account" }).click()
+
+      await expect(page.getByLabel("Email")).toHaveAttribute(
+        "aria-invalid",
+        "true"
+      )
+    })
+  })
+
+  test("clicking Sign in with Google initiates Google OAuth", async ({
+    page,
+  }) => {
+    const authRequest = page.waitForRequest((req) =>
+      req.url().includes("/api/auth/sign-in/social")
     )
+
+    await page.getByRole("button", { name: "Sign in with Google" }).click()
+
+    await expect(authRequest).resolves.toBeDefined()
   })
 
   test("has a link to the sign-in page", async ({ page }) => {
