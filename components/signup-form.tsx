@@ -57,15 +57,16 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         onSuccess: () => {
           router.push("/")
         },
-        onError: (ctx) => {
-          if (ctx.error.status === 422) {
+        onError: (context) => {
+          if (context.error.status === 422) {
             setError("email", {
               message: "An account with this email already exists.",
             })
           } else {
             setError("root", {
               message:
-                ctx.error.message ?? "Something went wrong. Please try again.",
+                context.error.message ??
+                "Something went wrong. Please try again.",
             })
           }
         },
@@ -121,7 +122,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     size="icon-xs"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff /> : <Eye />}
@@ -145,7 +148,11 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     size="icon-xs"
-                    aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                    aria-label={
+                      showConfirmPassword
+                        ? "Hide confirm password"
+                        : "Show confirm password"
+                    }
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? <EyeOff /> : <Eye />}

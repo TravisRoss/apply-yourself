@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -12,17 +12,53 @@ import {
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { signInWithProvider } from "@/lib/sign-in"
+import { useForm } from "react-hook-form"
+import { SignInFormData, signInSchema } from "@/lib/zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter()
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInFormData>({ resolver: zodResolver(signInSchema) })
+
+  async function onSubmit(formData: SignInFormData) {
+    await signIn.email(
+      {
+        email: formData.email,
+        password: formData.password,
+      },
+      {
+        onSuccess: () => {
+          router.push("/")
+        },
+        onError: (context) => {
+          setError("root", {
+            message:
+              context.error.message ??
+              "Something went wrong. Please try again.",
+          })
+        },
+      }
+    )
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -33,18 +69,21 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <FieldGroup>
-              <Field>
+              <Field data-invalid={!!errors.email}>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
                   type="email"
                   placeholder="m@example.com"
                   required
+                  {...register("email")}
+                  aria-invalid={!!errors.email}
                 />
+                <FieldError errors={[errors.email]} />
               </Field>
-              <Field>
+              <Field data-invalid={!!errors.password}>
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <Link
@@ -54,14 +93,25 @@ export function LoginForm({
                     Forgot your password?
                   </Link>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  {...register("password")}
+                  aria-invalid={!!errors.password}
+                />
+                <FieldError errors={[errors.password]} />
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                {errors.root && <FieldError errors={[errors.root]} />}
+                <Button type="submit">
+                  {isSubmitting ? "Logging in..." : "Login"}
+                </Button>
                 <Button
                   variant="outline"
                   type="button"
                   onClick={() => signInWithProvider("google")}
+                  aria-label="login-submit"
                 >
                   Login with Google
                 </Button>
