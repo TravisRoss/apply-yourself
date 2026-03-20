@@ -1,21 +1,6 @@
 import prisma from "@/lib/prisma"
-import test, { expect, Page } from "@playwright/test"
-
-async function fillForm(
-  page: Page,
-  overrides: Partial<{
-    email: string
-    password: string
-  }> = {}
-) {
-  const values = {
-    email: "jane@example.com",
-    password: "password123",
-    ...overrides,
-  }
-  await page.getByLabel("Email").fill(values.email)
-  await page.getByLabel("Password", { exact: true }).fill(values.password)
-}
+import test, { expect } from "@playwright/test"
+import { fillSignInForm } from "./test-utils"
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/sign-in")
@@ -46,7 +31,7 @@ test.describe("sign-in form", () => {
   })
 
   test("shows error when email or password is incorrect", async ({ page }) => {
-    await fillForm(page, { password: "incorrectpassword" })
+    await fillSignInForm(page, { password: "incorrectpassword" })
     await page.getByRole("button", { name: "Login", exact: true }).click()
 
     await expect(page.getByRole("alert")).toBeVisible()
@@ -61,7 +46,9 @@ test.describe("sign-in form", () => {
     await expect(passwordInput).toHaveAttribute("type", "text")
   })
 
-  test("clicking Login with Google initiates Google OAuth", async ({ page }) => {
+  test("clicking Login with Google initiates Google OAuth", async ({
+    page,
+  }) => {
     const authRequest = page.waitForRequest((req) =>
       req.url().includes("/api/auth/sign-in/social")
     )
@@ -91,7 +78,7 @@ test.describe("sign-in form", () => {
     })
 
     test("redirects to home", async ({ page }) => {
-      await fillForm(page, { email })
+      await fillSignInForm(page, { email })
       await page.getByRole("button", { name: "Login", exact: true }).click()
 
       await expect(page).toHaveURL("/")

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/sidebar"
 import { LogoIcon } from "../LogoIcon"
 import SidebarNav from "../SidebarNav"
+import SignOutDialog from "../SignOutDialog"
 
 export function AppSidebar() {
   return (
@@ -23,7 +24,9 @@ export function AppSidebar() {
         </SidebarGroup>
         <SidebarGroup />
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <SignOutDialog />
+      </SidebarFooter>
     </Sidebar>
   )
 }
