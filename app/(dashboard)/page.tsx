@@ -2,15 +2,10 @@ import ApplicationsTable from "@/components/ApplicationsTable"
 import StatCards from "@/components/StatCards"
 import { Button } from "@/components/ui/button"
 import { auth } from "@/lib/auth"
-import { redirect } from "next/navigation"
 import { headers } from "next/headers"
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({ headers: await headers() })
-
-  if (!session) {
-    redirect("/sign-in")
-  }
 
   return (
     <div className="p-8 pt-4">
@@ -25,7 +20,7 @@ export default async function DashboardPage() {
           View all
         </Button>
       </div>
-      <ApplicationsTable userId={session.user.id} />
+      <ApplicationsTable userId={session!.user.id} />
     </div>
   )
 }
