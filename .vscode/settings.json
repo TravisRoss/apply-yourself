@@ -1,3 +1,5 @@
 {
-  "vitest.vitestCommandLine": "npx vitest"
+  "vitest.vitestCommandLine": "npx vitest",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }
