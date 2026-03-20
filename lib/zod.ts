@@ -74,7 +74,10 @@ export const applicationSchema = z.object({
   url: z
     .union([z.url({ error: "Must be a valid URL" }), z.literal("")])
     .optional(),
-  notes: z.string().optional(),
+  notes: z
+    .string()
+    .max(500, "Notes must be less than 500 characters")
+    .optional(),
 })
 
 export const interviewSchema = z.object({
