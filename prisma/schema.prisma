@@ -72,6 +72,8 @@ enum ContactRole {
 
 model Application {
   id          String            @id @default(uuid())
+  userId      String            @map("user_id")
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   company     String
   position    String
   status      ApplicationStatus @default(applied)
@@ -88,6 +90,7 @@ model Application {
   interviews Interview[]
   contacts   Contact[]
 
+  @@index([userId])
   @@map("applications")
 }
 
@@ -107,6 +110,8 @@ model Interview {
 
 model Contact {
   id          String      @id @default(uuid())
+  userId      String      @map("user_id")
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   company     String
   name        String
   role        ContactRole
@@ -118,6 +123,7 @@ model Contact {
 
   applications Application[]
 
+  @@index([userId])
   @@map("contacts")
 }
 
@@ -131,6 +137,8 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  applications  Application[]
+  contacts      Contact[]
 
   @@unique([email])
   @@map("user")

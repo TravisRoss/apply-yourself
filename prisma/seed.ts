@@ -1,19 +1,28 @@
 import "dotenv/config"
 import { PrismaPg } from "@prisma/adapter-pg"
 import { PrismaClient } from "../generated/prisma/client"
+import { auth } from "../lib/auth"
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
 const prisma = new PrismaClient({ adapter })
 
+const SEED_EMAIL = "seed@example.com"
+const SEED_PASSWORD = "password123"
+
 async function main() {
-  // Clean existing data
-  await prisma.contact.deleteMany()
-  await prisma.interview.deleteMany()
-  await prisma.application.deleteMany()
+  // Clean existing seed user (cascades to applications, contacts, interviews)
+  await prisma.user.deleteMany({ where: { email: SEED_EMAIL } })
+
+  // Create seed user via auth so the password is hashed correctly
+  const { user } = await auth.api.signUpEmail({
+    body: { name: "Jane Doe", email: SEED_EMAIL, password: SEED_PASSWORD },
+  })
+  const userId = user.id
 
   // Applications
   const stripe = await prisma.application.create({
     data: {
+      userId,
       company: "Stripe",
       position: "Senior Frontend Engineer",
       status: "interview",
@@ -28,6 +37,7 @@ async function main() {
 
   const vercel = await prisma.application.create({
     data: {
+      userId,
       company: "Vercel",
       position: "Software Engineer, DX",
       status: "applied",
@@ -41,6 +51,7 @@ async function main() {
 
   const linear = await prisma.application.create({
     data: {
+      userId,
       company: "Linear",
       position: "Product Engineer",
       status: "offer",
@@ -54,6 +65,7 @@ async function main() {
 
   const shopify = await prisma.application.create({
     data: {
+      userId,
       company: "Shopify",
       position: "Frontend Developer",
       status: "rejected",
@@ -66,6 +78,7 @@ async function main() {
 
   const supabase = await prisma.application.create({
     data: {
+      userId,
       company: "Supabase",
       position: "Developer Advocate",
       status: "applied",
@@ -129,6 +142,7 @@ async function main() {
   // Contacts
   await prisma.contact.create({
     data: {
+      userId,
       name: "Sarah Chen",
       company: "Stripe",
       role: "recruiter",
@@ -141,6 +155,7 @@ async function main() {
 
   await prisma.contact.create({
     data: {
+      userId,
       name: "James Wright",
       company: "Linear",
       role: "hiring_manager",
@@ -152,6 +167,7 @@ async function main() {
 
   await prisma.contact.create({
     data: {
+      userId,
       name: "Priya Nair",
       company: "Vercel",
       role: "referral",
@@ -161,7 +177,7 @@ async function main() {
   })
 
   console.log(
-    `Seeded: 5 applications, 5 interviews, 3 contacts (including ${shopify.company} and ${supabase.company})`
+    `Seeded: user (${SEED_EMAIL} / ${SEED_PASSWORD}), 5 applications (including ${shopify.company} and ${supabase.company}), 5 interviews, 3 contacts`
   )
 }
 
