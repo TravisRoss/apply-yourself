@@ -25,7 +25,7 @@ export default async function DashboardPage() {
           View all
         </Button>
       </div>
-      <ApplicationsTable />
+      <ApplicationsTable userId={session.user.id} />
     </div>
   )
 }
