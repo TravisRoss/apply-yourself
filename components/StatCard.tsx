@@ -4,11 +4,11 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 type StatCardProps = {
   title: string
   icon: LucideIcon
-  total: string
+  total: number
   count?: number
   countLabel?: string
-  percentage?: number
-  percentageLabel?: string
+  percentageGain?: number
+  percentageGainLabel?: string
 }
 
 export default function StatCard({
@@ -17,8 +17,8 @@ export default function StatCard({
   total,
   count,
   countLabel,
-  percentage,
-  percentageLabel = "from last month",
+  percentageGain,
+  percentageGainLabel = "from last month",
 }: StatCardProps) {
   return (
     <Card className="w-full bg-card">
@@ -29,19 +29,22 @@ export default function StatCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="text-2xl font-semibold">
-        <p>{total}</p>
+        <p>{title === "Response Rate" ? `${total}%` : total}</p>
       </CardContent>
       <CardFooter className="text-xs text-muted-foreground">
         <div className="flex flex-col gap-2">
-          {count && countLabel && (
-            <p>
-              {count} {countLabel}
-            </p>
-          )}
-          {percentage && percentageLabel && (
-            <p className={percentage > 0 ? "text-green-500" : "text-red-500"}>
-              {percentage > 0 ? `+${percentage}%` : `${percentage}%`}{" "}
-              {percentageLabel}
+          <p>
+            {count} {countLabel ? countLabel : ""}
+          </p>
+
+          {percentageGain && percentageGainLabel && (
+            <p
+              className={percentageGain > 0 ? "text-green-500" : "text-red-500"}
+            >
+              {percentageGain > 0
+                ? `+${percentageGain}%`
+                : `${percentageGain}%`}{" "}
+              {percentageGainLabel}
             </p>
           )}
         </div>

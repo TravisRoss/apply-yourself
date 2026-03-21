@@ -1,42 +1,22 @@
-import { Calendar, FileText, Gift, TrendingUp } from "lucide-react"
+"use client"
+
+import { LucideIcon } from "lucide-react"
 import StatCard from "./StatCard"
 
-const stats = [
-  {
-    title: "Total Applied",
-    icon: FileText,
-    total: "10",
-    count: 12,
-    countLabel: "this week",
-    percentage: 5,
-  },
-  {
-    title: "Interviews",
-    icon: Calendar,
-    total: "8",
-    count: 10,
-    countLabel: "this week",
-    percentage: 3,
-  },
-  {
-    title: "Offers",
-    icon: Gift,
-    total: "5",
-    count: 8,
-    countLabel: "pending response",
-    percentage: 50,
-  },
-  {
-    title: "Response Rate",
-    icon: TrendingUp,
-    total: "90%",
-    count: 12,
-    countLabel: "this week",
-    percentage: -5,
-  },
-]
+type Stat = {
+  title: string
+  icon: LucideIcon
+  total: number
+  count?: number
+  countLabel?: string
+  percentageGain?: number
+}
 
-export default function StatCards() {
+type StatCardsProps = {
+  stats: Stat[]
+}
+
+export default function StatCards({ stats }: StatCardsProps) {
   return (
     <div className="grid grid-cols-2 gap-4 pt-4 md:grid-cols-4">
       {stats.map((stat) => (
@@ -47,7 +27,7 @@ export default function StatCards() {
           total={stat.total}
           count={stat.count}
           countLabel={stat.countLabel}
-          percentage={stat.percentage}
+          percentageGain={stat.percentageGain}
         />
       ))}
     </div>

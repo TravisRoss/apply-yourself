@@ -10,10 +10,10 @@ describe("StatCard", () => {
       <StatCard
         title="Total Applied"
         icon={FileText}
-        total="10"
+        total={10}
         count={12}
         countLabel="this week"
-        percentage={5}
+        percentageGain={5}
       />
     )
     expect(
@@ -27,10 +27,10 @@ describe("StatCard", () => {
       <StatCard
         title="Total Applied"
         icon={FileText}
-        total="10"
+        total={10}
         count={12}
         countLabel="this week"
-        percentage={5}
+        percentageGain={5}
       />
     )
     expect(screen.getByText("12 this week")).toBeInTheDocument()
@@ -41,17 +41,17 @@ describe("StatCard", () => {
       <StatCard
         title="Offers"
         icon={Gift}
-        total="5"
+        total={5}
         count={8}
         countLabel="pending response"
-        percentage={50}
+        percentageGain={50}
       />
     )
     expect(screen.getByText("8 pending response")).toBeInTheDocument()
   })
 
   test("displays no activity summary when data is unavailable", () => {
-    render(<StatCard title="Offers" icon={Gift} total="5" />)
+    render(<StatCard title="Offers" icon={Gift} total={5} />)
     expect(screen.queryByText(/pending response/)).not.toBeInTheDocument()
   })
 
@@ -60,8 +60,8 @@ describe("StatCard", () => {
       <StatCard
         title="Total Applied"
         icon={FileText}
-        total="10"
-        percentage={5}
+        total={10}
+        percentageGain={5}
       />
     )
     expect(screen.getByText(/\+5%.*from last month/)).toBeInTheDocument()
@@ -72,10 +72,10 @@ describe("StatCard", () => {
       <StatCard
         title="Response Rate"
         icon={TrendingUp}
-        total="90%"
+        total={90}
         count={12}
         countLabel="this week"
-        percentage={-5}
+        percentageGain={-5}
       />
     )
     expect(screen.getByText(/\-5%.*from last month/)).toBeInTheDocument()
@@ -86,7 +86,7 @@ describe("StatCard", () => {
       <StatCard
         title="Offers"
         icon={Gift}
-        total="5"
+        total={5}
         count={8}
         countLabel="pending response"
       />
@@ -97,7 +97,7 @@ describe("StatCard", () => {
   describe("accessibility", () => {
     test("decorative icon is not announced by screen readers", () => {
       const { container } = render(
-        <StatCard title="Total Applied" icon={FileText} total="10" />
+        <StatCard title="Total Applied" icon={FileText} total={10} />
       )
       expect(container.querySelector("svg")).toHaveAttribute(
         "aria-hidden",
@@ -110,10 +110,10 @@ describe("StatCard", () => {
         <StatCard
           title="Total Applied"
           icon={FileText}
-          total="10"
+          total={10}
           count={12}
           countLabel="this week"
-          percentage={5}
+          percentageGain={5}
         />
       )
       expect(await axe(container)).toHaveNoViolations()

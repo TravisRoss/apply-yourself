@@ -7,8 +7,24 @@ export async function getApplicationsByUserId(userId: string) {
   return await prisma.application.findMany({ where: { userId } })
 }
 
+export async function getApplictionsWhereStatusApplied(userId: string) {
+  return await prisma.application.findMany({
+    where: { userId, status: "applied" },
+  })
+}
+
 export async function getApplicationById(applicationId: string) {
   return await prisma.application.findUnique({ where: { id: applicationId } })
+}
+
+export async function getOffersByUserIed(userId: string) {
+  return await prisma.application.findMany({
+    where: { userId, status: "offer" },
+  })
+}
+
+export async function getInterviewsByUserId(userId: string) {
+  return await prisma.interview.findMany({ where: { application: { userId } } })
 }
 
 export async function createApplication(

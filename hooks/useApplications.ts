@@ -4,6 +4,8 @@ import {
   deleteApplication,
   getApplicationById,
   getApplicationsByUserId,
+  getApplictionsWhereStatusApplied,
+  getOffersByUserIed,
   updateApplication,
 } from "@/lib/data-service"
 import { ApplicationFormData } from "@/lib/zod"
@@ -21,6 +23,20 @@ export function useApplication(applicationId: string) {
   return useQuery({
     queryKey: ["application", applicationId],
     queryFn: () => getApplicationById(applicationId),
+  })
+}
+
+export function useOffers(userId: string) {
+  return useQuery({
+    queryKey: ["applications", userId, "offers"],
+    queryFn: () => getOffersByUserIed(userId),
+  })
+}
+
+export function useStatusApplied(userId: string) {
+  return useQuery({
+    queryKey: ["applications", userId, "applied"],
+    queryFn: () => getApplictionsWhereStatusApplied(userId),
   })
 }
 
@@ -69,6 +85,7 @@ export function useCreateApplication(userId: string) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["applications", userId] })
+      queryClient.invalidateQueries({ queryKey: ["offers", userId] })
     },
   })
 }

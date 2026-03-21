@@ -18,19 +18,22 @@ export const jobTypeSchema = z.enum([
   "other",
 ])
 
-export const sourceSchema = z.enum([
-  "linkedin",
-  "indeed",
-  "glassdoor",
-  "levels_fyi",
-  "ycombinator",
-  "wellfound",
-  "company_website",
-  "referral",
-  "recruiter",
-  "job_fair",
-  "other",
-])
+export const sourceSchema = z.enum(
+  [
+    "linkedin",
+    "indeed",
+    "glassdoor",
+    "levels_fyi",
+    "ycombinator",
+    "wellfound",
+    "company_website",
+    "referral",
+    "recruiter",
+    "job_fair",
+    "other",
+  ],
+  { error: "Source is required" }
+)
 
 export const interviewTypeSchema = z.enum([
   "video_call",
@@ -66,7 +69,7 @@ export const applicationSchema = z.object({
   company: z.string().min(1, "Company is required"),
   position: z.string().min(1, "Position is required"),
   status: applicationStatusSchema,
-  appliedDate: z.date(),
+  appliedDate: z.date({ error: "Date is required" }),
   source: sourceSchema,
   jobType: jobTypeSchema,
   location: z.string().optional(),
