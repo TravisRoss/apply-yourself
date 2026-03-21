@@ -1,5 +1,9 @@
 import { Application } from "@/generated/prisma/client"
-import { createApplication, getApplicationsByUserId } from "@/lib/data-service"
+import {
+  createApplication,
+  deleteApplication,
+  getApplicationsByUserId,
+} from "@/lib/data-service"
 import { ApplicationFormData } from "@/lib/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -54,6 +58,42 @@ export function useCreateApplication(userId: string) {
         context?.previousApplications
       )
       toast(`Failed to create application: ${error.message}`)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["applications", userId] })
+    },
+  })
+}
+
+export function useDeleteApplication(userId: string) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (applicationId: string) => deleteApplication(applicationId),
+    onMutate: async (applicationId) => {
+      await queryClient.cancelQueries({ queryKey: ["applications", userId] })
+
+      const previousApplications = queryClient.getQueryData<Application[]>([
+        "applications",
+        userId,
+      ])
+
+      queryClient.setQueryData<Application[]>(
+        ["applications", userId],
+        (previous = []) => previous.filter((app) => app.id !== applicationId)
+      )
+
+      return { previousApplications }
+    },
+    onSuccess: () => {
+      toast("Application deleted.")
+    },
+    onError: (error, _applicationId, context) => {
+      queryClient.setQueryData(
+        ["applications", userId],
+        context?.previousApplications
+      )
+      toast(`Failed to delete application: ${error.message}`)
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["applications", userId] })

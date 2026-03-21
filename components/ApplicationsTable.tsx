@@ -11,7 +11,7 @@ import {
 } from "./ui/table"
 import { Badge } from "./ui/badge"
 import KebabMenu from "./KebabMenu"
-import { useApplications } from "@/hooks/useApplications"
+import { useApplications, useDeleteApplication } from "@/hooks/useApplications"
 import { formatDate } from "@/lib/utils"
 
 const tableHeads = ["Company", "Position", "Location", "Status", "Applied"]
@@ -22,6 +22,11 @@ function MutedTableCell({ children }: { children: React.ReactNode }) {
 
 export default function ApplicationsTable({ userId }: { userId: string }) {
   const { data: applications } = useApplications(userId)
+  const deleteApplicationMutation = useDeleteApplication(userId)
+
+  function handleDelete(applicationId: string) {
+    deleteApplicationMutation.mutateAsync(applicationId)
+  }
 
   return (
     <div className="rounded-lg border border-border bg-card">
@@ -60,7 +65,7 @@ export default function ApplicationsTable({ userId }: { userId: string }) {
                   <span>{formatDate(application.appliedDate)}</span>
                 </MutedTableCell>
                 <MutedTableCell>
-                  <KebabMenu />
+                  <KebabMenu onDelete={() => handleDelete(application.id)} />
                 </MutedTableCell>
               </TableRow>
             ))}

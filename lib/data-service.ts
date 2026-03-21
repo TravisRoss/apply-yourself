@@ -27,3 +27,7 @@ export async function createApplication(
     },
   })
 }
+
+export async function deleteApplication(applicationId: string) {
+  await prisma.application.delete({ where: { id: applicationId } })
+}

@@ -7,7 +7,11 @@ import {
 import { Button } from "./ui/button"
 import { MoreHorizontal } from "lucide-react"
 
-export default function KebabMenu() {
+type KebabMenuProps = {
+  onDelete: () => void
+}
+
+export default function KebabMenu({ onDelete }: KebabMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,7 +26,9 @@ export default function KebabMenu() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem>View details</DropdownMenuItem>
         <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem variant={"destructive"}>Delete</DropdownMenuItem>
+        <DropdownMenuItem variant={"destructive"} onClick={() => onDelete()}>
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
