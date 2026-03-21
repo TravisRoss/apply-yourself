@@ -59,7 +59,7 @@ test.describe("sign-in form", () => {
   })
 
   test("has a link to the sign-up page", async ({ page }) => {
-    await page.getByRole("link", { name: "Sign up" }).click()
+    await page.getByText("Sign up").click()
     await expect(page).toHaveURL("/sign-up")
   })
 

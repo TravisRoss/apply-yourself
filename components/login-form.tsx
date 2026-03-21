@@ -106,7 +106,9 @@ export function LoginForm({
                   <InputGroupAddon align="inline-end">
                     <InputGroupButton
                       size="icon-xs"
-                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOff /> : <Eye />}
@@ -130,10 +132,13 @@ export function LoginForm({
                   }}
                   disabled={isGoogleLoading}
                 >
-                  {isGoogleLoading ? "Logging in with Google..." : "Login with Google"}
+                  {isGoogleLoading
+                    ? "Logging in with Google..."
+                    : "Login with Google"}
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <Link href="/sign-up">Sign up</Link>
+                  Don&apos;t have an account?
+                  <Link href="/sign-up">Sign up</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
