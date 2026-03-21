@@ -85,9 +85,6 @@ export function useDeleteApplication(userId: string) {
 
       return { previousApplications }
     },
-    onSuccess: () => {
-      toast("Application deleted.")
-    },
     onError: (error, _applicationId, context) => {
       queryClient.setQueryData(
         ["applications", userId],
