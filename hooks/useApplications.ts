@@ -2,7 +2,9 @@ import { Application } from "@/generated/prisma/client"
 import {
   createApplication,
   deleteApplication,
+  getApplicationById,
   getApplicationsByUserId,
+  updateApplication,
 } from "@/lib/data-service"
 import { ApplicationFormData } from "@/lib/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -15,13 +17,19 @@ export function useApplications(userId: string) {
   })
 }
 
+export function useApplication(applicationId: string) {
+  return useQuery({
+    queryKey: ["application", applicationId],
+    queryFn: () => getApplicationById(applicationId),
+  })
+}
+
 export function useCreateApplication(userId: string) {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (formData: ApplicationFormData) =>
       createApplication(userId, formData),
-    mutationKey: ["applications", userId],
     onMutate: async (formData: ApplicationFormData) => {
       await queryClient.cancelQueries({ queryKey: ["applications", userId] })
       const previousApplications = queryClient.getQueryData<Application[]>([
@@ -91,6 +99,69 @@ export function useDeleteApplication(userId: string) {
         context?.previousApplications
       )
       toast(`Failed to delete application: ${error.message}`)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["applications", userId] })
+    },
+  })
+}
+
+export function useUpdateApplication(userId: string) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async ({
+      applicationId,
+      formData,
+    }: {
+      applicationId: string
+      formData: ApplicationFormData
+    }) => updateApplication(applicationId, formData),
+    onMutate: async ({
+      applicationId,
+      formData,
+    }: {
+      applicationId: string
+      formData: ApplicationFormData
+    }) => {
+      // cancel any in flight queries
+      queryClient.cancelQueries({ queryKey: ["applications", userId] })
+
+      // store a snapshot of the previous applications array
+      const previousApplications = queryClient.getQueryData<Application[]>([
+        "applications",
+        userId,
+      ])
+
+      //optimistically update applications
+      queryClient.setQueryData(
+        ["applications", userId],
+        (prev: Application[] = []) =>
+          prev.map((app) =>
+            app.id === applicationId
+              ? {
+                  id: app.id,
+                  userId: app.userId,
+                  createdAt: app.createdAt,
+                  updatedAt: new Date(),
+                  ...formData,
+                  location: formData.location ?? null,
+                  salary: formData.salary ?? null,
+                  url: formData.url ?? null,
+                  notes: formData.notes ?? null,
+                }
+              : app
+          )
+      )
+      toast("Application updated successfully")
+
+      return { previousApplications }
+    },
+    onError: (_error, _variables, context) => {
+      queryClient.setQueryData(
+        ["applications", userId],
+        context?.previousApplications
+      )
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["applications", userId] })

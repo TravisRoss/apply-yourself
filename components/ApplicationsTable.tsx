@@ -65,7 +65,7 @@ export default function ApplicationsTable({ userId }: { userId: string }) {
                   <span>{formatDate(application.appliedDate)}</span>
                 </MutedTableCell>
                 <MutedTableCell>
-                  <KebabMenu onDelete={() => handleDelete(application.id)} />
+                  <KebabMenu onDelete={() => handleDelete(application.id)} applicationId={application.id} userId={userId} />
                 </MutedTableCell>
               </TableRow>
             ))}

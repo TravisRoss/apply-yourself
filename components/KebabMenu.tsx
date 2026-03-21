@@ -8,23 +8,23 @@ import { Button } from "./ui/button"
 import { MoreHorizontal } from "lucide-react"
 
 import { useState } from "react"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "./ui/alert-dialog"
+
+import EditApplicationSheet from "./EditApplicationSheet"
+import DeleteApplicationDialog from "./DeleteApplicationDialog"
 
 type KebabMenuProps = {
   onDelete: () => void
+  applicationId: string
+  userId: string
 }
 
-export default function KebabMenu({ onDelete }: KebabMenuProps) {
+export default function KebabMenu({
+  onDelete,
+  applicationId,
+  userId,
+}: KebabMenuProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [sheetOpen, setSheetOpen] = useState(false)
 
   return (
     <>
@@ -41,7 +41,9 @@ export default function KebabMenu({ onDelete }: KebabMenuProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>View details</DropdownMenuItem>
-          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setSheetOpen(true)}>
+            Edit
+          </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={(e) => {
               e.preventDefault()
@@ -52,31 +54,17 @@ export default function KebabMenu({ onDelete }: KebabMenuProps) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete selected application?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              selected application.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setDialogOpen(false)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              variant="destructive"
-              onClick={() => {
-                onDelete()
-                setDialogOpen(false)
-              }}
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <EditApplicationSheet
+        userId={userId}
+        applicationId={applicationId}
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+      />
+      <DeleteApplicationDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onDelete={onDelete}
+      />
     </>
   )
 }

@@ -18,20 +18,34 @@ import DatePicker from "./DatePicker"
 import { Controller, useForm } from "react-hook-form"
 import { ApplicationFormData, applicationSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 
 type AddApplicationFormProps = {
   onHandleSubmit: (formData: ApplicationFormData) => void
+  application?: ApplicationFormData
+  onDirtyChange?: (isDirty: boolean) => void
 }
 
 export default function AddApplicationForm({
   onHandleSubmit,
+  application,
+  onDirtyChange,
 }: AddApplicationFormProps) {
   const {
     register,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     handleSubmit,
-  } = useForm<ApplicationFormData>({ resolver: zodResolver(applicationSchema) })
+  } = useForm<ApplicationFormData>({
+    resolver: zodResolver(applicationSchema),
+    defaultValues: application ? application : {},
+  })
+
+  useEffect(() => {
+    if (onDirtyChange) {
+      onDirtyChange(isDirty)
+    }
+  }, [isDirty, onDirtyChange])
 
   return (
     <div className="flex-1 overflow-y-auto px-4 py-2">
@@ -154,7 +168,12 @@ export default function AddApplicationForm({
           </Field>
           <Field>
             <FieldLabel htmlFor="location">Location</FieldLabel>
-            <Input id="location" placeholder="e.g. Remote" type="text" />
+            <Input
+              id="location"
+              placeholder="e.g. Remote"
+              type="text"
+              {...register("location")}
+            />
           </Field>
           <Field>
             <FieldLabel htmlFor="salary">Salary</FieldLabel>
@@ -162,6 +181,7 @@ export default function AddApplicationForm({
               id="salary"
               placeholder="e.g. $120,000 - $150,000"
               type="text"
+              {...register("salary")}
             />
           </Field>
           <Field data-invalid={!!errors.url}>

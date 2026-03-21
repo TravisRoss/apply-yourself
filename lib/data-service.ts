@@ -7,6 +7,10 @@ export async function getApplicationsByUserId(userId: string) {
   return await prisma.application.findMany({ where: { userId } })
 }
 
+export async function getApplicationById(applicationId: string) {
+  return await prisma.application.findUnique({ where: { id: applicationId } })
+}
+
 export async function createApplication(
   userId: string,
   formData: ApplicationFormData
@@ -14,6 +18,27 @@ export async function createApplication(
   return await prisma.application.create({
     data: {
       userId,
+      company: formData.company,
+      position: formData.position,
+      status: formData.status,
+      appliedDate: formData.appliedDate,
+      source: formData.source,
+      jobType: formData.jobType,
+      location: formData.location,
+      salary: formData.salary,
+      url: formData.url,
+      notes: formData.notes,
+    },
+  })
+}
+
+export async function updateApplication(
+  applicationId: string,
+  formData: ApplicationFormData
+) {
+  await prisma.application.update({
+    where: { id: applicationId },
+    data: {
       company: formData.company,
       position: formData.position,
       status: formData.status,
