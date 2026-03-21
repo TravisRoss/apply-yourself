@@ -7,9 +7,13 @@ import { CalendarIcon } from "lucide-react"
 import { Calendar } from "./ui/calendar"
 import { formatDate } from "@/lib/utils"
 
-export default function DatePicker() {
+type DatePickerProps = {
+  value: Date | undefined
+  onChange: (date: Date | undefined) => void
+}
+
+export default function DatePicker({ value: date, onChange }: DatePickerProps) {
   const [open, setOpen] = useState(false)
-  const [date, setDate] = useState<Date>()
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -28,7 +32,7 @@ export default function DatePicker() {
           mode="single"
           selected={date}
           onSelect={(date) => {
-            setDate(date)
+            onChange(date)
             setOpen(false)
           }}
         />

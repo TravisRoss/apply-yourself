@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/ThemeProvider"
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import QueryProvider from "@/components/QueryProvider"
+import { Toaster } from "@/components/ui/sonner"
 
 const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -34,6 +35,7 @@ export default function RootLayout({
         <ThemeProvider>
           <QueryProvider>
             <TooltipProvider>{children}</TooltipProvider>
+            <Toaster />
           </QueryProvider>
         </ThemeProvider>
       </body>

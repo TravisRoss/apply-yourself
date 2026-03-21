@@ -14,7 +14,7 @@ export default async function DashboardPage() {
         <h1 className="mb-1 text-xl font-semibold text-foreground">
           Dashboard
         </h1>
-        <AddApplicationSheet />
+        <AddApplicationSheet userId={session!.user.id} />
       </div>
       <StatCards />
       <div className="mb-4 flex items-center justify-between pt-8">

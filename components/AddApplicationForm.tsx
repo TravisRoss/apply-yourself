@@ -1,4 +1,4 @@
-import { Field, FieldGroup, FieldLabel } from "./ui/field"
+import { Field, FieldError, FieldGroup, FieldLabel } from "./ui/field"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import {
@@ -15,78 +15,142 @@ import {
   sourceLabels,
 } from "@/lib/labels"
 import DatePicker from "./DatePicker"
+import { Controller, useForm } from "react-hook-form"
+import { ApplicationFormData, applicationSchema } from "@/lib/zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 type AddApplicationFormProps = {
-  onHandleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  onHandleSubmit: (formData: ApplicationFormData) => void
 }
 
 export default function AddApplicationForm({
   onHandleSubmit,
 }: AddApplicationFormProps) {
+  const {
+    register,
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<ApplicationFormData>({ resolver: zodResolver(applicationSchema) })
+
   return (
     <div className="flex-1 overflow-y-auto px-4 py-2">
-      <form onSubmit={onHandleSubmit} noValidate>
+      <form
+        id="add-application-form"
+        onSubmit={handleSubmit(onHandleSubmit)}
+        noValidate
+      >
         <FieldGroup>
-          <Field>
+          <Field data-invalid={!!errors.company}>
             <FieldLabel htmlFor="company">Company</FieldLabel>
-            <Input id="company" placeholder="e.g. Stripe" type="text" />
+            <Input
+              id="company"
+              placeholder="e.g. Stripe"
+              type="text"
+              aria-invalid={!!errors.company}
+              {...register("company")}
+            />
+            <FieldError errors={[errors.company]} />
           </Field>
-          <Field>
+          <Field data-invalid={!!errors.position}>
             <FieldLabel htmlFor="position">Position</FieldLabel>
             <Input
               id="position"
               placeholder="e.g. Software Engineer"
               type="text"
+              aria-invalid={!!errors.position}
+              {...register("position")}
             />
+            <FieldError errors={[errors.position]} />
           </Field>
-          <Field>
+          <Field data-invalid={!!errors.status}>
             <FieldLabel>Status</FieldLabel>
-            <Select defaultValue={ApplicationStatus.applied}>
-              <SelectTrigger className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(ApplicationStatus).map((status) => (
-                  <SelectItem key={status} value={status}>
-                    {applicationStatusLabels[status]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Controller
+              name="status"
+              control={control}
+              defaultValue={ApplicationStatus.applied}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger
+                    className="w-full"
+                    aria-invalid={!!errors.status}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.values(ApplicationStatus).map((status) => (
+                      <SelectItem key={status} value={status}>
+                        {applicationStatusLabels[status]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            <FieldError errors={[errors.status]} />
           </Field>
-          <Field>
+          <Field data-invalid={!!errors.appliedDate}>
             <FieldLabel htmlFor="appliedDate">Applied date</FieldLabel>
-            <DatePicker />
+            <Controller
+              name="appliedDate"
+              control={control}
+              render={({ field }) => (
+                <DatePicker value={field.value} onChange={field.onChange} />
+              )}
+            />
+            <FieldError errors={[errors.appliedDate]} />
           </Field>
-          <Field>
+          <Field data-invalid={!!errors.jobType}>
             <FieldLabel>Job type</FieldLabel>
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select job type" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(JobType).map((type) => (
-                  <SelectItem key={type} value={type}>
-                    {jobTypeLabels[type]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Controller
+              name="jobType"
+              control={control}
+              defaultValue={"full_time"}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger
+                    className="w-full"
+                    aria-invalid={!!errors.jobType}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.values(JobType).map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {jobTypeLabels[type]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+
+            <FieldError errors={[errors.jobType]} />
           </Field>
-          <Field>
+          <Field data-invalid={!!errors.source}>
             <FieldLabel>Source</FieldLabel>
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select source" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(Source).map((source) => (
-                  <SelectItem key={source} value={source}>
-                    {sourceLabels[source]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Controller
+              name="source"
+              control={control}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger
+                    className="w-full"
+                    aria-invalid={!!errors.source}
+                  >
+                    <SelectValue placeholder="Select source" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.values(Source).map((source) => (
+                      <SelectItem key={source} value={source}>
+                        {sourceLabels[source]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            <FieldError errors={[errors.source]} />
           </Field>
           <Field>
             <FieldLabel htmlFor="location">Location</FieldLabel>
@@ -100,18 +164,28 @@ export default function AddApplicationForm({
               type="text"
             />
           </Field>
-          <Field>
+          <Field data-invalid={!!errors.url}>
             <FieldLabel htmlFor="url">URL</FieldLabel>
             <Input
               id="url"
               placeholder="e.g. https://stripe.com/jobs/123"
               type="url"
+              aria-invalid={!!errors.url}
+              {...register("url")}
             />
+            <FieldError errors={[errors.url]} />
           </Field>
-          <Field>
+          <Field data-invalid={!!errors.notes}>
             <FieldLabel htmlFor="notes">Notes</FieldLabel>
-            <Textarea id="notes" placeholder="Any additional notes..." />
+            <Textarea
+              id="notes"
+              placeholder="Any additional notes..."
+              aria-invalid={!!errors.notes}
+              {...register("notes")}
+            />
+            <FieldError errors={[errors.notes]} />
           </Field>
+          {errors.root && <FieldError errors={[errors.root]} />}
         </FieldGroup>
       </form>
     </div>

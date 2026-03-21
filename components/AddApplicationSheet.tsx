@@ -15,12 +15,16 @@ import { useIsMobile } from "@/hooks/use-mobile"
 
 import { useState } from "react"
 import AddApplicationForm from "./AddApplicationForm"
+import { useCreateApplication } from "@/hooks/useApplications"
+import { ApplicationFormData } from "@/lib/zod"
 
-export default function AddApplicationSheet() {
+export default function AddApplicationSheet({ userId }: { userId: string }) {
   const [sheetOpen, setSheetOpen] = useState(false)
+  const createApplicationMutation = useCreateApplication(userId)
 
-  function handleSubmit() {
-    //TODO
+  function handleSubmit(formData: ApplicationFormData) {
+    createApplicationMutation.mutateAsync(formData)
+    setSheetOpen(false)
   }
 
   return (
@@ -43,7 +47,7 @@ export default function AddApplicationSheet() {
           <Button variant="outline" onClick={() => setSheetOpen(false)}>
             Cancel
           </Button>
-          <Button variant="default" type="submit">
+          <Button variant="default" type="submit" form="add-application-form">
             Save
           </Button>
         </SheetFooter>

@@ -47,7 +47,10 @@ function ThemeHotkey() {
         return
       }
 
-      if (event.key.toLowerCase() !== "d") {
+      if (
+        process.env.NODE_ENV === "development" &&
+        event.key.toLowerCase() !== "d"
+      ) {
         return
       }
 
