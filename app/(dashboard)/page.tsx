@@ -6,6 +6,7 @@ import StatCards from "@/components/StatCards"
 import { Button } from "@/components/ui/button"
 import { useDashboardStats } from "@/hooks/useDashboardStats"
 import { useSession } from "@/lib/auth-client"
+import Link from "next/link"
 
 export default function DashboardPage() {
   const { data: session } = useSession()
@@ -24,7 +25,7 @@ export default function DashboardPage() {
       <div className="mb-4 flex items-center justify-between pt-8">
         <h2 className="text-lg font-semibold">Recent Applications</h2>
         <Button variant="ghost" className="text-muted-foreground">
-          View all
+          <Link href="/applications">View all</Link>
         </Button>
       </div>
       <ApplicationsTable userId={userId!} />
