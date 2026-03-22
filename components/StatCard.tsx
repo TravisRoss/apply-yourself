@@ -1,5 +1,6 @@
 import { type LucideIcon } from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import { percentageGainDisplay } from "@/lib/utils"
 
 type StatCardProps = {
   title: string
@@ -7,7 +8,7 @@ type StatCardProps = {
   total: number
   count?: number
   countLabel?: string
-  percentageGain?: number
+  percentageGain?: number | null
   percentageGainLabel?: string
 }
 
@@ -37,14 +38,17 @@ export default function StatCard({
             {count} {countLabel ? countLabel : ""}
           </p>
 
-          {percentageGain && percentageGainLabel && (
+          {percentageGain !== undefined && percentageGainLabel && (
             <p
-              className={percentageGain > 0 ? "text-green-500" : "text-red-500"}
+              className={
+                percentageGain === null
+                  ? "text-muted-foreground"
+                  : percentageGain > 0
+                    ? "text-green-500"
+                    : "text-red-500"
+              }
             >
-              {percentageGain > 0
-                ? `+${percentageGain}%`
-                : `${percentageGain}%`}{" "}
-              {percentageGainLabel}
+              {percentageGainDisplay(percentageGain, percentageGainLabel)}
             </p>
           )}
         </div>

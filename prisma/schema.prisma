@@ -87,11 +87,24 @@ model Application {
   createdAt   DateTime          @default(now()) @map("created_at")
   updatedAt   DateTime          @updatedAt @map("updated_at")
 
-  interviews Interview[]
-  contacts   Contact[]
+  interviews     Interview[]
+  contacts       Contact[]
+  statusHistory  StatusHistory[]
 
   @@index([userId])
   @@map("applications")
+}
+
+model StatusHistory {
+  id            String            @id @default(uuid())
+  applicationId String            @map("application_id")
+  application   Application       @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  fromStatus    ApplicationStatus @map("from_status")
+  toStatus      ApplicationStatus @map("to_status")
+  changedAt     DateTime          @default(now()) @map("changed_at")
+
+  @@index([applicationId])
+  @@map("status_history")
 }
 
 model Interview {

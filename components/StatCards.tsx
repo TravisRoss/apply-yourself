@@ -9,7 +9,7 @@ type Stat = {
   total: number
   count?: number
   countLabel?: string
-  percentageGain?: number
+  percentageGain?: number | null
 }
 
 type StatCardsProps = {

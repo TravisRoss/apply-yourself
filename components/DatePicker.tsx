@@ -8,7 +8,7 @@ import { Calendar } from "./ui/calendar"
 import { formatDate } from "@/lib/utils"
 
 type DatePickerProps = {
-  value: Date | undefined
+  value: Date
   onChange: (date: Date | undefined) => void
 }
 

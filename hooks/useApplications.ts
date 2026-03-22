@@ -4,39 +4,76 @@ import {
   deleteApplication,
   getApplicationById,
   getApplicationsByUserId,
+  getApplicationsForMonth,
+  getApplicationsThisWeek,
   getApplictionsWhereStatusApplied,
   getOffersByUserIed,
+  getResponsesThisWeek,
   updateApplication,
 } from "@/lib/data-service"
+import { queryKeys } from "@/lib/query-keys"
 import { ApplicationFormData } from "@/lib/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
-export function useApplications(userId: string) {
+export function useApplications(userId: string | undefined) {
   return useQuery({
-    queryKey: ["applications", userId],
-    queryFn: () => getApplicationsByUserId(userId),
+    queryKey: queryKeys.applications(userId!),
+    queryFn: () => getApplicationsByUserId(userId!),
+    enabled: !!userId,
+  })
+}
+
+export function useApplicationsThisWeek(userId: string | undefined) {
+  return useQuery({
+    queryKey: queryKeys.applicationsThisWeek(userId!),
+    queryFn: () => getApplicationsThisWeek(userId!),
+    enabled: !!userId,
+  })
+}
+export function useApplicationsForMonth(
+  userId: string | undefined,
+  date: Date
+) {
+  return useQuery({
+    queryKey: queryKeys.applicationsForMonth(
+      userId!,
+      date.getFullYear(),
+      date.getMonth()
+    ),
+    queryFn: () => getApplicationsForMonth(userId!, date),
+    enabled: !!userId,
+  })
+}
+
+export function useResponsesThisWeek(userId: string | undefined) {
+  return useQuery({
+    queryKey: queryKeys.responsesThisWeek(userId!),
+    queryFn: () => getResponsesThisWeek(userId!),
+    enabled: !!userId,
   })
 }
 
 export function useApplication(applicationId: string) {
   return useQuery({
-    queryKey: ["application", applicationId],
+    queryKey: queryKeys.application(applicationId),
     queryFn: () => getApplicationById(applicationId),
   })
 }
 
-export function useOffers(userId: string) {
+export function useOffers(userId: string | undefined) {
   return useQuery({
-    queryKey: ["applications", userId, "offers"],
-    queryFn: () => getOffersByUserIed(userId),
+    queryKey: queryKeys.offers(userId!),
+    queryFn: () => getOffersByUserIed(userId!),
+    enabled: !!userId,
   })
 }
 
-export function useStatusApplied(userId: string) {
+export function useStatusApplied(userId: string | undefined) {
   return useQuery({
-    queryKey: ["applications", userId, "applied"],
-    queryFn: () => getApplictionsWhereStatusApplied(userId),
+    queryKey: queryKeys.statusApplied(userId!),
+    queryFn: () => getApplictionsWhereStatusApplied(userId!),
+    enabled: !!userId,
   })
 }
 
@@ -47,13 +84,14 @@ export function useCreateApplication(userId: string) {
     mutationFn: (formData: ApplicationFormData) =>
       createApplication(userId, formData),
     onMutate: async (formData: ApplicationFormData) => {
-      await queryClient.cancelQueries({ queryKey: ["applications", userId] })
-      const previousApplications = queryClient.getQueryData<Application[]>([
-        "applications",
-        userId,
-      ])
+      await queryClient.cancelQueries({
+        queryKey: queryKeys.applications(userId),
+      })
+      const previousApplications = queryClient.getQueryData<Application[]>(
+        queryKeys.applications(userId)
+      )
       queryClient.setQueryData<Application[]>(
-        ["applications", userId],
+        queryKeys.applications(userId),
         (previous = []) => [
           ...previous,
           {
@@ -78,14 +116,16 @@ export function useCreateApplication(userId: string) {
     onError: (error, _formData, context) => {
       // restore the applications from snapshot
       queryClient.setQueryData(
-        ["applications", userId],
+        queryKeys.applications(userId),
         context?.previousApplications
       )
       toast(`Failed to create application: ${error.message}`)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["applications", userId] })
-      queryClient.invalidateQueries({ queryKey: ["offers", userId] })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.applications(userId),
+      })
+      queryClient.invalidateQueries({ queryKey: queryKeys.offers(userId) })
     },
   })
 }
@@ -96,15 +136,16 @@ export function useDeleteApplication(userId: string) {
   return useMutation({
     mutationFn: (applicationId: string) => deleteApplication(applicationId),
     onMutate: async (applicationId) => {
-      await queryClient.cancelQueries({ queryKey: ["applications", userId] })
+      await queryClient.cancelQueries({
+        queryKey: queryKeys.applications(userId),
+      })
 
-      const previousApplications = queryClient.getQueryData<Application[]>([
-        "applications",
-        userId,
-      ])
+      const previousApplications = queryClient.getQueryData<Application[]>(
+        queryKeys.applications(userId)
+      )
 
       queryClient.setQueryData<Application[]>(
-        ["applications", userId],
+        queryKeys.applications(userId),
         (previous = []) => previous.filter((app) => app.id !== applicationId)
       )
 
@@ -112,13 +153,15 @@ export function useDeleteApplication(userId: string) {
     },
     onError: (error, _applicationId, context) => {
       queryClient.setQueryData(
-        ["applications", userId],
+        queryKeys.applications(userId),
         context?.previousApplications
       )
       toast(`Failed to delete application: ${error.message}`)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["applications", userId] })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.applications(userId),
+      })
     },
   })
 }
@@ -141,18 +184,14 @@ export function useUpdateApplication(userId: string) {
       applicationId: string
       formData: ApplicationFormData
     }) => {
-      // cancel any in flight queries
-      queryClient.cancelQueries({ queryKey: ["applications", userId] })
-
-      // store a snapshot of the previous applications array
-      const previousApplications = queryClient.getQueryData<Application[]>([
-        "applications",
-        userId,
-      ])
+      queryClient.cancelQueries({ queryKey: queryKeys.applications(userId) })
+      const previousApplications = queryClient.getQueryData<Application[]>(
+        queryKeys.applications(userId)
+      )
 
       //optimistically update applications
       queryClient.setQueryData(
-        ["applications", userId],
+        queryKeys.applications(userId),
         (prev: Application[] = []) =>
           prev.map((app) =>
             app.id === applicationId
@@ -170,18 +209,23 @@ export function useUpdateApplication(userId: string) {
               : app
           )
       )
-      toast("Application updated successfully")
 
       return { previousApplications }
     },
+    onSuccess: () => {
+      toast("Application updated successfully")
+    },
     onError: (_error, _variables, context) => {
       queryClient.setQueryData(
-        ["applications", userId],
+        queryKeys.applications(userId),
         context?.previousApplications
       )
+      console.log(_error)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["applications", userId] })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.applications(userId),
+      })
     },
   })
 }

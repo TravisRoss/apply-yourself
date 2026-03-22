@@ -38,7 +38,7 @@ export default function AddApplicationForm({
     handleSubmit,
   } = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
-    defaultValues: application ? application : {},
+    defaultValues: application ? application : { appliedDate: new Date() },
   })
 
   useEffect(() => {
