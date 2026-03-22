@@ -89,10 +89,10 @@ export async function createApplication(
       appliedDate: formData.appliedDate,
       source: formData.source,
       jobType: formData.jobType,
-      location: formData.location,
-      salary: formData.salary,
-      url: formData.url,
-      notes: formData.notes,
+      location: formData.location || null,
+      salary: formData.salary || null,
+      url: formData.url || null,
+      notes: formData.notes || null,
     },
   })
 }
@@ -116,10 +116,10 @@ export async function updateApplication(
         appliedDate: formData.appliedDate,
         source: formData.source,
         jobType: formData.jobType,
-        location: formData.location,
-        salary: formData.salary,
-        url: formData.url,
-        notes: formData.notes,
+        location: formData.location || null,
+        salary: formData.salary || null,
+        url: formData.url || null,
+        notes: formData.notes || null,
       },
     })
 

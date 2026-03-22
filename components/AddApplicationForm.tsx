@@ -38,7 +38,13 @@ export default function AddApplicationForm({
     handleSubmit,
   } = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
-    defaultValues: application ? application : { appliedDate: new Date() },
+    defaultValues: application
+      ? application
+      : {
+          appliedDate: new Date(),
+          status: ApplicationStatus.applied,
+          jobType: "full_time" as const,
+        },
   })
 
   useEffect(() => {
@@ -82,7 +88,6 @@ export default function AddApplicationForm({
             <Controller
               name="status"
               control={control}
-              defaultValue={ApplicationStatus.applied}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger
@@ -119,7 +124,6 @@ export default function AddApplicationForm({
             <Controller
               name="jobType"
               control={control}
-              defaultValue={"full_time"}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger

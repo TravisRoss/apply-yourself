@@ -201,10 +201,10 @@ export function useUpdateApplication(userId: string) {
                   createdAt: app.createdAt,
                   updatedAt: new Date(),
                   ...formData,
-                  location: formData.location ?? null,
-                  salary: formData.salary ?? null,
-                  url: formData.url ?? null,
-                  notes: formData.notes ?? null,
+                  location: formData.location || null,
+                  salary: formData.salary || null,
+                  url: formData.url || null,
+                  notes: formData.notes || null,
                 }
               : app
           )

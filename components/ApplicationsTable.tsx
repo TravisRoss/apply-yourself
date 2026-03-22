@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import { Table } from "./ui/table"
 import {
   TableBody,
@@ -13,6 +13,7 @@ import { Badge } from "./ui/badge"
 import KebabMenu from "./KebabMenu"
 import { useApplications, useDeleteApplication } from "@/hooks/useApplications"
 import { formatDate } from "@/lib/utils"
+import { ApplicationPagination } from "./ApplicationPagination"
 
 const tableHeads = ["Company", "Position", "Location", "Status", "Applied"]
 
@@ -23,6 +24,10 @@ function MutedTableCell({ children }: { children: React.ReactNode }) {
 export default function ApplicationsTable({ userId }: { userId: string }) {
   const { data: applications } = useApplications(userId)
   const deleteApplicationMutation = useDeleteApplication(userId)
+  const [page, setPage] = useState(0)
+  const [pageSize, setPageSize] = useState(5)
+  const pageStart = page * pageSize
+  const pageEnd = pageStart + pageSize
 
   function handleDelete(applicationId: string) {
     deleteApplicationMutation.mutateAsync(applicationId)
@@ -30,7 +35,7 @@ export default function ApplicationsTable({ userId }: { userId: string }) {
 
   return (
     <div className="rounded-lg border border-border bg-card">
-      <Table>
+      <Table className="table-fixed">
         <TableHeader>
           <TableRow className="text-muted-foreground hover:bg-transparent">
             {tableHeads.map((label) => (
@@ -40,16 +45,16 @@ export default function ApplicationsTable({ userId }: { userId: string }) {
         </TableHeader>
         <TableBody>
           {applications &&
-            applications.map((application) => (
+            applications.slice(pageStart, pageEnd).map((application) => (
               <TableRow key={application.id}>
                 <TableCell>
                   <div className="flex items-center gap-2 font-semibold">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-accent">
+                    <div className="flex min-h-8 min-w-8 items-center justify-center rounded-md bg-accent">
                       <span>
                         {application.company.slice(0, 2).toUpperCase()}
                       </span>
                     </div>
-                    <span>{application.company}</span>
+                    <span className="truncate">{application.company}</span>
                   </div>
                 </TableCell>
                 <TableCell>
@@ -65,12 +70,23 @@ export default function ApplicationsTable({ userId }: { userId: string }) {
                   <span>{formatDate(application.appliedDate)}</span>
                 </MutedTableCell>
                 <MutedTableCell>
-                  <KebabMenu onDelete={() => handleDelete(application.id)} applicationId={application.id} userId={userId} />
+                  <KebabMenu
+                    onDelete={() => handleDelete(application.id)}
+                    applicationId={application.id}
+                    userId={userId}
+                  />
                 </MutedTableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
+      <ApplicationPagination
+        total={applications?.length || 0}
+        page={page}
+        pageSize={pageSize}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+      />
     </div>
   )
 }

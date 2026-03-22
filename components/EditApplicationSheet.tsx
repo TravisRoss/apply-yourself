@@ -37,13 +37,18 @@ export default function EditApplicationSheet({
     onOpenChange(false)
   }
 
-  const formData = application
+  const formData: ApplicationFormData | undefined = application
     ? {
-        ...application,
-        location: application.location ?? undefined,
-        salary: application.salary ?? undefined,
-        url: application.url ?? undefined,
-        notes: application.notes ?? undefined,
+        company: application.company,
+        position: application.position,
+        status: application.status,
+        appliedDate: new Date(application.appliedDate),
+        source: application.source,
+        jobType: application.jobType,
+        location: application.location ?? "",
+        salary: application.salary ?? "",
+        url: application.url ?? "",
+        notes: application.notes ?? "",
       }
     : undefined
 
@@ -57,11 +62,13 @@ export default function EditApplicationSheet({
           <SheetTitle className="text-lg">Edit application</SheetTitle>
           <SheetDescription>Make changes to the application.</SheetDescription>
         </SheetHeader>
-        <AddApplicationForm
-          onHandleSubmit={handleSubmit}
-          application={formData}
-          onDirtyChange={setIsFormDirty}
-        />
+        {formData && (
+          <AddApplicationForm
+            onHandleSubmit={handleSubmit}
+            application={formData}
+            onDirtyChange={setIsFormDirty}
+          />
+        )}
         <SheetFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
