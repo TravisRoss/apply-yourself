@@ -21,13 +21,27 @@ function MutedTableCell({ children }: { children: React.ReactNode }) {
   return <TableCell className="text-muted-foreground">{children}</TableCell>
 }
 
-export default function ApplicationsTable({ userId }: { userId: string }) {
+type ApplicationsTableProps = {
+  userId: string
+  withPagination?: boolean
+}
+
+export default function ApplicationsTable({
+  userId,
+  withPagination = false,
+}: ApplicationsTableProps) {
   const { data: applications } = useApplications(userId)
   const deleteApplicationMutation = useDeleteApplication(userId)
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(5)
   const pageStart = page * pageSize
   const pageEnd = pageStart + pageSize
+  const recentApplications = applications
+    ?.sort((a, b) => b.appliedDate.getTime() - a.appliedDate.getTime())
+    .slice(0, 6)
+  const displayApplications = withPagination
+    ? applications?.slice(pageStart, pageEnd)
+    : recentApplications
 
   function handleDelete(applicationId: string) {
     deleteApplicationMutation.mutateAsync(applicationId)
@@ -44,8 +58,8 @@ export default function ApplicationsTable({ userId }: { userId: string }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {applications &&
-            applications.slice(pageStart, pageEnd).map((application) => (
+          {displayApplications &&
+            displayApplications.map((application) => (
               <TableRow key={application.id}>
                 <TableCell>
                   <div className="flex items-center gap-2 font-semibold">
@@ -80,13 +94,15 @@ export default function ApplicationsTable({ userId }: { userId: string }) {
             ))}
         </TableBody>
       </Table>
-      <ApplicationPagination
-        total={applications?.length || 0}
-        page={page}
-        pageSize={pageSize}
-        onPageChange={setPage}
-        onPageSizeChange={setPageSize}
-      />
+      {withPagination && (
+        <ApplicationPagination
+          total={applications?.length || 0}
+          page={page}
+          pageSize={pageSize}
+          onPageChange={setPage}
+          onPageSizeChange={setPageSize}
+        />
+      )}
     </div>
   )
 }
