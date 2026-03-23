@@ -29,7 +29,7 @@ export default function EditApplicationSheet({
   onOpenChange,
 }: EditApplicationSheetProps) {
   const editApplicationMutation = useUpdateApplication(userId)
-  const { data: application } = useApplication(applicationId)
+  const { data: application } = useApplication(userId, applicationId)
   const [isFormDirty, setIsFormDirty] = useState(false)
 
   function handleSubmit(formData: ApplicationFormData) {

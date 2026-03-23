@@ -14,6 +14,7 @@ import KebabMenu from "./KebabMenu"
 import { useApplications, useDeleteApplication } from "@/hooks/useApplications"
 import { formatDate } from "@/lib/utils"
 import { ApplicationPagination } from "./ApplicationPagination"
+import Initials from "./Initials"
 
 const tableHeads = ["Company", "Position", "Location", "Status", "Applied"]
 
@@ -63,11 +64,7 @@ export default function ApplicationsTable({
               <TableRow key={application.id}>
                 <TableCell>
                   <div className="flex items-center gap-2 font-semibold">
-                    <div className="flex min-h-8 min-w-8 items-center justify-center rounded-md bg-accent">
-                      <span>
-                        {application.company.slice(0, 2).toUpperCase()}
-                      </span>
-                    </div>
+                    <Initials title={application.company} />
                     <span className="truncate">{application.company}</span>
                   </div>
                 </TableCell>

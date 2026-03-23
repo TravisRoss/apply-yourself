@@ -1,3 +1,4 @@
+import { ApplicationStatus } from "@/generated/prisma/enums"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -21,7 +22,7 @@ export function calcPercentageGain(
   return Math.round(((current - previous) / previous) * 100)
 }
 
-export function formatDate(date: Date, locale: string = "en-US"): string {
+export function formatDate(date: Date, locale: string = "en-GB"): string {
   return date.toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
@@ -82,4 +83,11 @@ export function percentageGainDisplay(
   }
 
   return gain > 0 ? `+${gain}% ${label}` : `${gain}% ${label}`
+}
+
+export const STATUS_CLASSES: Record<ApplicationStatus, string> = {
+  applied: "text-blue-500  bg-blue-500/15  border-blue-500/30",
+  interview: "text-amber-500 bg-amber-500/15 border-amber-500/30",
+  offer: "text-green-500 bg-green-500/15 border-green-500/30",
+  rejected: "text-red-500   bg-red-500/15   border-red-500/30",
 }

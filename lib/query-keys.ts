@@ -6,8 +6,8 @@ export const queryKeys = {
     ["applications", userId, "month", year, month] as const,
   responsesThisWeek: (userId: string) =>
     ["applications", userId, "responses_this_week"] as const,
-  application: (applicationId: string) =>
-    ["application", applicationId] as const,
+  application: (userId: string, applicationId: string) =>
+    ["applications", userId, "application", applicationId] as const,
   offers: (userId: string) => ["applications", userId, "offers"] as const,
   statusApplied: (userId: string) =>
     ["applications", userId, "applied"] as const,

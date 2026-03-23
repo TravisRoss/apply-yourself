@@ -11,6 +11,7 @@ import { useState } from "react"
 
 import EditApplicationSheet from "./EditApplicationSheet"
 import DeleteApplicationDialog from "./DeleteApplicationDialog"
+import ViewApplicationSheet from "./ViewApplicationSheet"
 
 type KebabMenuProps = {
   onDelete: () => void
@@ -24,7 +25,8 @@ export default function KebabMenu({
   userId,
 }: KebabMenuProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [sheetOpen, setSheetOpen] = useState(false)
+  const [editSheetOpen, setEditSheetOpen] = useState(false)
+  const [viewSheetOpen, setViewSheetOpen] = useState(false)
 
   return (
     <>
@@ -40,8 +42,10 @@ export default function KebabMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem>View details</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setSheetOpen(true)}>
+          <DropdownMenuItem onClick={() => setViewSheetOpen(true)}>
+            View details
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setEditSheetOpen(true)}>
             Edit
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -54,11 +58,18 @@ export default function KebabMenu({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <ViewApplicationSheet
+        userId={userId}
+        applicationId={applicationId}
+        open={viewSheetOpen}
+        onOpenChange={setViewSheetOpen}
+        onEditSheetOpen={setEditSheetOpen}
+      />
       <EditApplicationSheet
         userId={userId}
         applicationId={applicationId}
-        open={sheetOpen}
-        onOpenChange={setSheetOpen}
+        open={editSheetOpen}
+        onOpenChange={setEditSheetOpen}
       />
       <DeleteApplicationDialog
         open={dialogOpen}

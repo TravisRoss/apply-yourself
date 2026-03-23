@@ -54,9 +54,9 @@ export function useResponsesThisWeek(userId: string | undefined) {
   })
 }
 
-export function useApplication(applicationId: string) {
+export function useApplication(userId: string, applicationId: string) {
   return useQuery({
-    queryKey: queryKeys.application(applicationId),
+    queryKey: queryKeys.application(userId, applicationId),
     queryFn: () => getApplicationById(applicationId),
   })
 }
