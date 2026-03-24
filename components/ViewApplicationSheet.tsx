@@ -22,6 +22,7 @@ import {
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
+import StatusBadge from "./StatusBadge"
 
 type ViewApplicationSheetProps = {
   userId: string
@@ -60,15 +61,7 @@ export default function ViewApplicationSheet({
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Status</span>
-                <Badge
-                  variant="outline"
-                  className={cn(
-                    STATUS_CLASSES[application.status],
-                    "h-6 text-xs capitalize"
-                  )}
-                >
-                  &bull; {application.status}
-                </Badge>
+                <StatusBadge status={application.status} />
               </div>
             </div>
           </SheetTitle>

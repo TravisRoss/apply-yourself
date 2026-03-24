@@ -9,12 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table"
-import { Badge } from "./ui/badge"
 import KebabMenu from "./KebabMenu"
 import { useApplications, useDeleteApplication } from "@/hooks/useApplications"
-import { formatDate } from "@/lib/utils"
+import { cn, formatDate } from "@/lib/utils"
 import { ApplicationPagination } from "./ApplicationPagination"
 import Initials from "./Initials"
+import StatusBadge from "./StatusBadge"
 
 const tableHeads = ["Company", "Position", "Location", "Status", "Applied"]
 
@@ -25,11 +25,13 @@ function MutedTableCell({ children }: { children: React.ReactNode }) {
 type ApplicationsTableProps = {
   userId: string
   withPagination?: boolean
+  className?: string
 }
 
 export default function ApplicationsTable({
   userId,
   withPagination = false,
+  className,
 }: ApplicationsTableProps) {
   const { data: applications } = useApplications(userId)
   const deleteApplicationMutation = useDeleteApplication(userId)
@@ -49,7 +51,7 @@ export default function ApplicationsTable({
   }
 
   return (
-    <div className="rounded-lg border border-border bg-card">
+    <div className={cn("rounded-lg border border-border bg-card", className)}>
       <Table className="table-fixed">
         <TableHeader>
           <TableRow className="text-muted-foreground hover:bg-transparent">
@@ -75,7 +77,7 @@ export default function ApplicationsTable({
                   <span>{application.location}</span>
                 </MutedTableCell>
                 <MutedTableCell>
-                  <Badge>{application.status}</Badge>
+                  <StatusBadge status={application.status} />
                 </MutedTableCell>
                 <MutedTableCell>
                   <span>{formatDate(application.appliedDate)}</span>

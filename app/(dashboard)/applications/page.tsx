@@ -1,19 +1,43 @@
+"use client"
+
+import AddApplicationSheet from "@/components/AddApplicationSheet"
 import ApplicationsTable from "@/components/ApplicationsTable"
-import { auth } from "@/lib/auth"
-import { headers } from "next/headers"
+import { PageShell } from "@/components/PageShell"
+import SearchBar from "@/components/SearchBar"
+import { Button } from "@/components/ui/button"
+import { useSession } from "@/lib/auth-client"
+import { Filter } from "lucide-react"
 import { redirect } from "next/navigation"
+import { useState } from "react"
 
-export default async function ApplicationsPage() {
-  const session = await auth.api.getSession({ headers: await headers() })
+export default function ApplicationsPage() {
+  const { data: sessionData } = useSession()
+  const [input, setInput] = useState("")
 
-  if (!session) {
+  if (!sessionData) {
     redirect("/sign-in")
   }
 
+  function handleInputChange(value: string) {
+    setInput(value)
+  }
+
+  const userId = sessionData.user.id
+
   return (
-    <div className="p-8 pt-4">
-      <h1 className="mb-1 pb-4 text-xl font-semibold">Applications</h1>
-      <ApplicationsTable userId={session.user.id} withPagination={true} />
-    </div>
+    <PageShell
+      title="Applications"
+      action={<AddApplicationSheet userId={userId!} />}
+    >
+      <div className="flex items-center gap-2">
+        <SearchBar onInputChange={handleInputChange} input={input} />
+        <Button variant="outline">
+          <Filter />
+          <span>Filter</span>
+        </Button>
+      </div>
+
+      <ApplicationsTable userId={userId!} withPagination={true} className="mt-4" />
+    </PageShell>
   )
 }
