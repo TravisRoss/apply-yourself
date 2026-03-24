@@ -1,3 +1,4 @@
+import { getPaginationRange } from "@/lib/pagination"
 import { Field, FieldLabel } from "@/components/ui/field"
 import {
   Pagination,
@@ -18,28 +19,28 @@ import {
 const notAllowed = "cursor-not-allowed opacity-50"
 
 type ApplicationPaginationProps = {
-  page: number
-  onPageChange: (page: number) => void
+  pageIndex: number
+  onPageChange: (pageIndex: number) => void
   pageSize: number
   onPageSizeChange: (pageSize: number) => void
   total: number
 }
 
 export function ApplicationPagination({
-  page,
+  pageIndex,
   onPageChange,
   pageSize,
   onPageSizeChange,
   total,
 }: ApplicationPaginationProps) {
-  const numPages = Math.ceil(total / pageSize)
+  const { numPages, rangeStart, rangeEnd } = getPaginationRange(pageIndex, pageSize, total)
 
   function handlePreviousClick() {
-    if (page > 0) onPageChange(page - 1)
+    if (pageIndex > 0) onPageChange(pageIndex - 1)
   }
 
   function handleNextClick() {
-    if (page < numPages - 1) onPageChange(page + 1)
+    if (pageIndex < numPages - 1) onPageChange(pageIndex + 1)
   }
 
   return (
@@ -69,16 +70,21 @@ export function ApplicationPagination({
           <PaginationItem>
             <PaginationPrevious
               onClick={() => handlePreviousClick()}
-              aria-disabled={page === 0}
-              className={page === 0 ? notAllowed : ""}
+              aria-disabled={pageIndex === 0}
+              className={pageIndex === 0 ? notAllowed : ""}
               text="Previous"
             />
           </PaginationItem>
           <PaginationItem>
+            <span className="px-2 text-xs text-muted-foreground">
+              {rangeStart}–{rangeEnd} of {total}
+            </span>
+          </PaginationItem>
+          <PaginationItem>
             <PaginationNext
               onClick={() => handleNextClick()}
-              aria-disabled={page === numPages - 1}
-              className={page === numPages - 1 ? notAllowed : ""}
+              aria-disabled={pageIndex === numPages - 1}
+              className={pageIndex === numPages - 1 ? notAllowed : ""}
               text="Next"
             />
           </PaginationItem>

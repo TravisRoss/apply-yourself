@@ -173,15 +173,21 @@ describe("percentageGainDisplay", () => {
   })
 
   it("prefixes with + for positive gain", () => {
-    expect(percentageGainDisplay(20, "from last month")).toBe("+20% from last month")
+    expect(percentageGainDisplay(20, "from last month")).toBe(
+      "+20% from last month"
+    )
   })
 
   it("does not prefix with + for negative gain", () => {
-    expect(percentageGainDisplay(-10, "from last month")).toBe("-10% from last month")
+    expect(percentageGainDisplay(-10, "from last month")).toBe(
+      "-10% from last month"
+    )
   })
 
   it("does not prefix with + for zero gain", () => {
-    expect(percentageGainDisplay(0, "from last month")).toBe("0% from last month")
+    expect(percentageGainDisplay(0, "from last month")).toBe(
+      "0% from last month"
+    )
   })
 
   it("includes the label in the output", () => {

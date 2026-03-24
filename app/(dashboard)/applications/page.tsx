@@ -4,22 +4,43 @@ import AddApplicationSheet from "@/components/AddApplicationSheet"
 import ApplicationsTable from "@/components/ApplicationsTable"
 import { PageShell } from "@/components/PageShell"
 import SearchBar from "@/components/SearchBar"
-import { Button } from "@/components/ui/button"
+import FilterMenu from "@/components/FilterMenu"
 import { useSession } from "@/lib/auth-client"
-import { Filter } from "lucide-react"
+import { DatePreset } from "@/lib/filter"
+import { SortDirection, SortKey } from "@/lib/sort"
 import { redirect } from "next/navigation"
 import { useState } from "react"
 
 export default function ApplicationsPage() {
   const { data: sessionData } = useSession()
-  const [input, setInput] = useState("")
+  const [search, setSearch] = useState("")
+  const [statusFilter, setStatusFilter] = useState<string[]>([])
+  const [datePreset, setDatePreset] = useState<DatePreset>(null)
+  const [pageIndex, setPageIndex] = useState(0)
+
+  function handleSearchChange(value: string) {
+    setSearch(value)
+    setPageIndex(0)
+  }
+
+  function handleStatusesChange(statuses: string[]) {
+    setStatusFilter(statuses)
+    setPageIndex(0)
+  }
+  const [sortKey, setSortKey] = useState<SortKey>("appliedDate")
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
 
   if (!sessionData) {
     redirect("/sign-in")
   }
 
-  function handleInputChange(value: string) {
-    setInput(value)
+  function handleSortChange(key: SortKey) {
+    if (key === sortKey) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+    } else {
+      setSortKey(key)
+      setSortDirection("asc")
+    }
   }
 
   const userId = sessionData.user.id
@@ -30,14 +51,28 @@ export default function ApplicationsPage() {
       action={<AddApplicationSheet userId={userId!} />}
     >
       <div className="flex items-center gap-2">
-        <SearchBar onInputChange={handleInputChange} input={input} />
-        <Button variant="outline">
-          <Filter />
-          <span>Filter</span>
-        </Button>
+        <SearchBar onInputChange={handleSearchChange} input={search} />
+        <FilterMenu
+          selectedStatuses={statusFilter}
+          onStatusesChange={handleStatusesChange}
+          datePreset={datePreset}
+          onDatePresetChange={setDatePreset}
+        />
       </div>
 
-      <ApplicationsTable userId={userId!} withPagination={true} className="mt-4" />
+      <ApplicationsTable
+        userId={userId!}
+        withPagination={true}
+        className="mt-4"
+        search={search}
+        statusFilter={statusFilter}
+        datePreset={datePreset}
+        sortKey={sortKey}
+        sortDirection={sortDirection}
+        onSortChange={handleSortChange}
+        pageIndex={pageIndex}
+        onPageIndexChange={setPageIndex}
+      />
     </PageShell>
   )
 }
