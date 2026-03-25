@@ -91,6 +91,10 @@ export const interviewSchema = z.object({
   notes: z.string().optional(),
 })
 
+export const interviewFormSchema = interviewSchema.extend({
+  time: z.string().regex(/^\d{2}:\d{2}$/, "Time is required"),
+})
+
 export const contactSchema = z.object({
   company: z.string().min(1, "Company is required"),
   name: z.string().min(1, "Name is required"),
@@ -127,6 +131,7 @@ export const signInSchema = z.object({
 
 export type ApplicationFormData = z.infer<typeof applicationSchema>
 export type InterviewFormData = z.infer<typeof interviewSchema>
+export type InterviewFormValues = z.infer<typeof interviewFormSchema>
 export type ContactFormData = z.infer<typeof contactSchema>
 export type SignUpFormData = z.infer<typeof signUpSchema>
 export type SignInFormData = z.infer<typeof signInSchema>

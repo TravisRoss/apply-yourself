@@ -2,7 +2,7 @@
 
 import prisma from "./prisma"
 import { calcMonthStartAndEndForDate, getCurrentWeekForDate } from "./utils"
-import { ApplicationFormData } from "./zod"
+import { ApplicationFormData, InterviewFormData } from "./zod"
 
 export async function getApplicationsByUserId(userId: string) {
   return await prisma.application.findMany({ where: { userId } })
@@ -73,6 +73,16 @@ export async function getInterviewsThisWeek(userId: string) {
       },
       date: { gte: currentWeek.weekStart, lte: currentWeek.weekEnd },
     },
+  })
+}
+
+export async function createInterview(formData: InterviewFormData) {
+  await prisma.interview.create({
+    data: { ...formData, notes: formData.notes || null },
+  })
+  await prisma.application.update({
+    where: { id: formData.applicationId },
+    data: { status: "interview" },
   })
 }
 
