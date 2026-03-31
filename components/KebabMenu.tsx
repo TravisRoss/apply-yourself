@@ -1,16 +1,16 @@
+import { MoreHorizontal } from "lucide-react"
+import { Button } from "./ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
-import { Button } from "./ui/button"
-import { MoreHorizontal } from "lucide-react"
 
 import { useState } from "react"
 
-import EditApplicationSheet from "./EditApplicationSheet"
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog"
+import EditApplicationSheet from "./EditApplicationSheet"
 import ViewApplicationSheet from "./ViewApplicationSheet"
 
 type KebabMenuProps = {
@@ -27,6 +27,13 @@ export default function KebabMenu({
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editSheetOpen, setEditSheetOpen] = useState(false)
   const [viewSheetOpen, setViewSheetOpen] = useState(false)
+
+  function handleDelete(event: Event) {
+    // Prevents Radix from auto-closing the dropdown, letting the dialog's
+    // focus trap take over instead of the dropdown's focus restoration.
+    event.preventDefault()
+    setDialogOpen(true)
+  }
 
   return (
     <>
@@ -48,12 +55,7 @@ export default function KebabMenu({
           <DropdownMenuItem onClick={() => setEditSheetOpen(true)}>
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault()
-              setDialogOpen(true)
-            }}
-          >
+          <DropdownMenuItem onSelect={handleDelete}>
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

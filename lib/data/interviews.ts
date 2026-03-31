@@ -28,3 +28,7 @@ export async function createInterview(formData: InterviewFormData) {
     data: { status: "interview" },
   })
 }
+
+export async function deleteInterview(interviewId: string) {
+  await prisma.interview.delete({ where: { id: interviewId } })
+}

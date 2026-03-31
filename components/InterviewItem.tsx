@@ -2,6 +2,7 @@ import { InterviewRound, InterviewType } from "@/generated/prisma/enums"
 import { formatDate } from "@/lib/utils"
 import { Clock, Video } from "lucide-react"
 import Initials from "./Initials"
+import InterviewKebabMenu from "./InterviewKebabMenu"
 import { Badge } from "./ui/badge"
 import {
   Item,
@@ -12,6 +13,7 @@ import {
 } from "./ui/item"
 
 type InterviewItemProps = {
+  id: string
   company: string
   position: string
   date: Date
@@ -20,6 +22,7 @@ type InterviewItemProps = {
 }
 
 export default function InterviewItem({
+  id,
   company,
   position,
   date,
@@ -60,6 +63,7 @@ export default function InterviewItem({
               {round}
             </Badge>
           </div>
+          <InterviewKebabMenu interviewId={id} />
         </div>
       </ItemActions>
     </Item>

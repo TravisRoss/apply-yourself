@@ -1,6 +1,7 @@
 import { Interview } from "@/generated/prisma/client"
 import {
   createInterview,
+  deleteInterview,
   getInterviewsByUserId,
   getInterviewsThisWeek,
 } from "@/lib/data/interviews"
@@ -22,6 +23,24 @@ export function useInterviewsThisWeek(userId: string | undefined) {
     queryKey: queryKeys.interviewsThisWeek(userId!),
     queryFn: () => getInterviewsThisWeek(userId!),
     enabled: !!userId,
+  })
+}
+
+export function useDeleteInterview(userId: string | undefined) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (interviewId: string) => deleteInterview(interviewId),
+    onSuccess: () => {
+      toast("Interview deleted.")
+    },
+    onError: (error) => {
+      toast("Interview could not be deleted.")
+      console.error("Interview deletion failed with error: ", error)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.interviews(userId!) })
+    },
   })
 }
 

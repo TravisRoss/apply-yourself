@@ -21,6 +21,7 @@ export default function InterviewsList({
         return (
           <InterviewItem
             key={interview.id}
+            id={interview.id}
             company={application.company}
             position={application.position}
             date={interview.date}
