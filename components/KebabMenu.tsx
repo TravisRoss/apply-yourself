@@ -10,7 +10,7 @@ import { MoreHorizontal } from "lucide-react"
 import { useState } from "react"
 
 import EditApplicationSheet from "./EditApplicationSheet"
-import DeleteApplicationDialog from "./DeleteApplicationDialog"
+import DeleteConfirmationDialog from "./DeleteConfirmationDialog"
 import ViewApplicationSheet from "./ViewApplicationSheet"
 
 type KebabMenuProps = {
@@ -71,10 +71,12 @@ export default function KebabMenu({
         open={editSheetOpen}
         onOpenChange={setEditSheetOpen}
       />
-      <DeleteApplicationDialog
+      <DeleteConfirmationDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         onDelete={onDelete}
+        title="Delete selected application?"
+        description="This action cannot be undone. This will permanently delete the selected application."
       />
     </>
   )

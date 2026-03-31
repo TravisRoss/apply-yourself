@@ -9,26 +9,27 @@ import {
   AlertDialogTitle,
 } from "./ui/alert-dialog"
 
-type DeleteApplicationDialogProps = {
+type DeleteConfirmationDialogProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
   onDelete: () => void
+  title: string
+  description: string
 }
 
-export default function DeleteApplicationDialog({
+export default function DeleteConfirmationDialog({
   open,
   onOpenChange,
   onDelete,
-}: DeleteApplicationDialogProps) {
+  title,
+  description,
+}: DeleteConfirmationDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete selected application?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the
-            selected application.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => onOpenChange(false)}>
