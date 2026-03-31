@@ -3,7 +3,7 @@ import {
   createInterview,
   getInterviewsByUserId,
   getInterviewsThisWeek,
-} from "@/lib/data-service"
+} from "@/lib/data/interviews"
 import { queryKeys } from "@/lib/query-keys"
 import { InterviewFormData } from "@/lib/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"

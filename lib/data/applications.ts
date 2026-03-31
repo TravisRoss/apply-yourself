@@ -1,8 +1,8 @@
 "use server"
 
-import prisma from "./prisma"
-import { calcMonthStartAndEndForDate, getCurrentWeekForDate } from "./utils"
-import { ApplicationFormData, InterviewFormData } from "./zod"
+import prisma from "@/lib/prisma"
+import { calcMonthStartAndEndForDate, getCurrentWeekForDate } from "@/lib/utils"
+import { ApplicationFormData } from "@/lib/zod"
 
 export async function getApplicationsByUserId(userId: string) {
   return await prisma.application.findMany({ where: { userId } })
@@ -19,7 +19,7 @@ export async function getApplicationsThisWeek(userId: string) {
 
   return await prisma.application.findMany({
     where: {
-      userId: userId,
+      userId,
       appliedDate: { gte: currentWeek.weekStart, lte: currentWeek.weekEnd },
     },
   })
@@ -32,7 +32,7 @@ export async function getApplicationsForMonth(
   const { monthStart, monthEnd } = calcMonthStartAndEndForDate(date)
 
   return await prisma.application.findMany({
-    where: { userId: userId, appliedDate: { gte: monthStart, lte: monthEnd } },
+    where: { userId, appliedDate: { gte: monthStart, lte: monthEnd } },
   })
 }
 
@@ -51,39 +51,6 @@ export async function getResponsesThisWeek(userId: string) {
 
 export async function getApplicationById(applicationId: string) {
   return await prisma.application.findUnique({ where: { id: applicationId } })
-}
-
-export async function getOffersByUserIed(userId: string) {
-  return await prisma.application.findMany({
-    where: { userId, status: "offer" },
-  })
-}
-
-export async function getInterviewsByUserId(userId: string) {
-  return await prisma.interview.findMany({ where: { application: { userId } } })
-}
-
-export async function getInterviewsThisWeek(userId: string) {
-  const currentWeek = getCurrentWeekForDate(new Date())
-
-  return await prisma.interview.findMany({
-    where: {
-      application: {
-        userId: userId,
-      },
-      date: { gte: currentWeek.weekStart, lte: currentWeek.weekEnd },
-    },
-  })
-}
-
-export async function createInterview(formData: InterviewFormData) {
-  await prisma.interview.create({
-    data: { ...formData, notes: formData.notes || null },
-  })
-  await prisma.application.update({
-    where: { id: formData.applicationId },
-    data: { status: "interview" },
-  })
 }
 
 export async function createApplication(

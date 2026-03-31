@@ -1,6 +1,6 @@
 // @vitest-environment node
 import prisma from "@/lib/prisma"
-import { deleteApplication } from "@/lib/data-service"
+import { deleteApplication } from "@/lib/data/applications"
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 
 const EMAIL = "delete-application-integration@example.com"

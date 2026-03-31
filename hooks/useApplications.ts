@@ -7,10 +7,10 @@ import {
   getApplicationsForMonth,
   getApplicationsThisWeek,
   getApplictionsWhereStatusApplied,
-  getOffersByUserIed,
   getResponsesThisWeek,
   updateApplication,
-} from "@/lib/data-service"
+} from "@/lib/data/applications"
+import { getOffersByUserId } from "@/lib/data/offers"
 import { queryKeys } from "@/lib/query-keys"
 import { ApplicationFormData } from "@/lib/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -64,7 +64,7 @@ export function useApplication(userId: string, applicationId: string) {
 export function useOffers(userId: string | undefined) {
   return useQuery({
     queryKey: queryKeys.offers(userId!),
-    queryFn: () => getOffersByUserIed(userId!),
+    queryFn: () => getOffersByUserId(userId!),
     enabled: !!userId,
   })
 }
