@@ -60,6 +60,12 @@ test.describe("interviews page", () => {
     await prisma.interview.deleteMany({ where: { application: { userId } } })
   })
 
+  async function deleteInterview(page: Page) {
+    await page.getByRole("button", { name: "Open menu" }).click()
+    await page.getByRole("menuitem", { name: "Delete" }).click()
+    await page.getByRole("button", { name: "Delete" }).click()
+  }
+
   async function scheduleInterview(
     page: Page,
     { time = "09:00" }: { time?: string } = {}
@@ -134,6 +140,19 @@ test.describe("interviews page", () => {
 
     await expect(
       page.getByText("You don't have any past interviews.")
+    ).toBeVisible()
+  })
+
+  test("deleting the last interview shows the empty state", async ({
+    page,
+  }) => {
+    await scheduleInterview(page, { time: "23:00" })
+    await deleteInterview(page)
+
+    await expect(
+      page.getByText(
+        "No interviews yet. Add your first interview to get started!"
+      )
     ).toBeVisible()
   })
 })
