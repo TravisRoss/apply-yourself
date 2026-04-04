@@ -30,7 +30,7 @@ export default function InterviewsPage() {
         </p>
       ) : (
         <>
-          <h2 className="mb-4">Upcoming Interviews</h2>
+          <h2 className="mb-4">Upcoming</h2>
           {upcomingInterviews.length === 0 ? (
             <p className="text-muted-foreground">
               Currently no upcoming interviews.
@@ -41,7 +41,7 @@ export default function InterviewsPage() {
               applications={applications}
             />
           )}
-          <h2 className="mb-4 mt-4">Past Interviews</h2>
+          <h2 className="mt-4 mb-4">Past</h2>
           {pastInterviews.length === 0 ? (
             <p className="text-muted-foreground">
               You don&apos;t have any past interviews.
@@ -50,6 +50,7 @@ export default function InterviewsPage() {
             <InterviewsList
               interviews={pastInterviews}
               applications={applications}
+              currentTime={currentTime}
             />
           )}
         </>
