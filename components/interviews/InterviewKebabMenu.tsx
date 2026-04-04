@@ -25,13 +25,11 @@ export default function InterviewKebabMenu({
   const [editSheetOpen, setEditSheetOpen] = useState(false)
   const { mutate: deleteInterview } = useDeleteInterview(userId)
 
-  function handleEdit(event: Event) {
-    event.preventDefault()
+  function handleEdit() {
     setEditSheetOpen(true)
   }
 
-  function handleDelete(event: Event) {
-    event.preventDefault()
+  function handleDelete() {
     setDialogOpen(true)
   }
 
