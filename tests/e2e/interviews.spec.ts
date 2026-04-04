@@ -155,4 +155,13 @@ test.describe("interviews page", () => {
       )
     ).toBeVisible()
   })
+
+  test("deleting a past interview removes it from the Past Interviews section", async ({
+    page,
+  }) => {
+    await scheduleInterview(page, { time: "09:00" })
+    await deleteInterview(page)
+
+    await expect(page.getByText("Stripe")).not.toBeVisible()
+  })
 })
