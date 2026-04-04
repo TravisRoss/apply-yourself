@@ -39,6 +39,15 @@ type PastInterviewItemProps = {
 
 type InterviewItemProps = UpcomingInterviewItemProps | PastInterviewItemProps
 
+const INTERVIEW_TYPE_LABELS: Record<InterviewType, string> = {
+  video_call: "Video Call",
+  phone: "Phone Call",
+  in_person: "In Person",
+  take_home: "Take Home",
+  panel: "Panel",
+  other: "Other",
+}
+
 export default function InterviewItem({
   id,
   company,
@@ -71,7 +80,7 @@ export default function InterviewItem({
             <InterviewKebabMenu interviewId={id} />
           </div>
         ) : (
-          <div className="flex w-full items-center justify-between">
+          <div className="flex w-full items-center justify-between gap-2">
             <div className="flex w-28 flex-col">
               <span className="text-foreground">{formatDate(date)}</span>
               <div className="flex items-center gap-2 text-muted-foreground">
@@ -86,7 +95,7 @@ export default function InterviewItem({
             </div>
             <div className="flex w-24 items-center gap-2 text-muted-foreground">
               <Video className="h-4 w-4" />
-              <span>{type}</span>
+              <span>{INTERVIEW_TYPE_LABELS[type]}</span>
             </div>
             <div className="flex w-24 justify-end">
               <Badge variant="outline" className="w-full">
