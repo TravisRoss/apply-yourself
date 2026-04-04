@@ -1,4 +1,5 @@
 import { defineConfig } from "vitest/config"
+import { loadEnv } from "vite"
 import react from "@vitejs/plugin-react"
 import { fileURLToPath } from "url"
 import path from "path"
@@ -12,6 +13,7 @@ export default defineConfig({
     setupFiles: ["./vitest.setup.ts"],
     globals: true,
     exclude: ["**/node_modules/**", "tests/e2e/**"],
+    env: loadEnv("test", process.cwd(), ""),
   },
   resolve: {
     alias: {
