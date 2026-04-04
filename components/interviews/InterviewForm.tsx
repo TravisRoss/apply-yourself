@@ -17,15 +17,17 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 type Application = { id: string; company: string; position: string }
 
-type AddInterviewFormProps = {
+type InterviewFormProps = {
   applications: Application[]
   onHandleSubmit: (formData: InterviewFormData) => void
+  defaultValues?: InterviewFormValues
 }
 
-export default function AddInterviewForm({
+export default function InterviewForm({
   applications,
   onHandleSubmit,
-}: AddInterviewFormProps) {
+  defaultValues,
+}: InterviewFormProps) {
   const {
     register,
     control,
@@ -33,7 +35,7 @@ export default function AddInterviewForm({
     handleSubmit,
   } = useForm<InterviewFormValues>({
     resolver: zodResolver(interviewFormSchema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       date: new Date(),
       time: "09:00",
     },

@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import EditInterviewSheet from "./EditInterviewSheet"
 
 type InterviewKebabMenuProps = {
   interviewId: string
@@ -21,10 +22,15 @@ export default function InterviewKebabMenu({
   const { data: session } = useSession()
   const userId = session?.user.id
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [editSheetOpen, setEditSheetOpen] = useState(false)
   const { mutate: deleteInterview } = useDeleteInterview(userId)
 
+  function handleEdit(event: Event) {
+    event.preventDefault()
+    setEditSheetOpen(true)
+  }
+
   function handleDelete(event: Event) {
-    // Prevents Radix from auto-closing the dropdown
     event.preventDefault()
     setDialogOpen(true)
   }
@@ -43,9 +49,15 @@ export default function InterviewKebabMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuItem onSelect={handleEdit}>Edit</DropdownMenuItem>
           <DropdownMenuItem onSelect={handleDelete}>Delete</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <EditInterviewSheet
+        interviewId={interviewId}
+        open={editSheetOpen}
+        onOpenChange={setEditSheetOpen}
+      />
       <DeleteConfirmationDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}

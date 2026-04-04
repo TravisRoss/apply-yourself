@@ -13,7 +13,7 @@ import { Button } from "../ui/button"
 import { PlusIcon } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useState } from "react"
-import AddInterviewForm from "./AddInterviewForm"
+import InterviewForm from "./InterviewForm"
 import { useCreateInterview } from "@/hooks/useInterviews"
 import { useApplications } from "@/hooks/useApplications"
 import { InterviewFormData } from "@/lib/zod"
@@ -47,7 +47,7 @@ export default function AddInterviewSheet() {
           <SheetTitle className="text-lg">Schedule interview</SheetTitle>
           <SheetDescription>Schedule a new interview.</SheetDescription>
         </SheetHeader>
-        <AddInterviewForm
+        <InterviewForm
           applications={applications}
           onHandleSubmit={handleSubmit}
         />
