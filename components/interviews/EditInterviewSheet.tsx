@@ -5,6 +5,7 @@ import { useApplications } from "@/hooks/useApplications"
 import { useInterview, useUpdateInterview } from "@/hooks/useInterviews"
 import { useSession } from "@/lib/auth-client"
 import { InterviewFormData } from "@/lib/zod"
+import { useState } from "react"
 import { Button } from "../ui/button"
 import {
   Sheet,
@@ -33,6 +34,7 @@ export default function EditInterviewSheet({
   const { data: applications = [] } = useApplications(userId)
   const updateInterviewMutation = useUpdateInterview(userId)
   const isMobile = useIsMobile()
+  const [isFormDirty, setIsFormDirty] = useState(false)
 
   async function handleSubmit(formData: InterviewFormData) {
     await updateInterviewMutation.mutateAsync({ interviewId, formData })
@@ -69,13 +71,14 @@ export default function EditInterviewSheet({
             applications={applications}
             onHandleSubmit={handleSubmit}
             defaultValues={defaultValues}
+            onDirtyChange={setIsFormDirty}
           />
         )}
         <SheetFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button variant="default" type="submit" form="add-interview-form">
+          <Button variant="default" type="submit" form="add-interview-form" disabled={!isFormDirty}>
             Save
           </Button>
         </SheetFooter>

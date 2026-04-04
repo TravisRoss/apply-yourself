@@ -14,6 +14,7 @@ import DatePicker from "../shared/DatePicker"
 import { Controller, useForm } from "react-hook-form"
 import { InterviewFormData, InterviewFormValues, interviewFormSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 
 type Application = { id: string; company: string; position: string }
 
@@ -21,17 +22,19 @@ type InterviewFormProps = {
   applications: Application[]
   onHandleSubmit: (formData: InterviewFormData) => void
   defaultValues?: InterviewFormValues
+  onDirtyChange?: (isDirty: boolean) => void
 }
 
 export default function InterviewForm({
   applications,
   onHandleSubmit,
   defaultValues,
+  onDirtyChange,
 }: InterviewFormProps) {
   const {
     register,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     handleSubmit,
   } = useForm<InterviewFormValues>({
     resolver: zodResolver(interviewFormSchema),
@@ -40,6 +43,10 @@ export default function InterviewForm({
       time: "09:00",
     },
   })
+
+  useEffect(() => {
+    onDirtyChange?.(isDirty)
+  }, [isDirty, onDirtyChange])
 
   function handleFormSubmit({ time, date, ...rest }: InterviewFormValues) {
     const [hours, minutes] = time.split(":").map(Number)
