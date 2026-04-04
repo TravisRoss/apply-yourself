@@ -1,20 +1,20 @@
 "use client"
 
 import React, { useState } from "react"
-import { Table } from "./ui/table"
+import { Table } from "../ui/table"
 import {
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table"
+} from "../ui/table"
 import KebabMenu from "./KebabMenu"
 import { useApplications, useDeleteApplication } from "@/hooks/useApplications"
 import { cn, formatDate } from "@/lib/utils"
 import { ApplicationPagination } from "./ApplicationPagination"
-import Initials from "./Initials"
-import StatusBadge from "./StatusBadge"
+import Initials from "../shared/Initials"
+import StatusBadge from "../shared/StatusBadge"
 import { sortApplications, SortKey, SortDirection } from "@/lib/sort"
 import { searchApplications, filterByStatus, filterByDatePreset, DatePreset } from "@/lib/filter"
 import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react"

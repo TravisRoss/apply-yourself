@@ -1,9 +1,9 @@
 "use client"
 
-import AddApplicationSheet from "@/components/AddApplicationSheet"
-import ApplicationsTable from "@/components/ApplicationsTable"
-import { PageShell } from "@/components/PageShell"
-import StatCards from "@/components/StatCards"
+import AddApplicationSheet from "@/components/applications/AddApplicationSheet"
+import ApplicationsTable from "@/components/applications/ApplicationsTable"
+import { PageShell } from "@/components/layout/PageShell"
+import StatCards from "@/components/dashboard/StatCards"
 import { Button } from "@/components/ui/button"
 import { useDashboardStats } from "@/hooks/useDashboardStats"
 import { useSession } from "@/lib/auth-client"

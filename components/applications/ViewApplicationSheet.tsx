@@ -6,11 +6,11 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "./ui/sheet"
-import Initials from "./Initials"
-import { Badge } from "./ui/badge"
+} from "../ui/sheet"
+import Initials from "../shared/Initials"
+import { Badge } from "../ui/badge"
 import { cn, formatDate, STATUS_CLASSES } from "@/lib/utils"
-import SheetRow from "./SheetRow"
+import SheetRow from "../shared/SheetRow"
 import {
   Calendar,
   CircleDollarSign,
@@ -20,9 +20,9 @@ import {
   NotepadText,
   SquareArrowRightEnter,
 } from "lucide-react"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
-import StatusBadge from "./StatusBadge"
+import StatusBadge from "../shared/StatusBadge"
 
 type ViewApplicationSheetProps = {
   userId: string

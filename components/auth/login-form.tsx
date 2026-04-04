@@ -31,7 +31,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { Eye, EyeOff } from "lucide-react"
-import { Input } from "./ui/input"
+import { Input } from "../ui/input"
 
 export function LoginForm({
   className,

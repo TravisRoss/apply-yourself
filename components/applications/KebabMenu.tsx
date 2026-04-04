@@ -1,15 +1,15 @@
 import { MoreHorizontal } from "lucide-react"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
+} from "../ui/dropdown-menu"
 
 import { useState } from "react"
 
-import DeleteConfirmationDialog from "./DeleteConfirmationDialog"
+import DeleteConfirmationDialog from "../shared/DeleteConfirmationDialog"
 import EditApplicationSheet from "./EditApplicationSheet"
 import ViewApplicationSheet from "./ViewApplicationSheet"
 

@@ -1,4 +1,4 @@
-import { PageShell } from "@/components/PageShell"
+import { PageShell } from "@/components/layout/PageShell"
 
 export default function SettingsPage() {
   return <PageShell title="Settings" />

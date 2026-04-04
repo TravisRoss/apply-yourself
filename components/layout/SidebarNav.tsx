@@ -10,7 +10,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar"
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
 
 const navLinks: { title: string; href: string; icon: LucideIcon }[] = [
   { title: "Dashboard", href: "/", icon: LayoutDashboard },

@@ -7,8 +7,8 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "./ui/sheet"
-import { Button } from "./ui/button"
+} from "../ui/sheet"
+import { Button } from "../ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
 import AddApplicationForm from "./AddApplicationForm"
 import { useApplication, useUpdateApplication } from "@/hooks/useApplications"

@@ -1,16 +1,16 @@
 import { InterviewRound, InterviewType } from "@/generated/prisma/enums"
 import { formatDate } from "@/lib/utils"
 import { Clock, Video } from "lucide-react"
-import Initials from "./Initials"
+import Initials from "../shared/Initials"
 import InterviewKebabMenu from "./InterviewKebabMenu"
-import { Badge } from "./ui/badge"
+import { Badge } from "../ui/badge"
 import {
   Item,
   ItemActions,
   ItemContent,
   ItemDescription,
   ItemTitle,
-} from "./ui/item"
+} from "../ui/item"
 
 type InterviewItemProps = {
   id: string

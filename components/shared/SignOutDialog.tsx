@@ -10,10 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "./ui/dialog"
+} from "../ui/dialog"
 import { LogOut } from "lucide-react"
 import { signOut } from "@/lib/auth-client"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 
 export default function SignOutDialog() {
   const router = useRouter()

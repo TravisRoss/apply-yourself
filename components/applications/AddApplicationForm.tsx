@@ -1,20 +1,20 @@
-import { Field, FieldError, FieldGroup, FieldLabel } from "./ui/field"
-import { Input } from "./ui/input"
-import { Textarea } from "./ui/textarea"
+import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field"
+import { Input } from "../ui/input"
+import { Textarea } from "../ui/textarea"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select"
+} from "../ui/select"
 import { ApplicationStatus, JobType, Source } from "@/generated/prisma/enums"
 import {
   applicationStatusLabels,
   jobTypeLabels,
   sourceLabels,
 } from "@/lib/labels"
-import DatePicker from "./DatePicker"
+import DatePicker from "../shared/DatePicker"
 import { Controller, useForm } from "react-hook-form"
 import { ApplicationFormData, applicationSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"

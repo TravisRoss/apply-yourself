@@ -2,14 +2,14 @@ import { useDeleteInterview } from "@/hooks/useInterviews"
 import { useSession } from "@/lib/auth-client"
 import { MoreHorizontal } from "lucide-react"
 import { useState } from "react"
-import DeleteConfirmationDialog from "./DeleteConfirmationDialog"
-import { Button } from "./ui/button"
+import DeleteConfirmationDialog from "../shared/DeleteConfirmationDialog"
+import { Button } from "../ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
+} from "../ui/dropdown-menu"
 
 type InterviewKebabMenuProps = {
   interviewId: string

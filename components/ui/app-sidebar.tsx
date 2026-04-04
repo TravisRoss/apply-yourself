@@ -5,9 +5,9 @@ import {
   SidebarGroup,
   SidebarHeader,
 } from "@/components/ui/sidebar"
-import { LogoIcon } from "../LogoIcon"
-import SidebarNav from "../SidebarNav"
-import SignOutDialog from "../SignOutDialog"
+import { LogoIcon } from "../layout/LogoIcon"
+import SidebarNav from "../layout/SidebarNav"
+import SignOutDialog from "../shared/SignOutDialog"
 
 export function AppSidebar() {
   return (

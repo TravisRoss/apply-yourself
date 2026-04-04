@@ -1,5 +1,5 @@
 import { cn, STATUS_CLASSES } from "@/lib/utils"
-import { Badge } from "./ui/badge"
+import { Badge } from "../ui/badge"
 import { ApplicationStatus } from "@/generated/prisma/enums"
 
 type StatusBadgeProps = {

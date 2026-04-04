@@ -1,8 +1,8 @@
 "use client"
 
-import AddInterviewSheet from "@/components/AddInterviewSheet"
-import InterviewsList from "@/components/InterviewsList"
-import { PageShell } from "@/components/PageShell"
+import AddInterviewSheet from "@/components/interviews/AddInterviewSheet"
+import InterviewsList from "@/components/interviews/InterviewsList"
+import { PageShell } from "@/components/layout/PageShell"
 import { useApplications } from "@/hooks/useApplications"
 import { useInterviews } from "@/hooks/useInterviews"
 import { useSession } from "@/lib/auth-client"
