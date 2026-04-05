@@ -6,12 +6,20 @@ import ToggleRow from "@/components/settings/ToggleRow"
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { useDeleteAccount } from "@/hooks/useSettings"
+import { useSession } from "@/lib/auth-client"
 import { useState } from "react"
 
 export default function SettingsPage() {
+  const { data: session } = useSession()
+  const userId = session?.user.id
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const deleteAccountMutation = useDeleteAccount()
 
-  function handleDeleteAccount() {}
+  async function handleDeleteAccount() {
+    if (userId === undefined) return
+    await deleteAccountMutation.mutateAsync({ userId })
+  }
 
   return (
     <PageShell title="Settings">
