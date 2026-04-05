@@ -16,8 +16,8 @@ import ContactsKebabMenu from "./ContactsKebabMenu"
 import LinkedinOutlineIcon from "./LinkedInIcon"
 
 type ContactCardProps = {
-  contactId: string
   userId: string
+  contactId: string
   company: string
   name: string
   role: ContactRole
@@ -27,8 +27,8 @@ type ContactCardProps = {
 }
 
 export default function ContactCard({
-  contactId,
   userId,
+  contactId,
   company,
   name,
   role,
