@@ -45,15 +45,17 @@ export default function ContactCard({
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-2">
-          <Initials title={name} className="h-10 w-10" />
-          <div className="flex flex-col gap-0">
-            <CardTitle className="text-[1.05rem]">{name}</CardTitle>
-            <CardDescription className="text-[0.9rem] leading-tight">
-              {ContactRoleLabels[role]}
-            </CardDescription>
-            <ContactsKebabMenu contactId={contactId} onDelete={handleDelete} />
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-4">
+            <Initials title={name} className="h-10 w-10" />
+            <div className="flex flex-col">
+              <CardTitle className="text-[1.05rem]">{name}</CardTitle>
+              <CardDescription className="text-[0.9rem] leading-tight">
+                {ContactRoleLabels[role]}
+              </CardDescription>
+            </div>
           </div>
+          <ContactsKebabMenu contactId={contactId} onDelete={handleDelete} />
         </div>
       </CardHeader>
       <CardContent>
