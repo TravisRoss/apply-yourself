@@ -1,5 +1,5 @@
-import "dotenv/config"
 import { PrismaPg } from "@prisma/adapter-pg"
+import "dotenv/config"
 import { PrismaClient } from "../generated/prisma/client"
 import { auth } from "../lib/auth"
 
@@ -508,8 +508,83 @@ async function main() {
     ],
   })
 
+  // ── Contacts ─────────────────────────────────────────────────────────────────
+
+  await prisma.contact.createMany({
+    data: [
+      {
+        userId,
+        name: "Sarah Chen",
+        company: "Stripe",
+        role: "recruiter",
+        email: "sarah.chen@stripe.com",
+        linkedinUrl: "https://linkedin.com/in/sarahchen",
+        notes: "Reached out via LinkedIn. Very responsive.",
+      },
+      {
+        userId,
+        name: "Marcus Webb",
+        company: "Vercel",
+        role: "hiring_manager",
+        email: "marcus@vercel.com",
+        notes:
+          "Had a 30-min intro call. Seemed interested in my Next.js experience.",
+      },
+      {
+        userId,
+        name: "Priya Nair",
+        company: "Linear",
+        role: "interviewer",
+        email: "priya@linear.app",
+        linkedinUrl: "https://linkedin.com/in/priyanair",
+        notes:
+          "Conducted the technical round. Asked a lot about system design.",
+      },
+      {
+        userId,
+        name: "Tom Baxter",
+        company: "GitHub",
+        role: "recruiter",
+        email: "tbaxter@github.com",
+      },
+      {
+        userId,
+        name: "Lena Fischer",
+        company: "Neon",
+        role: "hiring_manager",
+        email: "lena@neon.tech",
+        linkedinUrl: "https://linkedin.com/in/lenafischer",
+        notes:
+          "Referred by a mutual connection. Offered the role on 21 Mar. This is a really long text note to test how the UI handles long notes. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      },
+      {
+        userId,
+        name: "James O'Sullivan",
+        company: "Raycast",
+        role: "interviewer",
+        notes: "Panel interview. Very technical, focused on React internals.",
+      },
+      {
+        userId,
+        name: "Aisha Kamara",
+        company: "Shopify",
+        role: "recruiter",
+        email: "aisha.kamara@shopify.com",
+        linkedinUrl: "https://linkedin.com/in/aishakamara",
+      },
+      {
+        userId,
+        name: "David Park",
+        company: "Clerk",
+        role: "hiring_manager",
+        email: "david@clerk.com",
+        notes: "Second interview scheduled for next week.",
+      },
+    ],
+  })
+
   console.log(
-    `Seeded: ${SEED_EMAIL} / ${SEED_PASSWORD} — 24 applications, 11 interviews, ${statusHistoryEntries.length} status history entries`
+    `Seeded: ${SEED_EMAIL} / ${SEED_PASSWORD} — 24 applications, 11 interviews, ${statusHistoryEntries.length} status history entries, 8 contacts`
   )
 }
 

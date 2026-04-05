@@ -1,5 +1,6 @@
 import {
   ApplicationStatus,
+  ContactRole,
   InterviewRound,
   InterviewType,
   JobType,
@@ -54,4 +55,12 @@ export const sourceLabels: Record<Source, string> = {
   [Source.recruiter]: "Recruiter",
   [Source.job_fair]: "Job fair",
   [Source.other]: "Other",
+}
+
+export const ContactRoleLabels: Record<ContactRole, string> = {
+  [ContactRole.recruiter]: "Recruiter",
+  [ContactRole.hiring_manager]: "Hiring Manager",
+  [ContactRole.interviewer]: "Interviewer",
+  [ContactRole.referral]: "Referral",
+  [ContactRole.other]: "Other",
 }
