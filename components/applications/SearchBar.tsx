@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "../ui/input-group"
 import { SearchIcon } from "lucide-react"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "../ui/input-group"
 
 type SearchBarProps = {
   input: string

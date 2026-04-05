@@ -32,7 +32,7 @@ export default function InterviewsPage() {
         <>
           <h2 className="mb-4">Upcoming</h2>
           {upcomingInterviews.length === 0 ? (
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Currently no upcoming interviews.
             </p>
           ) : (
