@@ -18,7 +18,6 @@ export default function SettingsPage() {
       <div className="max-w-lg space-y-4">
         <h2>Profile</h2>
         <ProfileForm />
-        <Button>Save Profile</Button>
         <Separator />
         <h2>Notifications</h2>
         <div className="flex flex-col gap-2">
