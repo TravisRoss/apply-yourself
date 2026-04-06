@@ -244,6 +244,23 @@
       "profileEmailFailed": "メールの更新に失敗しました。"
     }
   },
+  "validation": {
+    "companyRequired": "会社名は必須です",
+    "positionRequired": "職種は必須です",
+    "nameRequired": "名前は必須です",
+    "dateRequired": "日付は必須です",
+    "sourceRequired": "応募元は必須です",
+    "applicationRequired": "応募先は必須です",
+    "typeRequired": "面接の種類は必須です",
+    "roundRequired": "面接のラウンドは必須です",
+    "timeRequired": "時刻は必須です",
+    "passwordRequired": "パスワードは必須です",
+    "invalidUrl": "有効なURLを入力してください",
+    "invalidEmail": "有効なメールアドレスを入力してください",
+    "passwordMinLength": "パスワードは8文字以上にしてください",
+    "passwordMismatch": "パスワードが一致しません",
+    "notesMaxLength": "メモは500文字以内にしてください"
+  },
   "auth": {
     "login": {
       "title": "アカウントにログイン",

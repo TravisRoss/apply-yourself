@@ -238,6 +238,23 @@
       "profileEmailFailed": "E-Mail konnte nicht aktualisiert werden."
     }
   },
+  "validation": {
+    "companyRequired": "Unternehmen ist erforderlich",
+    "positionRequired": "Stelle ist erforderlich",
+    "nameRequired": "Name ist erforderlich",
+    "dateRequired": "Datum ist erforderlich",
+    "sourceRequired": "Quelle ist erforderlich",
+    "applicationRequired": "Bewerbung ist erforderlich",
+    "typeRequired": "Interviewart ist erforderlich",
+    "roundRequired": "Interviewrunde ist erforderlich",
+    "timeRequired": "Uhrzeit ist erforderlich",
+    "passwordRequired": "Passwort ist erforderlich",
+    "invalidUrl": "Muss eine gültige URL sein",
+    "invalidEmail": "Muss eine gültige E-Mail-Adresse sein",
+    "passwordMinLength": "Passwort muss mindestens 8 Zeichen lang sein",
+    "passwordMismatch": "Passwörter stimmen nicht überein",
+    "notesMaxLength": "Notizen dürfen maximal 500 Zeichen lang sein"
+  },
   "auth": {
     "login": {
       "title": "Bei deinem Konto anmelden",

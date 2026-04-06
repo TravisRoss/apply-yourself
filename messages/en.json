@@ -244,6 +244,23 @@
       "profileEmailFailed": "Failed to update email."
     }
   },
+  "validation": {
+    "companyRequired": "Company is required",
+    "positionRequired": "Position is required",
+    "nameRequired": "Name is required",
+    "dateRequired": "Date is required",
+    "sourceRequired": "Source is required",
+    "applicationRequired": "Application is required",
+    "typeRequired": "Interview type is required",
+    "roundRequired": "Interview round is required",
+    "timeRequired": "Time is required",
+    "passwordRequired": "Password is required",
+    "invalidUrl": "Must be a valid URL",
+    "invalidEmail": "Must be a valid email",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "passwordMismatch": "Passwords do not match",
+    "notesMaxLength": "Notes must be less than 500 characters"
+  },
   "auth": {
     "login": {
       "title": "Login to your account",

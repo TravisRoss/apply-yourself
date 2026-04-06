@@ -23,7 +23,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group"
-import { SignUpFormData, signUpSchema } from "@/lib/zod"
+import { SignUpFormData, createSignUpSchema } from "@/lib/zod"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -39,6 +39,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const t = useTranslations("auth.signup")
+  const tValidation = useTranslations("validation")
 
   const {
     register,
@@ -46,7 +47,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(createSignUpSchema(tValidation)),
   })
 
   async function onSubmit(formData: SignUpFormData) {

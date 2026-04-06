@@ -16,7 +16,7 @@ import {
 } from "@/lib/labels"
 import DatePicker from "../shared/DatePicker"
 import { Controller, useForm } from "react-hook-form"
-import { ApplicationFormData, applicationSchema } from "@/lib/zod"
+import { ApplicationFormData, createApplicationSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
@@ -34,6 +34,7 @@ export default function AddApplicationForm({
 }: AddApplicationFormProps) {
   const t = useTranslations("applications.form")
   const tCommon = useTranslations("common")
+  const tValidation = useTranslations("validation")
 
   const {
     register,
@@ -41,7 +42,7 @@ export default function AddApplicationForm({
     formState: { errors, isDirty },
     handleSubmit,
   } = useForm<ApplicationFormData>({
-    resolver: zodResolver(applicationSchema),
+    resolver: zodResolver(createApplicationSchema(tValidation)),
     defaultValues: application
       ? application
       : {

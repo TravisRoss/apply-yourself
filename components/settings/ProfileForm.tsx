@@ -1,7 +1,7 @@
 "use client"
 
 import { changeEmail, updateUser, useSession } from "@/lib/auth-client"
-import { ProfileFormData, profileSchema } from "@/lib/zod"
+import { ProfileFormData, createProfileSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
@@ -17,6 +17,7 @@ export default function ProfileForm() {
   const user = session?.user
   const t = useTranslations("settings.profile")
   const tToasts = useTranslations("settings.toasts")
+  const tValidation = useTranslations("validation")
 
   const {
     register,
@@ -24,7 +25,7 @@ export default function ProfileForm() {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(profileSchema),
+    resolver: zodResolver(createProfileSchema(tValidation)),
     defaultValues: {
       name: user?.name ?? "",
       email: user?.email ?? "",

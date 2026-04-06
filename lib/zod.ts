@@ -1,5 +1,7 @@
 import * as z from "zod"
 
+type ValidationT = (key: string) => string
+
 // ─── Enums ────────────────────────────────────────────────────────────────────
 
 export const applicationStatusSchema = z.enum([
@@ -18,22 +20,19 @@ export const jobTypeSchema = z.enum([
   "other",
 ])
 
-export const sourceSchema = z.enum(
-  [
-    "linkedin",
-    "indeed",
-    "glassdoor",
-    "levels_fyi",
-    "ycombinator",
-    "wellfound",
-    "company_website",
-    "referral",
-    "recruiter",
-    "job_fair",
-    "other",
-  ],
-  { error: "Source is required" }
-)
+export const sourceSchema = z.enum([
+  "linkedin",
+  "indeed",
+  "glassdoor",
+  "levels_fyi",
+  "ycombinator",
+  "wellfound",
+  "company_website",
+  "referral",
+  "recruiter",
+  "job_fair",
+  "other",
+])
 
 export const interviewTypeSchema = z.enum([
   "video_call",
@@ -63,87 +62,95 @@ export const contactRoleSchema = z.enum([
   "other",
 ])
 
-// ─── Schemas ──────────────────────────────────────────────────────────────────
+// ─── Schema factories ─────────────────────────────────────────────────────────
 
-export const applicationSchema = z.object({
-  company: z.string().min(1, "Company is required"),
-  position: z.string().min(1, "Position is required"),
-  status: applicationStatusSchema,
-  appliedDate: z.date({ error: "Date is required" }),
-  source: sourceSchema,
-  jobType: jobTypeSchema,
-  location: z.string().optional(),
-  salary: z.string().optional(),
-  url: z
-    .union([z.url({ error: "Must be a valid URL" }), z.literal("")])
-    .optional(),
-  notes: z
-    .string()
-    .max(500, "Notes must be less than 500 characters")
-    .optional(),
-})
+export function createApplicationSchema(t: ValidationT) {
+  return z.object({
+    company: z.string().min(1, t("companyRequired")),
+    position: z.string().min(1, t("positionRequired")),
+    status: applicationStatusSchema,
+    appliedDate: z.date({ error: t("dateRequired") }),
+    source: z.enum(sourceSchema.options, { error: t("sourceRequired") }),
+    jobType: jobTypeSchema,
+    location: z.string().optional(),
+    salary: z.string().optional(),
+    url: z.union([z.url({ error: t("invalidUrl") }), z.literal("")]).optional(),
+    notes: z.string().max(500, t("notesMaxLength")).optional(),
+  })
+}
 
-export const interviewSchema = z.object({
-  applicationId: z.uuid(),
-  date: z.date(),
-  type: interviewTypeSchema,
-  round: interviewRoundSchema,
-  notes: z.string().optional(),
-})
+export function createInterviewFormSchema(t: ValidationT) {
+  return z.object({
+    applicationId: z.uuid({ error: t("applicationRequired") }),
+    date: z.date(),
+    type: z.enum(interviewTypeSchema.options, { error: t("typeRequired") }),
+    round: z.enum(interviewRoundSchema.options, { error: t("roundRequired") }),
+    notes: z.string().optional(),
+    time: z.string().regex(/^\d{2}:\d{2}$/, t("timeRequired")),
+  })
+}
 
-export const interviewFormSchema = interviewSchema.extend({
-  time: z.string().regex(/^\d{2}:\d{2}$/, "Time is required"),
-})
+export function createContactSchema(t: ValidationT) {
+  return z.object({
+    company: z.string().min(1, t("companyRequired")),
+    name: z.string().min(1, t("nameRequired")),
+    role: contactRoleSchema,
+    email: z
+      .union([z.email({ error: t("invalidEmail") }), z.literal("")])
+      .optional(),
+    linkedinUrl: z
+      .union([z.url({ error: t("invalidUrl") }), z.literal("")])
+      .optional(),
+    notes: z.string().optional(),
+  })
+}
 
-export const contactSchema = z.object({
-  company: z.string().min(1, "Company is required"),
-  name: z.string().min(1, "Name is required"),
-  role: contactRoleSchema,
-  email: z
-    .union([z.email({ error: "Must be a valid email" }), z.literal("")])
-    .optional(),
-  linkedinUrl: z
-    .union([z.url({ error: "Must be a valid URL" }), z.literal("")])
-    .optional(),
-  notes: z.string().optional(),
-})
+export function createProfileSchema(t: ValidationT) {
+  return z.object({
+    name: z.string().min(1, t("nameRequired")),
+    email: z.email({ error: t("invalidEmail") }),
+  })
+}
+
+export function createSignUpSchema(t: ValidationT) {
+  return z
+    .object({
+      name: z.string().min(1, t("nameRequired")),
+      email: z.email({ error: t("invalidEmail") }),
+      password: z.string().min(8, t("passwordMinLength")),
+      confirmPassword: z.string().min(8, t("passwordMinLength")),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("passwordMismatch"),
+      path: ["confirmPassword"],
+    })
+}
+
+export function createSignInSchema(t: ValidationT) {
+  return z.object({
+    email: z.email({ error: t("invalidEmail") }),
+    password: z.string().min(1, t("passwordRequired")),
+  })
+}
 
 export const notificationPreferencesSchema = z.object({
   interviewReminders: z.boolean(),
   weeklySummary: z.boolean(),
 })
 
-export const profileSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.email({ error: "Must be a valid email" }),
-})
-
-export const signUpSchema = z
-  .object({
-    name: z.string().min(1, "Name is required"),
-    email: z.email({ error: "Must be a valid email" }),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z
-      .string()
-      .min(8, "Password must be at least 8 characters"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  })
-
-export const signInSchema = z.object({
-  email: z.email({ error: "Must be a valid email" }),
-  password: z.string().min(1, "Password is required"),
-})
-
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type ApplicationFormData = z.infer<typeof applicationSchema>
-export type InterviewFormData = z.infer<typeof interviewSchema>
-export type InterviewFormValues = z.infer<typeof interviewFormSchema>
-export type ContactFormData = z.infer<typeof contactSchema>
-export type ProfileFormData = z.infer<typeof profileSchema>
-export type SignUpFormData = z.infer<typeof signUpSchema>
-export type NotificationPreferencesFormData = z.infer<typeof notificationPreferencesSchema>
-export type SignInFormData = z.infer<typeof signInSchema>
+export type ApplicationFormData = z.infer<
+  ReturnType<typeof createApplicationSchema>
+>
+export type InterviewFormData = Omit<InterviewFormValues, "time">
+export type InterviewFormValues = z.infer<
+  ReturnType<typeof createInterviewFormSchema>
+>
+export type ContactFormData = z.infer<ReturnType<typeof createContactSchema>>
+export type ProfileFormData = z.infer<ReturnType<typeof createProfileSchema>>
+export type SignUpFormData = z.infer<ReturnType<typeof createSignUpSchema>>
+export type NotificationPreferencesFormData = z.infer<
+  typeof notificationPreferencesSchema
+>
+export type SignInFormData = z.infer<ReturnType<typeof createSignInSchema>>

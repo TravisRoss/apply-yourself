@@ -1,8 +1,18 @@
 "use client"
 
+import { InterviewRound, InterviewType } from "@/generated/prisma/enums"
+import {
+  InterviewFormData,
+  InterviewFormValues,
+  createInterviewFormSchema,
+} from "@/lib/zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import { useEffect } from "react"
+import { Controller, useForm } from "react-hook-form"
+import DatePicker from "../shared/DatePicker"
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field"
 import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
 import {
   Select,
   SelectContent,
@@ -10,13 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select"
-import { InterviewRound, InterviewType } from "@/generated/prisma/enums"
-import DatePicker from "../shared/DatePicker"
-import { Controller, useForm } from "react-hook-form"
-import { InterviewFormData, InterviewFormValues, interviewFormSchema } from "@/lib/zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { useEffect } from "react"
+import { Textarea } from "../ui/textarea"
 
 type Application = { id: string; company: string; position: string }
 
@@ -36,6 +40,7 @@ export default function InterviewForm({
   const t = useTranslations("interviews.form")
   const tInterviews = useTranslations("interviews")
   const tCommon = useTranslations("common")
+  const tValidation = useTranslations("validation")
 
   const {
     register,
@@ -43,7 +48,7 @@ export default function InterviewForm({
     formState: { errors, isDirty },
     handleSubmit,
   } = useForm<InterviewFormValues>({
-    resolver: zodResolver(interviewFormSchema),
+    resolver: zodResolver(createInterviewFormSchema(tValidation)),
     defaultValues: defaultValues ?? {
       date: new Date(),
       time: "09:00",
@@ -76,12 +81,19 @@ export default function InterviewForm({
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="w-full" aria-invalid={!!errors.applicationId}>
+                  <SelectTrigger
+                    className="w-full"
+                    aria-invalid={!!errors.applicationId}
+                  >
                     <SelectValue placeholder={t("applicationPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {applications.map((app) => (
-                      <SelectItem key={app.id} value={app.id} className="truncate">
+                      <SelectItem
+                        key={app.id}
+                        value={app.id}
+                        className="truncate"
+                      >
                         {app.company} — {app.position}
                       </SelectItem>
                     ))}
@@ -119,7 +131,10 @@ export default function InterviewForm({
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="w-full" aria-invalid={!!errors.type}>
+                  <SelectTrigger
+                    className="w-full"
+                    aria-invalid={!!errors.type}
+                  >
                     <SelectValue placeholder={t("typePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
@@ -141,7 +156,10 @@ export default function InterviewForm({
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="w-full" aria-invalid={!!errors.round}>
+                  <SelectTrigger
+                    className="w-full"
+                    aria-invalid={!!errors.round}
+                  >
                     <SelectValue placeholder={t("roundPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>

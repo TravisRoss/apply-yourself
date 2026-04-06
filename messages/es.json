@@ -244,6 +244,23 @@
       "profileEmailFailed": "No se pudo actualizar el correo."
     }
   },
+  "validation": {
+    "companyRequired": "La empresa es obligatoria",
+    "positionRequired": "El cargo es obligatorio",
+    "nameRequired": "El nombre es obligatorio",
+    "dateRequired": "La fecha es obligatoria",
+    "sourceRequired": "La fuente es obligatoria",
+    "applicationRequired": "La solicitud es obligatoria",
+    "typeRequired": "El tipo de entrevista es obligatorio",
+    "roundRequired": "La ronda de entrevista es obligatoria",
+    "timeRequired": "La hora es obligatoria",
+    "passwordRequired": "La contraseña es obligatoria",
+    "invalidUrl": "Debe ser una URL válida",
+    "invalidEmail": "Debe ser un correo electrónico válido",
+    "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+    "passwordMismatch": "Las contraseñas no coinciden",
+    "notesMaxLength": "Las notas no pueden superar los 500 caracteres"
+  },
   "auth": {
     "login": {
       "title": "Inicia sesión en tu cuenta",

@@ -26,7 +26,7 @@ import {
 import Link from "next/link"
 import { signInWithProvider } from "@/lib/sign-in"
 import { useForm } from "react-hook-form"
-import { SignInFormData, signInSchema } from "@/lib/zod"
+import { SignInFormData, createSignInSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
@@ -42,13 +42,14 @@ export function LoginForm({
   const [showPassword, setShowPassword] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const t = useTranslations("auth.login")
+  const tValidation = useTranslations("validation")
 
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<SignInFormData>({ resolver: zodResolver(signInSchema) })
+  } = useForm<SignInFormData>({ resolver: zodResolver(createSignInSchema(tValidation)) })
 
   async function onSubmit(formData: SignInFormData) {
     await signIn.email(

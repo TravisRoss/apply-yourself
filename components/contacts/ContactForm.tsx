@@ -2,7 +2,7 @@
 
 import { ContactRole } from "@/generated/prisma/enums"
 import { ContactRoleLabels } from "@/lib/labels"
-import { ContactFormData, contactSchema } from "@/lib/zod"
+import { ContactFormData, createContactSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
@@ -31,6 +31,7 @@ export default function ContactForm({
 }: ContactFormProps) {
   const t = useTranslations("contacts.form")
   const tCommon = useTranslations("common")
+  const tValidation = useTranslations("validation")
 
   const {
     register,
@@ -38,7 +39,7 @@ export default function ContactForm({
     formState: { errors, isDirty },
     handleSubmit,
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(createContactSchema(tValidation)),
     defaultValues,
   })
 
