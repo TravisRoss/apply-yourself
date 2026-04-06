@@ -17,6 +17,8 @@ import {
 const LANGUAGES = [
   { label: "English", value: "en" },
   { label: "Deutsch", value: "de" },
+  { label: "Español", value: "es" },
+  { label: "日本語", value: "ja" },
 ]
 
 export default function LanguageSelect() {

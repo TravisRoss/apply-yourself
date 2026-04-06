@@ -1,0 +1,293 @@
+{
+  "common": {
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "openMenu": "メニューを開く",
+    "notes": "メモ",
+    "notesPlaceholder": "追加のメモを入力..."
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "applications": "応募",
+    "interviews": "面接",
+    "contacts": "連絡先",
+    "settings": "設定"
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "recentApplications": "最近の応募",
+    "viewAll": "すべて表示",
+    "fromLastMonth": "先月から",
+    "stats": {
+      "totalApplied": "応募数",
+      "interviews": "面接数",
+      "offers": "内定数",
+      "responseRate": "返信率",
+      "thisWeek": "今週",
+      "pendingResponse": "返信待ち"
+    }
+  },
+  "applications": {
+    "title": "応募",
+    "noResults": "応募が見つかりません",
+    "search": "検索...",
+    "table": {
+      "company": "会社",
+      "position": "職種",
+      "location": "勤務地",
+      "status": "ステータス",
+      "applied": "応募日"
+    },
+    "add": {
+      "trigger": "応募を追加",
+      "title": "応募を追加",
+      "description": "新しい応募を追加します。"
+    },
+    "edit": {
+      "title": "応募を編集",
+      "description": "応募内容を編集します。"
+    },
+    "view": {
+      "editButton": "応募を編集",
+      "appliedOn": "{date} に応募"
+    },
+    "filter": {
+      "trigger": "フィルター",
+      "status": "ステータス",
+      "appliedDate": "応募日",
+      "last7Days": "過去7日",
+      "last30Days": "過去30日",
+      "last90Days": "過去90日",
+      "clearFilters": "フィルターをクリア"
+    },
+    "kebab": {
+      "viewDetails": "詳細を見る",
+      "deleteTitle": "この応募を削除しますか？",
+      "deleteDescription": "この操作は元に戻せません。この応募は完全に削除されます。"
+    },
+    "pagination": {
+      "rowsPerPage": "1ページあたりの行数",
+      "previous": "前へ",
+      "next": "次へ",
+      "range": "{start}〜{end} / {total}"
+    },
+    "form": {
+      "company": "会社",
+      "companyPlaceholder": "例：Stripe",
+      "position": "職種",
+      "positionPlaceholder": "例：ソフトウェアエンジニア",
+      "status": "ステータス",
+      "appliedDate": "応募日",
+      "jobType": "雇用形態",
+      "source": "応募元",
+      "sourcePlaceholder": "選択してください",
+      "location": "勤務地",
+      "locationPlaceholder": "例：リモート",
+      "salary": "給与",
+      "salaryPlaceholder": "例：$120,000 - $150,000",
+      "url": "URL",
+      "urlPlaceholder": "例：https://stripe.com/jobs/123"
+    },
+    "card": {
+      "totalApplied": "応募数",
+      "interviews": "面接数",
+      "offers": "内定数",
+      "responseRate": "返信率"
+    },
+    "toasts": {
+      "created": "応募を作成しました。",
+      "createFailed": "応募の作成に失敗しました: {error}",
+      "deleteFailed": "応募の削除に失敗しました: {error}",
+      "updated": "応募を更新しました。"
+    }
+  },
+  "interviews": {
+    "title": "面接",
+    "empty": "まだ面接がありません。最初の面接を追加しましょう！",
+    "upcoming": "予定",
+    "upcomingEmpty": "現在予定されている面接はありません。",
+    "past": "過去",
+    "pastEmpty": "過去の面接はありません。",
+    "add": {
+      "trigger": "面接を追加",
+      "title": "面接を追加",
+      "description": "新しい面接を追加します。",
+      "noApplications": "面接を追加するには、少なくとも1つの応募が必要です。",
+      "goToApplications": "応募一覧へ"
+    },
+    "edit": {
+      "title": "面接を編集",
+      "description": "面接内容を編集します。"
+    },
+    "form": {
+      "application": "応募",
+      "applicationPlaceholder": "応募を選択",
+      "date": "日付",
+      "time": "時間",
+      "type": "種類",
+      "typePlaceholder": "種類を選択",
+      "round": "ラウンド",
+      "roundPlaceholder": "ラウンドを選択"
+    },
+    "types": {
+      "video_call": "ビデオ通話",
+      "phone": "電話",
+      "in_person": "対面",
+      "take_home": "課題",
+      "panel": "パネル面接",
+      "other": "その他"
+    },
+    "rounds": {
+      "hr": "人事",
+      "recruiter_screen": "リクルーター面談",
+      "technical": "技術面接",
+      "system_design": "システム設計",
+      "behavioral": "行動面接",
+      "manager": "マネージャー面接",
+      "final": "最終面接",
+      "other": "その他"
+    },
+    "kebab": {
+      "deleteTitle": "この面接を削除しますか？",
+      "deleteDescription": "この操作は元に戻せません。この面接は完全に削除されます。"
+    },
+    "toasts": {
+      "created": "面接を追加しました。",
+      "createFailed": "面接の追加に失敗しました。",
+      "deleted": "面接を削除しました。",
+      "deleteFailed": "面接の削除に失敗しました。",
+      "updated": "面接を更新しました。",
+      "updateFailed": "面接の更新に失敗しました。"
+    }
+  },
+  "contacts": {
+    "title": "連絡先",
+    "empty": "連絡先がありません。",
+    "searchPlaceholder": "連絡先を検索...",
+    "noResults": "該当する連絡先が見つかりません。",
+    "add": {
+      "trigger": "連絡先を追加",
+      "title": "連絡先を追加"
+    },
+    "edit": {
+      "title": "連絡先を編集",
+      "description": "連絡先情報を編集します。"
+    },
+    "form": {
+      "name": "名前",
+      "namePlaceholder": "山田 太郎",
+      "company": "会社",
+      "companyPlaceholder": "Acme Corp",
+      "role": "役割",
+      "rolePlaceholder": "選択してください",
+      "email": "メール",
+      "emailPlaceholder": "jane@acme.com",
+      "linkedin": "LinkedIn URL",
+      "linkedinPlaceholder": "https://linkedin.com/in/janesmith"
+    },
+    "card": {
+      "email": "メール",
+      "linkedin": "LinkedIn"
+    },
+    "roles": {
+      "recruiter": "リクルーター",
+      "hiring_manager": "採用担当者",
+      "interviewer": "面接官",
+      "referral": "紹介",
+      "other": "その他"
+    },
+    "kebab": {
+      "deleteTitle": "この連絡先を削除しますか？",
+      "deleteDescription": "この操作は元に戻せません。この連絡先は完全に削除されます。"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "profile": {
+      "title": "プロフィール",
+      "name": "氏名",
+      "namePlaceholder": "山田 太郎",
+      "email": "メール",
+      "emailPlaceholder": "example@example.com",
+      "save": "プロフィールを保存"
+    },
+    "notifications": {
+      "title": "通知",
+      "interviewReminders": "面接リマインダー",
+      "interviewRemindersDescription": "面接の24時間前に通知を受け取る",
+      "weeklySummary": "週間サマリー",
+      "weeklySummaryDescription": "就職活動の週間まとめを受け取る",
+      "save": "通知設定を保存"
+    },
+    "language": "言語",
+    "appearance": {
+      "title": "外観",
+      "darkMode": "ダークモード",
+      "darkModeDescription": "ライトモードとダークモードを切り替える"
+    },
+    "dangerZone": {
+      "title": "危険ゾーン",
+      "deleteAccount": "アカウント削除",
+      "deleteAccountDescription": "アカウントとすべてのデータを完全に削除します。自動的にログアウトされます。",
+      "delete": "削除",
+      "deleteTitle": "アカウントを削除しますか？",
+      "deleteDescription": "この操作は元に戻せません。すべてのデータが完全に削除されます。"
+    },
+    "toasts": {
+      "notificationsSaved": "通知設定を保存しました。",
+      "notificationsFailed": "設定の保存に失敗しました。もう一度お試しください。",
+      "deleteAccountFailed": "アカウント削除に失敗しました。もう一度お試しください。",
+      "profileUpdated": "プロフィールを更新しました。",
+      "profileNameFailed": "名前の更新に失敗しました。",
+      "profileEmailFailed": "メールの更新に失敗しました。"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "アカウントにログイン",
+      "subtitle": "メールアドレスを入力してログインしてください",
+      "email": "メール",
+      "emailPlaceholder": "m@example.com",
+      "password": "パスワード",
+      "hidePassword": "パスワードを非表示",
+      "showPassword": "パスワードを表示",
+      "loggingIn": "ログイン中...",
+      "submit": "ログイン",
+      "googleLoading": "Googleでログイン中...",
+      "google": "Googleでログイン",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signUp": "新規登録"
+    },
+    "signup": {
+      "title": "アカウント作成",
+      "subtitle": "情報を入力してアカウントを作成してください",
+      "name": "氏名",
+      "namePlaceholder": "John Doe",
+      "email": "メール",
+      "emailPlaceholder": "m@example.com",
+      "password": "パスワード",
+      "hidePassword": "パスワードを非表示",
+      "showPassword": "パスワードを表示",
+      "confirmPassword": "パスワード確認",
+      "hideConfirmPassword": "確認用パスワードを非表示",
+      "showConfirmPassword": "確認用パスワードを表示",
+      "creating": "アカウント作成中...",
+      "submit": "アカウント作成",
+      "googleLoading": "Googleでサインイン中...",
+      "google": "Googleでサインイン",
+      "hasAccount": "すでにアカウントをお持ちですか？",
+      "signIn": "ログイン",
+      "emailExists": "このメールアドレスはすでに登録されています。",
+      "error": "エラーが発生しました。もう一度お試しください。"
+    },
+    "signOut": {
+      "trigger": "ログアウト",
+      "title": "ログアウトしますか？",
+      "description": "サインインページに戻ります。",
+      "cancel": "キャンセル",
+      "confirm": "ログアウト"
+    }
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "openMenu": "Abrir menú",
+    "notes": "Notas",
+    "notesPlaceholder": "Notas adicionales..."
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "applications": "Solicitudes",
+    "interviews": "Entrevistas",
+    "contacts": "Contactos",
+    "settings": "Configuración"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "recentApplications": "Solicitudes recientes",
+    "viewAll": "Ver todas",
+    "fromLastMonth": "del mes pasado",
+    "stats": {
+      "totalApplied": "Total de solicitudes",
+      "interviews": "Entrevistas",
+      "offers": "Ofertas",
+      "responseRate": "Tasa de respuesta",
+      "thisWeek": "esta semana",
+      "pendingResponse": "respuesta pendiente"
+    }
+  },
+  "applications": {
+    "title": "Solicitudes",
+    "noResults": "No se encontraron solicitudes",
+    "search": "Buscar...",
+    "table": {
+      "company": "Empresa",
+      "position": "Puesto",
+      "location": "Ubicación",
+      "status": "Estado",
+      "applied": "Fecha de solicitud"
+    },
+    "add": {
+      "trigger": "Agregar solicitud",
+      "title": "Agregar solicitud",
+      "description": "Agrega una nueva solicitud."
+    },
+    "edit": {
+      "title": "Editar solicitud",
+      "description": "Realiza cambios en la solicitud."
+    },
+    "view": {
+      "editButton": "Editar solicitud",
+      "appliedOn": "Solicitado el {date}"
+    },
+    "filter": {
+      "trigger": "Filtrar",
+      "status": "Estado",
+      "appliedDate": "Fecha de solicitud",
+      "last7Days": "Últimos 7 días",
+      "last30Days": "Últimos 30 días",
+      "last90Days": "Últimos 90 días",
+      "clearFilters": "Limpiar filtros"
+    },
+    "kebab": {
+      "viewDetails": "Ver detalles",
+      "deleteTitle": "¿Eliminar la solicitud seleccionada?",
+      "deleteDescription": "Esta acción no se puede deshacer. Esto eliminará permanentemente la solicitud seleccionada."
+    },
+    "pagination": {
+      "rowsPerPage": "Filas por página",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "range": "{start}–{end} de {total}"
+    },
+    "form": {
+      "company": "Empresa",
+      "companyPlaceholder": "p. ej. Stripe",
+      "position": "Puesto",
+      "positionPlaceholder": "p. ej. Ingeniero de Software",
+      "status": "Estado",
+      "appliedDate": "Fecha de solicitud",
+      "jobType": "Tipo de trabajo",
+      "source": "Fuente",
+      "sourcePlaceholder": "Seleccionar fuente",
+      "location": "Ubicación",
+      "locationPlaceholder": "p. ej. Remoto",
+      "salary": "Salario",
+      "salaryPlaceholder": "p. ej. $120,000 - $150,000",
+      "url": "URL",
+      "urlPlaceholder": "p. ej. https://stripe.com/jobs/123"
+    },
+    "card": {
+      "totalApplied": "Total de solicitudes",
+      "interviews": "Entrevistas",
+      "offers": "Ofertas",
+      "responseRate": "Tasa de respuesta"
+    },
+    "toasts": {
+      "created": "Solicitud creada correctamente.",
+      "createFailed": "No se pudo crear la solicitud: {error}",
+      "deleteFailed": "No se pudo eliminar la solicitud: {error}",
+      "updated": "Solicitud actualizada correctamente."
+    }
+  },
+  "interviews": {
+    "title": "Entrevistas",
+    "empty": "Aún no tienes entrevistas. ¡Agrega tu primera entrevista para comenzar!",
+    "upcoming": "Próximas",
+    "upcomingEmpty": "Actualmente no hay entrevistas próximas.",
+    "past": "Pasadas",
+    "pastEmpty": "No tienes entrevistas pasadas.",
+    "add": {
+      "trigger": "Programar entrevista",
+      "title": "Programar entrevista",
+      "description": "Programa una nueva entrevista.",
+      "noApplications": "Necesitas al menos una solicitud antes de poder programar una entrevista.",
+      "goToApplications": "Ir a Solicitudes"
+    },
+    "edit": {
+      "title": "Editar entrevista",
+      "description": "Realiza cambios en la entrevista."
+    },
+    "form": {
+      "application": "Solicitud",
+      "applicationPlaceholder": "Seleccionar solicitud",
+      "date": "Fecha",
+      "time": "Hora",
+      "type": "Tipo",
+      "typePlaceholder": "Seleccionar tipo",
+      "round": "Ronda",
+      "roundPlaceholder": "Seleccionar ronda"
+    },
+    "types": {
+      "video_call": "Videollamada",
+      "phone": "Teléfono",
+      "in_person": "Presencial",
+      "take_home": "Prueba para casa",
+      "panel": "Panel",
+      "other": "Otro"
+    },
+    "rounds": {
+      "hr": "RR. HH.",
+      "recruiter_screen": "Filtro del reclutador",
+      "technical": "Técnica",
+      "system_design": "Diseño de sistemas",
+      "behavioral": "Conductual",
+      "manager": "Gerente",
+      "final": "Ronda final",
+      "other": "Otro"
+    },
+    "kebab": {
+      "deleteTitle": "¿Eliminar esta entrevista?",
+      "deleteDescription": "Esta acción no se puede deshacer. Esto eliminará permanentemente la entrevista."
+    },
+    "toasts": {
+      "created": "Entrevista agregada correctamente.",
+      "createFailed": "No se pudo agregar la entrevista.",
+      "deleted": "Entrevista eliminada.",
+      "deleteFailed": "No se pudo eliminar la entrevista.",
+      "updated": "Entrevista actualizada correctamente.",
+      "updateFailed": "No se pudo actualizar la entrevista."
+    }
+  },
+  "contacts": {
+    "title": "Contactos",
+    "empty": "Aún no tienes contactos.",
+    "searchPlaceholder": "Buscar contactos...",
+    "noResults": "No se encontraron contactos que coincidan con tu búsqueda.",
+    "add": {
+      "trigger": "Agregar contacto",
+      "title": "Agregar contacto"
+    },
+    "edit": {
+      "title": "Editar contacto",
+      "description": "Realiza cambios en el contacto."
+    },
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Jane Smith",
+      "company": "Empresa",
+      "companyPlaceholder": "Acme Corp",
+      "role": "Cargo",
+      "rolePlaceholder": "Seleccionar cargo",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "jane@acme.com",
+      "linkedin": "URL de LinkedIn",
+      "linkedinPlaceholder": "https://linkedin.com/in/janesmith"
+    },
+    "card": {
+      "email": "Correo",
+      "linkedin": "LinkedIn"
+    },
+    "roles": {
+      "recruiter": "Reclutador",
+      "hiring_manager": "Gerente de contratación",
+      "interviewer": "Entrevistador",
+      "referral": "Referencia",
+      "other": "Otro"
+    },
+    "kebab": {
+      "deleteTitle": "¿Eliminar el contacto seleccionado?",
+      "deleteDescription": "Esta acción no se puede deshacer. Esto eliminará permanentemente el contacto seleccionado."
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "profile": {
+      "title": "Perfil",
+      "name": "Nombre completo",
+      "namePlaceholder": "Jane Smith",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "example@example.com",
+      "save": "Guardar perfil"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "interviewReminders": "Recordatorios de entrevistas",
+      "interviewRemindersDescription": "Recibe un recordatorio 24 horas antes de las entrevistas",
+      "weeklySummary": "Resumen semanal",
+      "weeklySummaryDescription": "Recibe un resumen semanal de tu búsqueda de empleo",
+      "save": "Guardar notificaciones"
+    },
+    "language": "Idioma",
+    "appearance": {
+      "title": "Apariencia",
+      "darkMode": "Modo oscuro",
+      "darkModeDescription": "Alterna entre modo claro y oscuro"
+    },
+    "dangerZone": {
+      "title": "Zona de peligro",
+      "deleteAccount": "Eliminar cuenta",
+      "deleteAccountDescription": "Elimina permanentemente tu cuenta y todos tus datos. Se cerrará tu sesión automáticamente.",
+      "delete": "Eliminar",
+      "deleteTitle": "¿Eliminar cuenta?",
+      "deleteDescription": "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y todos tus datos."
+    },
+    "toasts": {
+      "notificationsSaved": "Preferencias de notificación guardadas.",
+      "notificationsFailed": "No se pudieron guardar las preferencias. Inténtalo de nuevo.",
+      "deleteAccountFailed": "No se pudo eliminar la cuenta. Inténtalo de nuevo.",
+      "profileUpdated": "Perfil actualizado.",
+      "profileNameFailed": "No se pudo actualizar el nombre.",
+      "profileEmailFailed": "No se pudo actualizar el correo."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Inicia sesión en tu cuenta",
+      "subtitle": "Ingresa tu correo electrónico para iniciar sesión",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "m@example.com",
+      "password": "Contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "showPassword": "Mostrar contraseña",
+      "loggingIn": "Iniciando sesión...",
+      "submit": "Iniciar sesión",
+      "googleLoading": "Iniciando sesión con Google...",
+      "google": "Iniciar sesión con Google",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Regístrate"
+    },
+    "signup": {
+      "title": "Crear una cuenta",
+      "subtitle": "Ingresa tu información para crear tu cuenta",
+      "name": "Nombre completo",
+      "namePlaceholder": "John Doe",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "m@example.com",
+      "password": "Contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "showPassword": "Mostrar contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "hideConfirmPassword": "Ocultar confirmación",
+      "showConfirmPassword": "Mostrar confirmación",
+      "creating": "Creando cuenta...",
+      "submit": "Crear cuenta",
+      "googleLoading": "Iniciando sesión con Google...",
+      "google": "Iniciar sesión con Google",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Inicia sesión",
+      "emailExists": "Ya existe una cuenta con este correo.",
+      "error": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "signOut": {
+      "trigger": "Cerrar sesión",
+      "title": "¿Cerrar sesión?",
+      "description": "Serás redirigido a la página de inicio de sesión.",
+      "cancel": "Cancelar",
+      "confirm": "Cerrar sesión"
+    }
+  }
+}

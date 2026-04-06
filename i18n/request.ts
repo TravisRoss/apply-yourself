@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma"
 import { getRequestConfig } from "next-intl/server"
 import { cookies, headers } from "next/headers"
 
-const SUPPORTED_LOCALES = ["en", "de"]
+const SUPPORTED_LOCALES = ["en", "de", "es", "ja"]
 const DEFAULT_LOCALE = "en"
 
 export default getRequestConfig(async () => {
