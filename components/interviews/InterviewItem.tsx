@@ -66,18 +66,18 @@ export default function InterviewItem({
           </div>
         </div>
       </ItemContent>
-      <ItemActions className="w-80">
+      <ItemActions>
         {isPast ? (
-          <div className="flex w-full items-center justify-end gap-4">
+          <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-4">
             <span className="text-foreground">{formatDate(date)}</span>
             <StatusBadge status={status} />
             <InterviewKebabMenu interviewId={id} />
           </div>
         ) : (
-          <div className="flex w-full items-center justify-between gap-2">
-            <div className="flex w-28 flex-col">
+          <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4">
+            <div className="flex min-w-24 flex-1 flex-col">
               <span className="text-foreground">{formatDate(date)}</span>
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-1 text-muted-foreground">
                 <Clock className="h-4 w-4" />
                 <span>
                   {date.toLocaleTimeString(locale, {
@@ -87,12 +87,12 @@ export default function InterviewItem({
                 </span>
               </div>
             </div>
-            <div className="flex w-24 items-center gap-2 text-muted-foreground">
+            <div className="flex min-w-24 flex-1 items-center gap-1 text-muted-foreground">
               <Video className="h-4 w-4" />
               <span>{t(`types.${type}`)}</span>
             </div>
-            <div className="flex w-24 justify-end">
-              <Badge variant="outline" className="w-full">
+            <div className="flex min-w-24 flex-1 justify-end">
+              <Badge variant="outline" className="w-fit">
                 {t(`rounds.${round}`)}
               </Badge>
             </div>
