@@ -34,6 +34,14 @@ export default getRequestConfig(async () => {
       }
     }
   } catch (err) {
+    if (
+      err !== null &&
+      typeof err === "object" &&
+      "digest" in err &&
+      err.digest === "DYNAMIC_SERVER_USAGE"
+    ) {
+      throw err
+    }
     console.error("Locale resolution failed:", err)
   }
 
