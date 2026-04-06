@@ -1,24 +1,29 @@
 "use client"
 
-import React, { useState } from "react"
-import { Table } from "../ui/table"
+import { useApplications, useDeleteApplication } from "@/hooks/useApplications"
 import {
+  DatePreset,
+  filterByDatePreset,
+  filterByStatus,
+  searchApplications,
+} from "@/lib/filter"
+import { sortApplications, SortDirection, SortKey } from "@/lib/sort"
+import { cn, formatDate } from "@/lib/utils"
+import { ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react"
+import { useTranslations } from "next-intl"
+import React, { useState } from "react"
+import Initials from "../shared/Initials"
+import StatusBadge from "../shared/StatusBadge"
+import {
+  Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "../ui/table"
-import KebabMenu from "./KebabMenu"
-import { useApplications, useDeleteApplication } from "@/hooks/useApplications"
-import { cn, formatDate } from "@/lib/utils"
 import { ApplicationPagination } from "./ApplicationPagination"
-import Initials from "../shared/Initials"
-import StatusBadge from "../shared/StatusBadge"
-import { sortApplications, SortKey, SortDirection } from "@/lib/sort"
-import { searchApplications, filterByStatus, filterByDatePreset, DatePreset } from "@/lib/filter"
-import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react"
-import { useTranslations } from "next-intl"
+import KebabMenu from "./KebabMenu"
 
 type Column = {
   label: string
@@ -35,9 +40,11 @@ function SortIcon({
   direction: SortDirection
 }) {
   if (column !== activeSortKey) return <ChevronsUpDown className="size-3.5" />
-  return direction === "asc"
-    ? <ChevronUp className="size-3.5" />
-    : <ChevronDown className="size-3.5" />
+  return direction === "asc" ? (
+    <ChevronUp className="size-3.5" />
+  ) : (
+    <ChevronDown className="size-3.5" />
+  )
 }
 
 function MutedTableCell({ children }: { children: React.ReactNode }) {
@@ -102,8 +109,13 @@ export default function ApplicationsTable({
   }
 
   return (
-    <div className={cn("rounded-lg border border-border bg-card", className)}>
-      <Table className="table-fixed">
+    <div
+      className={cn(
+        "overflow-x-scroll rounded-lg border border-border bg-card md:overflow-auto",
+        className
+      )}
+    >
+      <Table className="min-w-150">
         <TableHeader>
           <TableRow className="text-muted-foreground hover:bg-transparent">
             {columns.map((column) => (
@@ -152,7 +164,9 @@ export default function ApplicationsTable({
                 <MutedTableCell>
                   <StatusBadge status={application.status} />
                 </MutedTableCell>
-                <MutedTableCell>{formatDate(application.appliedDate)}</MutedTableCell>
+                <MutedTableCell>
+                  {formatDate(application.appliedDate)}
+                </MutedTableCell>
                 <MutedTableCell>
                   <KebabMenu
                     onDelete={() => handleDelete(application.id)}
