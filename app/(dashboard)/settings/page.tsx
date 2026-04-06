@@ -13,6 +13,7 @@ import {
 } from "@/hooks/useSettings"
 import { useSession } from "@/lib/auth-client"
 import { NotificationPreferencesFormData } from "@/lib/zod"
+import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 
@@ -20,17 +21,22 @@ export default function SettingsPage() {
   const { data: session } = useSession()
   const userId = session?.user.id
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const { theme, setTheme } = useTheme()
 
   const deleteAccountMutation = useDeleteAccount()
   const { data: notificationPreferences } = useNotificationPreferences(userId)
   const updateNotificationPreferences = useUpdateNotificationPreferences(userId)
 
-  const { control, handleSubmit, reset } = useForm<NotificationPreferencesFormData>({
-    defaultValues: { interviewReminders: false, weeklySummary: false },
-  })
+  const { control, handleSubmit, reset } =
+    useForm<NotificationPreferencesFormData>({
+      defaultValues: { interviewReminders: false, weeklySummary: false },
+    })
 
   useEffect(() => {
-    if (notificationPreferences !== undefined && notificationPreferences !== null) {
+    if (
+      notificationPreferences !== undefined &&
+      notificationPreferences !== null
+    ) {
       reset({
         interviewReminders: notificationPreferences.interviewReminders,
         weeklySummary: notificationPreferences.weeklySummary,
@@ -94,13 +100,14 @@ export default function SettingsPage() {
         <ToggleRow
           title="Dark mode"
           description="Toggle between light and dark mode"
-          checked={false}
-          onCheckedChange={() => {}}
+          checked={theme === "dark"}
+          onCheckedChange={() => {
+            setTheme(theme === "light" ? "dark" : "light")
+          }}
         />
-        <Button>Save Appearance</Button>
         <Separator />
-        <h2>Danger Zone</h2>
-        <div className="flex items-center justify-between rounded-md border border-red-500 bg-red-950 p-4 text-xs">
+        <h2 className="text-destructive">Danger Zone</h2>
+        <div className="flex items-center justify-between rounded-md border border-red-300 bg-red-50 p-4 text-xs dark:border-red-800 dark:bg-red-950">
           <div className="flex flex-col">
             <p className="text-foreground">Delete account</p>
             <p className="text-muted-foreground">
