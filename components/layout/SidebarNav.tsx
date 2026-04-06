@@ -1,7 +1,5 @@
 "use client"
 
-import { usePathname } from "next/navigation"
-import Link from "next/link"
 import {
   Calendar,
   FileText,
@@ -10,14 +8,22 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "../ui/sidebar"
 
 type NavLink = { title: string; href: string; icon: LucideIcon }
 
 export default function SidebarNav() {
   const pathname = usePathname()
   const t = useTranslations("nav")
+  const { isMobile, setOpenMobile } = useSidebar()
 
   const navLinks: NavLink[] = [
     { title: t("dashboard"), href: "/", icon: LayoutDashboard },
@@ -31,7 +37,13 @@ export default function SidebarNav() {
     <SidebarMenu>
       {navLinks.map((link) => (
         <SidebarMenuItem key={link.href}>
-          <SidebarMenuButton asChild isActive={link.href === pathname}>
+          <SidebarMenuButton
+            asChild
+            isActive={link.href === pathname}
+            onClick={() => {
+              if (isMobile) setOpenMobile(false)
+            }}
+          >
             <Link
               href={link.href}
               className={

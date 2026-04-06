@@ -56,11 +56,6 @@ components/    →  consume hooks, never call data functions directly
 - Forms use a split `date` + `time` field pattern (see `InterviewFormValues` vs `InterviewFormData` in `lib/zod.ts`)
 - Sheet components follow a controlled open pattern — parent owns `open` / `onOpenChange`
 
-## What's Not Built Yet
-- Contacts page is a stub
-- Settings page is a stub
-- No search/filter on interviews yet
-
 ## Coding Standards
 - Always use TypeScript with proper types — no `any`
 - Follow Next.js App Router conventions (Server Components by default, Client Components only when necessary)
