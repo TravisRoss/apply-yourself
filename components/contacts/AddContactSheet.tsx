@@ -1,5 +1,6 @@
 "use client"
 
+import { useIsMobile } from "@/hooks/use-mobile"
 import { useCreateContact } from "@/hooks/useContacts"
 import { ContactFormData } from "@/lib/zod"
 import { PlusIcon } from "lucide-react"
@@ -25,6 +26,7 @@ export default function AddContactSheet({ userId }: AddContactSheetProps) {
   const addContactMutation = useCreateContact(userId)
   const t = useTranslations("contacts")
   const tCommon = useTranslations("common")
+  const isMobile = useIsMobile()
 
   function handleSubmit(formData: ContactFormData) {
     addContactMutation.mutateAsync({ formData, userId })
@@ -38,7 +40,7 @@ export default function AddContactSheet({ userId }: AddContactSheetProps) {
           <PlusIcon /> {t("add.trigger")}
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent side={isMobile ? "bottom" : "right"}>
         <SheetHeader>
           <SheetTitle>{t("add.title")}</SheetTitle>
         </SheetHeader>
