@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "seed": "tsx prisma/seed.ts",
     "dev": "next dev --turbopack",
     "build": "next build",
