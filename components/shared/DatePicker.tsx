@@ -35,6 +35,7 @@ export default function DatePicker({ value: date, onChange }: DatePickerProps) {
             onChange(date)
             setOpen(false)
           }}
+          className="w-full"
         />
       </PopoverContent>
     </Popover>
