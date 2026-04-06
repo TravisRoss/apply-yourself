@@ -1,6 +1,5 @@
 "use client"
 
-import { getPaginationRange } from "@/lib/pagination"
 import { Field, FieldLabel } from "@/components/ui/field"
 import {
   Pagination,
@@ -17,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { getPaginationRange } from "@/lib/pagination"
 import { useTranslations } from "next-intl"
 
 const notAllowed = "cursor-not-allowed opacity-50"
@@ -36,7 +36,11 @@ export function ApplicationPagination({
   onPageSizeChange,
   total,
 }: ApplicationPaginationProps) {
-  const { numPages, rangeStart, rangeEnd } = getPaginationRange(pageIndex, pageSize, total)
+  const { numPages, rangeStart, rangeEnd } = getPaginationRange(
+    pageIndex,
+    pageSize,
+    total
+  )
   const t = useTranslations("applications.pagination")
 
   function handlePreviousClick() {
@@ -50,7 +54,9 @@ export function ApplicationPagination({
   return (
     <div className="flex items-center justify-between gap-4 p-2">
       <Field orientation="horizontal" className="w-fit">
-        <FieldLabel htmlFor="select-rows-per-page">{t("rowsPerPage")}</FieldLabel>
+        <FieldLabel htmlFor="select-rows-per-page">
+          {t("rowsPerPage")}
+        </FieldLabel>
         <Select
           value={pageSize.toString()}
           onValueChange={(value) => onPageSizeChange(Number(value))}
@@ -79,7 +85,7 @@ export function ApplicationPagination({
               text={t("previous")}
             />
           </PaginationItem>
-          <PaginationItem>
+          <PaginationItem className="flex">
             <span className="px-2 text-xs text-muted-foreground">
               {t("range", { start: rangeStart, end: rangeEnd, total })}
             </span>
