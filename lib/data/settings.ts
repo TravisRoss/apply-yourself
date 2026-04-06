@@ -22,3 +22,10 @@ export async function updateNotificationPreferences(
     update: data,
   })
 }
+
+export async function setLocale(userId: string, locale: string) {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { locale },
+  })
+}

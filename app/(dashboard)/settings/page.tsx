@@ -1,6 +1,7 @@
 "use client"
 
 import { PageShell } from "@/components/layout/PageShell"
+import LanguageSelect from "@/components/settings/LanguageSelect"
 import ProfileForm from "@/components/settings/ProfileForm"
 import ToggleRow from "@/components/settings/ToggleRow"
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog"
@@ -93,6 +94,9 @@ export default function SettingsPage() {
             {t("notifications.save")}
           </Button>
         </form>
+        <Separator />
+        <h2>Language</h2>
+        <LanguageSelect />
         <Separator />
         <h2>{t("appearance.title")}</h2>
         <ToggleRow

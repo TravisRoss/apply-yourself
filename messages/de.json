@@ -1,0 +1,252 @@
+{
+  "common": {
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "openMenu": "Menü öffnen",
+    "notes": "Notizen",
+    "notesPlaceholder": "Weitere Notizen..."
+  },
+  "nav": {
+    "dashboard": "Übersicht",
+    "applications": "Bewerbungen",
+    "interviews": "Interviews",
+    "contacts": "Kontakte",
+    "settings": "Einstellungen"
+  },
+  "dashboard": {
+    "title": "Übersicht",
+    "recentApplications": "Aktuelle Bewerbungen",
+    "viewAll": "Alle anzeigen",
+    "fromLastMonth": "gegenüber letztem Monat"
+  },
+  "applications": {
+    "title": "Bewerbungen",
+    "noResults": "Keine Bewerbungen gefunden",
+    "search": "Suchen...",
+    "table": {
+      "company": "Unternehmen",
+      "position": "Stelle",
+      "location": "Ort",
+      "status": "Status",
+      "applied": "Beworben"
+    },
+    "add": {
+      "trigger": "Bewerbung hinzufügen",
+      "title": "Bewerbung hinzufügen",
+      "description": "Neue Bewerbung erfassen."
+    },
+    "edit": {
+      "title": "Bewerbung bearbeiten",
+      "description": "Änderungen an der Bewerbung vornehmen."
+    },
+    "view": {
+      "editButton": "Bewerbung bearbeiten",
+      "appliedOn": "Beworben am {date}"
+    },
+    "filter": {
+      "trigger": "Filter",
+      "status": "Status",
+      "appliedDate": "Bewerbungsdatum",
+      "last7Days": "Letzte 7 Tage",
+      "last30Days": "Letzte 30 Tage",
+      "last90Days": "Letzte 90 Tage",
+      "clearFilters": "Filter zurücksetzen"
+    },
+    "kebab": {
+      "viewDetails": "Details anzeigen",
+      "deleteTitle": "Ausgewählte Bewerbung löschen?",
+      "deleteDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Die Bewerbung wird dauerhaft gelöscht."
+    },
+    "pagination": {
+      "rowsPerPage": "Zeilen pro Seite",
+      "previous": "Zurück",
+      "next": "Weiter"
+    },
+    "form": {
+      "company": "Unternehmen",
+      "companyPlaceholder": "z. B. Stripe",
+      "position": "Stelle",
+      "positionPlaceholder": "z. B. Software-Ingenieur",
+      "status": "Status",
+      "appliedDate": "Bewerbungsdatum",
+      "jobType": "Beschäftigungsart",
+      "source": "Quelle",
+      "sourcePlaceholder": "Quelle auswählen",
+      "location": "Ort",
+      "locationPlaceholder": "z. B. Remote",
+      "salary": "Gehalt",
+      "salaryPlaceholder": "z. B. 60.000 – 80.000 €",
+      "url": "URL",
+      "urlPlaceholder": "z. B. https://stripe.com/jobs/123"
+    },
+    "toasts": {
+      "created": "Bewerbung erfolgreich erstellt.",
+      "createFailed": "Bewerbung konnte nicht erstellt werden: {error}",
+      "deleteFailed": "Bewerbung konnte nicht gelöscht werden: {error}",
+      "updated": "Bewerbung erfolgreich aktualisiert."
+    }
+  },
+  "interviews": {
+    "title": "Interviews",
+    "empty": "Noch keine Interviews. Füge dein erstes Interview hinzu!",
+    "upcoming": "Bevorstehend",
+    "upcomingEmpty": "Keine bevorstehenden Interviews.",
+    "past": "Vergangen",
+    "pastEmpty": "Keine vergangenen Interviews.",
+    "add": {
+      "trigger": "Interview planen",
+      "title": "Interview planen",
+      "description": "Neues Interview planen.",
+      "noApplications": "Du benötigst mindestens eine Bewerbung, um ein Interview zu planen.",
+      "goToApplications": "Zu den Bewerbungen"
+    },
+    "edit": {
+      "title": "Interview bearbeiten",
+      "description": "Änderungen am Interview vornehmen."
+    },
+    "form": {
+      "application": "Bewerbung",
+      "applicationPlaceholder": "Bewerbung auswählen",
+      "date": "Datum",
+      "time": "Uhrzeit",
+      "type": "Art",
+      "typePlaceholder": "Art auswählen",
+      "round": "Runde",
+      "roundPlaceholder": "Runde auswählen"
+    },
+    "kebab": {
+      "deleteTitle": "Dieses Interview löschen?",
+      "deleteDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Das Interview wird dauerhaft gelöscht."
+    },
+    "toasts": {
+      "created": "Interview erfolgreich hinzugefügt.",
+      "createFailed": "Interview konnte nicht hinzugefügt werden.",
+      "deleted": "Interview gelöscht.",
+      "deleteFailed": "Interview konnte nicht gelöscht werden.",
+      "updated": "Interview erfolgreich aktualisiert.",
+      "updateFailed": "Interview konnte nicht aktualisiert werden."
+    }
+  },
+  "contacts": {
+    "title": "Kontakte",
+    "empty": "Noch keine Kontakte vorhanden.",
+    "searchPlaceholder": "Kontakte suchen...",
+    "noResults": "Keine Kontakte für diese Suche gefunden.",
+    "add": {
+      "trigger": "Kontakt hinzufügen",
+      "title": "Kontakt hinzufügen"
+    },
+    "edit": {
+      "title": "Kontakt bearbeiten",
+      "description": "Änderungen am Kontakt vornehmen."
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Jane Schmidt",
+      "company": "Unternehmen",
+      "companyPlaceholder": "Muster GmbH",
+      "role": "Rolle",
+      "rolePlaceholder": "Rolle auswählen",
+      "email": "E-Mail",
+      "emailPlaceholder": "jane@muster.de",
+      "linkedin": "LinkedIn-URL",
+      "linkedinPlaceholder": "https://linkedin.com/in/janeschmidt"
+    },
+    "card": {
+      "email": "E-Mail",
+      "linkedin": "LinkedIn"
+    },
+    "kebab": {
+      "deleteTitle": "Ausgewählten Kontakt löschen?",
+      "deleteDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Der Kontakt wird dauerhaft gelöscht."
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "profile": {
+      "title": "Profil",
+      "name": "Vollständiger Name",
+      "namePlaceholder": "Jane Schmidt",
+      "email": "E-Mail",
+      "emailPlaceholder": "beispiel@beispiel.de",
+      "save": "Profil speichern"
+    },
+    "notifications": {
+      "title": "Benachrichtigungen",
+      "interviewReminders": "Interview-Erinnerungen",
+      "interviewRemindersDescription": "Werde 24 Stunden vor Interviews erinnert",
+      "weeklySummary": "Wöchentliche Zusammenfassung",
+      "weeklySummaryDescription": "Erhalte eine wöchentliche Übersicht deiner Jobsuche",
+      "save": "Benachrichtigungen speichern"
+    },
+    "appearance": {
+      "title": "Darstellung",
+      "darkMode": "Dunkelmodus",
+      "darkModeDescription": "Zwischen hellem und dunklem Design wechseln"
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "deleteAccount": "Konto löschen",
+      "deleteAccountDescription": "Konto und alle Daten dauerhaft löschen. Du wirst automatisch abgemeldet.",
+      "delete": "Löschen",
+      "deleteTitle": "Konto löschen?",
+      "deleteDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Dein Konto und alle Daten werden dauerhaft gelöscht."
+    },
+    "toasts": {
+      "notificationsSaved": "Benachrichtigungseinstellungen gespeichert.",
+      "notificationsFailed": "Einstellungen konnten nicht gespeichert werden. Bitte versuche es erneut.",
+      "deleteAccountFailed": "Konto konnte nicht gelöscht werden. Bitte versuche es erneut.",
+      "profileUpdated": "Profil aktualisiert.",
+      "profileNameFailed": "Name konnte nicht aktualisiert werden.",
+      "profileEmailFailed": "E-Mail konnte nicht aktualisiert werden."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Bei deinem Konto anmelden",
+      "subtitle": "Gib deine E-Mail-Adresse ein, um dich anzumelden",
+      "email": "E-Mail",
+      "emailPlaceholder": "m@beispiel.de",
+      "password": "Passwort",
+      "hidePassword": "Passwort verbergen",
+      "showPassword": "Passwort anzeigen",
+      "loggingIn": "Wird angemeldet...",
+      "submit": "Anmelden",
+      "googleLoading": "Anmeldung mit Google...",
+      "google": "Mit Google anmelden",
+      "noAccount": "Noch kein Konto?",
+      "signUp": "Registrieren"
+    },
+    "signup": {
+      "title": "Konto erstellen",
+      "subtitle": "Gib deine Daten ein, um ein Konto zu erstellen",
+      "name": "Vollständiger Name",
+      "namePlaceholder": "Max Mustermann",
+      "email": "E-Mail",
+      "emailPlaceholder": "m@beispiel.de",
+      "password": "Passwort",
+      "hidePassword": "Passwort verbergen",
+      "showPassword": "Passwort anzeigen",
+      "confirmPassword": "Passwort bestätigen",
+      "hideConfirmPassword": "Bestätigungspasswort verbergen",
+      "showConfirmPassword": "Bestätigungspasswort anzeigen",
+      "creating": "Konto wird erstellt...",
+      "submit": "Konto erstellen",
+      "googleLoading": "Anmeldung mit Google...",
+      "google": "Mit Google anmelden",
+      "hasAccount": "Bereits ein Konto?",
+      "signIn": "Anmelden",
+      "emailExists": "Ein Konto mit dieser E-Mail-Adresse existiert bereits.",
+      "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+    },
+    "signOut": {
+      "trigger": "Abmelden",
+      "title": "Abmelden?",
+      "description": "Du wirst zur Anmeldeseite weitergeleitet.",
+      "cancel": "Abbrechen",
+      "confirm": "Abmelden"
+    }
+  }
+}
