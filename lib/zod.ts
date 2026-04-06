@@ -108,6 +108,11 @@ export const contactSchema = z.object({
   notes: z.string().optional(),
 })
 
+export const notificationPreferencesSchema = z.object({
+  interviewReminders: z.boolean(),
+  weeklySummary: z.boolean(),
+})
+
 export const profileSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.email({ error: "Must be a valid email" }),
@@ -140,4 +145,5 @@ export type InterviewFormValues = z.infer<typeof interviewFormSchema>
 export type ContactFormData = z.infer<typeof contactSchema>
 export type ProfileFormData = z.infer<typeof profileSchema>
 export type SignUpFormData = z.infer<typeof signUpSchema>
+export type NotificationPreferencesFormData = z.infer<typeof notificationPreferencesSchema>
 export type SignInFormData = z.infer<typeof signInSchema>

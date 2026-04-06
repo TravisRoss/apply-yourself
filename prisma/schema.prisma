@@ -113,9 +113,10 @@ model Interview {
   date          DateTime
   type          InterviewType
   round         InterviewRound
-  notes         String?
-  createdAt     DateTime       @default(now()) @map("created_at")
-  updatedAt     DateTime       @updatedAt @map("updated_at")
+  notes          String?
+  reminderSentAt DateTime? @map("reminder_sent_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
 
   @@map("interviews")
 }
@@ -138,20 +139,33 @@ model Contact {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  applications  Application[]
-  contacts      Contact[]
+  id                      String                   @id
+  name                    String
+  email                   String
+  emailVerified           Boolean                  @default(false)
+  image                   String?
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  sessions                Session[]
+  accounts                Account[]
+  applications            Application[]
+  contacts                Contact[]
+  notificationPreferences NotificationPreferences?
 
   @@unique([email])
   @@map("user")
+}
+
+model NotificationPreferences {
+  id                 String   @id @default(uuid())
+  userId             String   @unique @map("user_id")
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  interviewReminders Boolean  @default(false) @map("interview_reminders")
+  weeklySummary      Boolean  @default(false) @map("weekly_summary")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@map("notification_preferences")
 }
 
 model Session {

@@ -3,11 +3,17 @@ import { Switch } from "../ui/switch"
 type ToggleRowProps = {
   title: string
   description: string
+  checked: boolean
+  onCheckedChange: (checked: boolean) => void
+  disabled?: boolean
 }
 
 export default function ToggleRow({
   title,
   description,
+  checked,
+  onCheckedChange,
+  disabled,
 }: ToggleRowProps) {
   return (
     <div className="flex items-center justify-between text-xs">
@@ -15,7 +21,11 @@ export default function ToggleRow({
         <p className="text-foreground">{title}</p>
         <p className="text-muted-foreground">{description}</p>
       </div>
-      <Switch />
+      <Switch
+        checked={checked}
+        onCheckedChange={onCheckedChange}
+        disabled={disabled}
+      />
     </div>
   )
 }

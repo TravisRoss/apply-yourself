@@ -24,4 +24,15 @@ export const auth = betterAuth({
       maxAge: 60 * 60 * 24 * 30, // 30 days
     },
   },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          await prisma.notificationPreferences.create({
+            data: { userId: user.id },
+          })
+        },
+      },
+    },
+  },
 })

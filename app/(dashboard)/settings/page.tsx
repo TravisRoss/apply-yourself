@@ -6,19 +6,45 @@ import ToggleRow from "@/components/settings/ToggleRow"
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { useDeleteAccount } from "@/hooks/useSettings"
+import {
+  useDeleteAccount,
+  useNotificationPreferences,
+  useUpdateNotificationPreferences,
+} from "@/hooks/useSettings"
 import { useSession } from "@/lib/auth-client"
-import { useState } from "react"
+import { NotificationPreferencesFormData } from "@/lib/zod"
+import { useEffect, useState } from "react"
+import { Controller, useForm } from "react-hook-form"
 
 export default function SettingsPage() {
   const { data: session } = useSession()
   const userId = session?.user.id
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const deleteAccountMutation = useDeleteAccount()
 
-  async function handleDeleteAccount() {
+  const deleteAccountMutation = useDeleteAccount()
+  const { data: notificationPreferences } = useNotificationPreferences(userId)
+  const updateNotificationPreferences = useUpdateNotificationPreferences(userId)
+
+  const { control, handleSubmit, reset } = useForm<NotificationPreferencesFormData>({
+    defaultValues: { interviewReminders: false, weeklySummary: false },
+  })
+
+  useEffect(() => {
+    if (notificationPreferences !== undefined && notificationPreferences !== null) {
+      reset({
+        interviewReminders: notificationPreferences.interviewReminders,
+        weeklySummary: notificationPreferences.weeklySummary,
+      })
+    }
+  }, [notificationPreferences, reset])
+
+  function handleDeleteAccount() {
     if (userId === undefined) return
-    await deleteAccountMutation.mutateAsync({ userId })
+    deleteAccountMutation.mutate({ userId })
+  }
+
+  function handleSaveNotifications(values: NotificationPreferencesFormData) {
+    updateNotificationPreferences.mutate(values)
   }
 
   return (
@@ -28,22 +54,48 @@ export default function SettingsPage() {
         <ProfileForm />
         <Separator />
         <h2>Notifications</h2>
-        <div className="flex flex-col gap-2">
-          <ToggleRow
-            title="Interview reminders"
-            description="Get reminded 24 hours before interviews"
-          />
-          <ToggleRow
-            title="Weekly summary"
-            description="Receive a weekly summary of your job search"
-          />
-        </div>
-        <Button>Save Notifications</Button>
+        <form onSubmit={handleSubmit(handleSaveNotifications)}>
+          <div className="flex flex-col gap-2">
+            <Controller
+              control={control}
+              name="interviewReminders"
+              render={({ field }) => (
+                <ToggleRow
+                  title="Interview reminders"
+                  description="Get reminded 24 hours before interviews"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="weeklySummary"
+              render={({ field }) => (
+                <ToggleRow
+                  title="Weekly summary"
+                  description="Receive a weekly summary of your job search"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              )}
+            />
+          </div>
+          <Button
+            type="submit"
+            className="mt-4"
+            disabled={updateNotificationPreferences.isPending}
+          >
+            Save Notifications
+          </Button>
+        </form>
         <Separator />
         <h2>Appearance</h2>
         <ToggleRow
           title="Dark mode"
           description="Toggle between light and dark mode"
+          checked={false}
+          onCheckedChange={() => {}}
         />
         <Button>Save Appearance</Button>
         <Separator />

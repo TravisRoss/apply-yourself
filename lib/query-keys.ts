@@ -18,4 +18,6 @@ export const queryKeys = {
     ["interviews", userId, "this_week"] as const,
   contacts: (userId: string) => ["contacts", userId] as const,
   contact: (contactId: string) => ["contacts", "contact", contactId] as const,
+  notificationPreferences: (userId: string) =>
+    ["settings", userId, "notification_preferences"] as const,
 }
