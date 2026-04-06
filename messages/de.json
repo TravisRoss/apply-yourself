@@ -19,7 +19,15 @@
     "title": "Übersicht",
     "recentApplications": "Aktuelle Bewerbungen",
     "viewAll": "Alle anzeigen",
-    "fromLastMonth": "gegenüber letztem Monat"
+    "fromLastMonth": "gegenüber letztem Monat",
+    "stats": {
+      "totalApplied": "Gesamtbewerbungen",
+      "interviews": "Interviews",
+      "offers": "Angebote",
+      "responseRate": "Antwortquote",
+      "thisWeek": "diese Woche",
+      "pendingResponse": "ausstehend"
+    }
   },
   "applications": {
     "title": "Bewerbungen",
@@ -62,7 +70,8 @@
     "pagination": {
       "rowsPerPage": "Zeilen pro Seite",
       "previous": "Zurück",
-      "next": "Weiter"
+      "next": "Weiter",
+      "range": "{start}–{end} von {total}"
     },
     "form": {
       "company": "Unternehmen",
@@ -116,6 +125,24 @@
       "round": "Runde",
       "roundPlaceholder": "Runde auswählen"
     },
+    "types": {
+      "video_call": "Videoanruf",
+      "phone": "Telefonat",
+      "in_person": "Vor Ort",
+      "take_home": "Take-Home",
+      "panel": "Panel",
+      "other": "Sonstiges"
+    },
+    "rounds": {
+      "hr": "HR",
+      "recruiter_screen": "Recruiter-Gespräch",
+      "technical": "Technisches Interview",
+      "system_design": "System Design",
+      "behavioral": "Verhaltensinterview",
+      "manager": "Manager-Gespräch",
+      "final": "Finalrunde",
+      "other": "Sonstiges"
+    },
     "kebab": {
       "deleteTitle": "Dieses Interview löschen?",
       "deleteDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Das Interview wird dauerhaft gelöscht."
@@ -158,6 +185,13 @@
       "email": "E-Mail",
       "linkedin": "LinkedIn"
     },
+    "roles": {
+      "recruiter": "Recruiter",
+      "hiring_manager": "Hiring Manager",
+      "interviewer": "Gesprächspartner",
+      "referral": "Empfehlung",
+      "other": "Sonstiges"
+    },
     "kebab": {
       "deleteTitle": "Ausgewählten Kontakt löschen?",
       "deleteDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Der Kontakt wird dauerhaft gelöscht."
@@ -181,6 +215,7 @@
       "weeklySummaryDescription": "Erhalte eine wöchentliche Übersicht deiner Jobsuche",
       "save": "Benachrichtigungen speichern"
     },
+    "language": "Sprache",
     "appearance": {
       "title": "Darstellung",
       "darkMode": "Dunkelmodus",

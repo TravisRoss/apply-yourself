@@ -5,6 +5,7 @@ import {
 } from "@/generated/prisma/enums"
 import { formatDate } from "@/lib/utils"
 import { Clock, Video } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
 import Initials from "../shared/Initials"
 import StatusBadge from "../shared/StatusBadge"
 import { Badge } from "../ui/badge"
@@ -39,15 +40,6 @@ type PastInterviewItemProps = {
 
 type InterviewItemProps = UpcomingInterviewItemProps | PastInterviewItemProps
 
-const INTERVIEW_TYPE_LABELS: Record<InterviewType, string> = {
-  video_call: "Video Call",
-  phone: "Phone Call",
-  in_person: "In Person",
-  take_home: "Take Home",
-  panel: "Panel",
-  other: "Other",
-}
-
 export default function InterviewItem({
   id,
   company,
@@ -57,6 +49,8 @@ export default function InterviewItem({
   round,
   status,
 }: InterviewItemProps) {
+  const t = useTranslations("interviews")
+  const locale = useLocale()
   const isPast = status !== undefined
 
   return (
@@ -86,7 +80,7 @@ export default function InterviewItem({
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="h-4 w-4" />
                 <span>
-                  {date.toLocaleTimeString([], {
+                  {date.toLocaleTimeString(locale, {
                     hour: "2-digit",
                     minute: "2-digit",
                   })}
@@ -95,11 +89,11 @@ export default function InterviewItem({
             </div>
             <div className="flex w-24 items-center gap-2 text-muted-foreground">
               <Video className="h-4 w-4" />
-              <span>{INTERVIEW_TYPE_LABELS[type]}</span>
+              <span>{t(`types.${type}`)}</span>
             </div>
             <div className="flex w-24 justify-end">
               <Badge variant="outline" className="w-full">
-                {round}
+                {t(`rounds.${round}`)}
               </Badge>
             </div>
             <InterviewKebabMenu interviewId={id} />

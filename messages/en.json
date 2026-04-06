@@ -19,7 +19,15 @@
     "title": "Dashboard",
     "recentApplications": "Recent Applications",
     "viewAll": "View all",
-    "fromLastMonth": "from last month"
+    "fromLastMonth": "from last month",
+    "stats": {
+      "totalApplied": "Total Applied",
+      "interviews": "Interviews",
+      "offers": "Offers",
+      "responseRate": "Response Rate",
+      "thisWeek": "this week",
+      "pendingResponse": "pending response"
+    }
   },
   "applications": {
     "title": "Applications",
@@ -62,7 +70,8 @@
     "pagination": {
       "rowsPerPage": "Rows per page",
       "previous": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "range": "{start}–{end} of {total}"
     },
     "form": {
       "company": "Company",
@@ -80,6 +89,12 @@
       "salaryPlaceholder": "e.g. $120,000 - $150,000",
       "url": "URL",
       "urlPlaceholder": "e.g. https://stripe.com/jobs/123"
+    },
+    "card": {
+      "totalApplied": "Total Applied",
+      "interviews": "Interviews",
+      "offers": "Offers",
+      "responseRate": "Response Rate"
     },
     "toasts": {
       "created": "Application created successfully.",
@@ -115,6 +130,24 @@
       "typePlaceholder": "Select type",
       "round": "Round",
       "roundPlaceholder": "Select round"
+    },
+    "types": {
+      "video_call": "Video Call",
+      "phone": "Phone",
+      "in_person": "In Person",
+      "take_home": "Take Home",
+      "panel": "Panel",
+      "other": "Other"
+    },
+    "rounds": {
+      "hr": "HR",
+      "recruiter_screen": "Recruiter Screen",
+      "technical": "Technical",
+      "system_design": "System Design",
+      "behavioral": "Behavioral",
+      "manager": "Manager",
+      "final": "Final Round",
+      "other": "Other"
     },
     "kebab": {
       "deleteTitle": "Delete this interview?",
@@ -158,6 +191,13 @@
       "email": "Email",
       "linkedin": "LinkedIn"
     },
+    "roles": {
+      "recruiter": "Recruiter",
+      "hiring_manager": "Hiring Manager",
+      "interviewer": "Interviewer",
+      "referral": "Referral",
+      "other": "Other"
+    },
     "kebab": {
       "deleteTitle": "Delete selected contact?",
       "deleteDescription": "This action cannot be undone. This will permanently delete the selected contact."
@@ -181,6 +221,7 @@
       "weeklySummaryDescription": "Receive a weekly summary of your job search",
       "save": "Save Notifications"
     },
+    "language": "Language",
     "appearance": {
       "title": "Appearance",
       "darkMode": "Dark mode",

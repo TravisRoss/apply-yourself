@@ -81,7 +81,7 @@ export function ApplicationPagination({
           </PaginationItem>
           <PaginationItem>
             <span className="px-2 text-xs text-muted-foreground">
-              {rangeStart}–{rangeEnd} of {total}
+              {t("range", { start: rangeStart, end: rangeEnd, total })}
             </span>
           </PaginationItem>
           <PaginationItem>

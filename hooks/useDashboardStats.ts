@@ -13,8 +13,10 @@ import {
   calculateResponseRate,
 } from "@/lib/utils"
 import { Calendar, FileText, Gift, TrendingUp } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export function useDashboardStats(userId: string | undefined) {
+  const t = useTranslations("dashboard.stats")
   const now = new Date()
   const previousMonth = new Date(now.getFullYear(), now.getMonth() - 1)
 
@@ -67,50 +69,57 @@ export function useDashboardStats(userId: string | undefined) {
     applications?.length ?? 0
   )
 
+  const fromLastMonth = useTranslations("dashboard")("fromLastMonth")
+
   return [
     {
-      title: "Total Applied",
+      title: t("totalApplied"),
       icon: FileText,
       total: applications?.length ?? 0,
       count: applicationsThisWeek?.length ?? 0,
-      countLabel: "this week",
+      countLabel: t("thisWeek"),
       percentageGain: calcPercentageGain(
         applicationsThisMonth?.length ?? 0,
         applicationsLastMonth?.length ?? 0
       ),
+      percentageGainLabel: fromLastMonth,
     },
     {
-      title: "Interviews",
+      title: t("interviews"),
       icon: Calendar,
       total: interviews?.length ?? 0,
       count: interviewsThisWeek?.length ?? 0,
-      countLabel: "this week",
+      countLabel: t("thisWeek"),
       percentageGain: calcPercentageGain(
         interviewsThisMonth?.length ?? 0,
         interviewsLastMonth?.length ?? 0
       ),
+      percentageGainLabel: fromLastMonth,
     },
     {
-      title: "Offers",
+      title: t("offers"),
       icon: Gift,
       total: offers?.length ?? 0,
       count: statusApplied?.length ?? 0,
-      countLabel: "pending response",
+      countLabel: t("pendingResponse"),
       percentageGain: calcPercentageGain(
         offersThisMonth?.length ?? 0,
         offersLastMonth?.length ?? 0
       ),
+      percentageGainLabel: fromLastMonth,
     },
     {
-      title: "Response Rate",
+      title: t("responseRate"),
       icon: TrendingUp,
       total: responseRate,
+      isPercentage: true,
       count: responsesThisWeek?.length ?? 0,
-      countLabel: "this week",
+      countLabel: t("thisWeek"),
       percentageGain: calcPercentageGain(
         responseRateThisMonth,
         responseRateLastMonth
       ),
+      percentageGainLabel: fromLastMonth,
     },
   ]
 }

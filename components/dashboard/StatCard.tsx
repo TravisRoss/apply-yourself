@@ -6,6 +6,7 @@ type StatCardProps = {
   title: string
   icon: LucideIcon
   total: number
+  isPercentage?: boolean
   count?: number
   countLabel?: string
   percentageGain?: number | null
@@ -16,10 +17,11 @@ export default function StatCard({
   title,
   icon: Icon,
   total,
+  isPercentage = false,
   count,
   countLabel,
   percentageGain,
-  percentageGainLabel = "from last month",
+  percentageGainLabel,
 }: StatCardProps) {
   return (
     <Card className="w-full bg-card">
@@ -30,7 +32,7 @@ export default function StatCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="text-2xl font-semibold">
-        <p>{title === "Response Rate" ? `${total}%` : total}</p>
+        <p>{isPercentage ? `${total}%` : total}</p>
       </CardContent>
       <CardFooter className="text-xs text-muted-foreground">
         <div className="flex flex-col gap-2">

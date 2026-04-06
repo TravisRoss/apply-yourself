@@ -11,7 +11,6 @@ import {
   SelectValue,
 } from "../ui/select"
 import { InterviewRound, InterviewType } from "@/generated/prisma/enums"
-import { interviewTypeLabels, interviewRoundLabels } from "@/lib/labels"
 import DatePicker from "../shared/DatePicker"
 import { Controller, useForm } from "react-hook-form"
 import { InterviewFormData, InterviewFormValues, interviewFormSchema } from "@/lib/zod"
@@ -35,6 +34,7 @@ export default function InterviewForm({
   onDirtyChange,
 }: InterviewFormProps) {
   const t = useTranslations("interviews.form")
+  const tInterviews = useTranslations("interviews")
   const tCommon = useTranslations("common")
 
   const {
@@ -125,7 +125,7 @@ export default function InterviewForm({
                   <SelectContent>
                     {Object.values(InterviewType).map((type) => (
                       <SelectItem key={type} value={type}>
-                        {interviewTypeLabels[type]}
+                        {tInterviews(`types.${type}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -147,7 +147,7 @@ export default function InterviewForm({
                   <SelectContent>
                     {Object.values(InterviewRound).map((round) => (
                       <SelectItem key={round} value={round}>
-                        {interviewRoundLabels[round]}
+                        {tInterviews(`rounds.${round}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>

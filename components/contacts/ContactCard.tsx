@@ -2,7 +2,6 @@
 
 import { ContactRole } from "@/generated/prisma/enums"
 import { useDeleteContact } from "@/hooks/useContacts"
-import { ContactRoleLabels } from "@/lib/labels"
 import { Mail } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Initials from "../shared/Initials"
@@ -40,7 +39,7 @@ export default function ContactCard({
   notes,
 }: ContactCardProps) {
   const deleteContactMutation = useDeleteContact(userId)
-  const t = useTranslations("contacts.card")
+  const t = useTranslations("contacts")
 
   async function handleDelete() {
     await deleteContactMutation.mutateAsync(contactId)
@@ -55,7 +54,7 @@ export default function ContactCard({
             <div className="flex flex-col">
               <CardTitle className="text-[1.05rem]">{name}</CardTitle>
               <CardDescription className="text-[0.9rem] leading-tight">
-                {ContactRoleLabels[role]}
+                {t(`roles.${role}`)}
               </CardDescription>
             </div>
           </div>
@@ -70,14 +69,14 @@ export default function ContactCard({
               <ButtonWithLink
                 href={`mailto:${email}`}
                 icon={Mail}
-                label={t("email")}
+                label={t("card.email")}
               />
             )}
             {linkedInUrl && (
               <ButtonWithLink
                 href={linkedInUrl}
                 icon={LinkedinOutlineIcon}
-                label={t("linkedin")}
+                label={t("card.linkedin")}
               />
             )}
           </div>

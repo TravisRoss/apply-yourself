@@ -95,7 +95,7 @@ export default function SettingsPage() {
           </Button>
         </form>
         <Separator />
-        <h2>Language</h2>
+        <h2>{t("language")}</h2>
         <LanguageSelect />
         <Separator />
         <h2>{t("appearance.title")}</h2>

@@ -7,9 +7,11 @@ type Stat = {
   title: string
   icon: LucideIcon
   total: number
+  isPercentage?: boolean
   count?: number
   countLabel?: string
   percentageGain?: number | null
+  percentageGainLabel?: string
 }
 
 type StatCardsProps = {
@@ -25,9 +27,11 @@ export default function StatCards({ stats }: StatCardsProps) {
           title={stat.title}
           icon={stat.icon}
           total={stat.total}
+          isPercentage={stat.isPercentage}
           count={stat.count}
           countLabel={stat.countLabel}
           percentageGain={stat.percentageGain}
+          percentageGainLabel={stat.percentageGainLabel}
         />
       ))}
     </div>
