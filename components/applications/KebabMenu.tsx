@@ -1,3 +1,5 @@
+"use client"
+
 import { MoreHorizontal } from "lucide-react"
 import { Button } from "../ui/button"
 import {
@@ -6,12 +8,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-
 import { useState } from "react"
-
 import DeleteConfirmationDialog from "../shared/DeleteConfirmationDialog"
 import EditApplicationSheet from "./EditApplicationSheet"
 import ViewApplicationSheet from "./ViewApplicationSheet"
+import { useTranslations } from "next-intl"
 
 type KebabMenuProps = {
   onDelete: () => void
@@ -27,6 +28,8 @@ export default function KebabMenu({
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editSheetOpen, setEditSheetOpen] = useState(false)
   const [viewSheetOpen, setViewSheetOpen] = useState(false)
+  const t = useTranslations("applications.kebab")
+  const tCommon = useTranslations("common")
 
   function handleDelete(event: Event) {
     // Prevents Radix from auto-closing the dropdown, letting the dialog's
@@ -43,20 +46,20 @@ export default function KebabMenu({
             variant="ghost"
             size="icon"
             className="h-8 w-8 text-muted-foreground"
-            aria-label="Open menu"
+            aria-label={tCommon("openMenu")}
           >
             <MoreHorizontal />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => setViewSheetOpen(true)}>
-            View details
+            {t("viewDetails")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setEditSheetOpen(true)}>
-            Edit
+            {tCommon("edit")}
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={handleDelete}>
-            Delete
+            {tCommon("delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -77,8 +80,8 @@ export default function KebabMenu({
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         onDelete={onDelete}
-        title="Delete selected application?"
-        description="This action cannot be undone. This will permanently delete the selected application."
+        title={t("deleteTitle")}
+        description={t("deleteDescription")}
       />
     </>
   )

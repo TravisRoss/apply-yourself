@@ -5,11 +5,13 @@ import {
 } from "@/lib/data/settings"
 import { queryKeys } from "@/lib/query-keys"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 export function useDeleteAccount() {
   const router = useRouter()
+  const t = useTranslations("settings.toasts")
 
   return useMutation({
     mutationFn: ({ userId }: { userId: string }) => deleteAccount(userId),
@@ -17,7 +19,7 @@ export function useDeleteAccount() {
       router.push("/sign-in")
     },
     onError: () => {
-      toast.error("Failed to delete account. Please try again.")
+      toast.error(t("deleteAccountFailed"))
     },
   })
 }
@@ -32,6 +34,7 @@ export function useNotificationPreferences(userId: string | undefined) {
 
 export function useUpdateNotificationPreferences(userId: string | undefined) {
   const queryClient = useQueryClient()
+  const t = useTranslations("settings.toasts")
 
   return useMutation({
     mutationFn: (data: {
@@ -45,10 +48,10 @@ export function useUpdateNotificationPreferences(userId: string | undefined) {
       queryClient.invalidateQueries({
         queryKey: queryKeys.notificationPreferences(userId ?? ""),
       })
-      toast.success("Notification preferences saved successfully")
+      toast.success(t("notificationsSaved"))
     },
     onError: () => {
-      toast.error("Failed to save preferences. Please try again.")
+      toast.error(t("notificationsFailed"))
     },
   })
 }

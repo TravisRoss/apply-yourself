@@ -32,6 +32,7 @@ import { signIn } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { Eye, EyeOff } from "lucide-react"
 import { Input } from "../ui/input"
+import { useTranslations } from "next-intl"
 
 export function LoginForm({
   className,
@@ -40,6 +41,7 @@ export function LoginForm({
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+  const t = useTranslations("auth.login")
 
   const {
     register,
@@ -60,9 +62,7 @@ export function LoginForm({
         },
         onError: (context) => {
           setError("root", {
-            message:
-              context.error.message ??
-              "Something went wrong. Please try again.",
+            message: context.error.message ?? t("error"),
           })
         },
       }
@@ -73,20 +73,18 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardTitle>{t("title")}</CardTitle>
+          <CardDescription>{t("subtitle")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <FieldGroup>
               <Field data-invalid={!!errors.email}>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">{t("email")}</FieldLabel>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder={t("emailPlaceholder")}
                   required
                   {...register("email")}
                   aria-invalid={!!errors.email}
@@ -94,7 +92,7 @@ export function LoginForm({
                 <FieldError errors={[errors.email]} />
               </Field>
               <Field data-invalid={!!errors.password}>
-                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
                 <InputGroup>
                   <InputGroupInput
                     id="password"
@@ -106,9 +104,7 @@ export function LoginForm({
                   <InputGroupAddon align="inline-end">
                     <InputGroupButton
                       size="icon-xs"
-                      aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                      }
+                      aria-label={showPassword ? t("hidePassword") : t("showPassword")}
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOff /> : <Eye />}
@@ -120,7 +116,7 @@ export function LoginForm({
               <Field>
                 {errors.root && <FieldError errors={[errors.root]} />}
                 <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Logging in..." : "Login"}
+                  {isSubmitting ? t("loggingIn") : t("submit")}
                 </Button>
                 <Button
                   variant="outline"
@@ -132,13 +128,11 @@ export function LoginForm({
                   }}
                   disabled={isGoogleLoading}
                 >
-                  {isGoogleLoading
-                    ? "Logging in with Google..."
-                    : "Login with Google"}
+                  {isGoogleLoading ? t("googleLoading") : t("google")}
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account?
-                  <Link href="/sign-up">Sign up</Link>
+                  {t("noAccount")}
+                  <Link href="/sign-up">{t("signUp")}</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

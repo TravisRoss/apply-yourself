@@ -1,3 +1,5 @@
+"use client"
+
 import { getPaginationRange } from "@/lib/pagination"
 import { Field, FieldLabel } from "@/components/ui/field"
 import {
@@ -15,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useTranslations } from "next-intl"
 
 const notAllowed = "cursor-not-allowed opacity-50"
 
@@ -34,6 +37,7 @@ export function ApplicationPagination({
   total,
 }: ApplicationPaginationProps) {
   const { numPages, rangeStart, rangeEnd } = getPaginationRange(pageIndex, pageSize, total)
+  const t = useTranslations("applications.pagination")
 
   function handlePreviousClick() {
     if (pageIndex > 0) onPageChange(pageIndex - 1)
@@ -46,7 +50,7 @@ export function ApplicationPagination({
   return (
     <div className="flex items-center justify-between gap-4 p-2">
       <Field orientation="horizontal" className="w-fit">
-        <FieldLabel htmlFor="select-rows-per-page">Rows per page</FieldLabel>
+        <FieldLabel htmlFor="select-rows-per-page">{t("rowsPerPage")}</FieldLabel>
         <Select
           value={pageSize.toString()}
           onValueChange={(value) => onPageSizeChange(Number(value))}
@@ -72,7 +76,7 @@ export function ApplicationPagination({
               onClick={() => handlePreviousClick()}
               aria-disabled={pageIndex === 0}
               className={pageIndex === 0 ? notAllowed : ""}
-              text="Previous"
+              text={t("previous")}
             />
           </PaginationItem>
           <PaginationItem>
@@ -85,7 +89,7 @@ export function ApplicationPagination({
               onClick={() => handleNextClick()}
               aria-disabled={pageIndex === numPages - 1}
               className={pageIndex === numPages - 1 ? notAllowed : ""}
-              text="Next"
+              text={t("next")}
             />
           </PaginationItem>
         </PaginationContent>

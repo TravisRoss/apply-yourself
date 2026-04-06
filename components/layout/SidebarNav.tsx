@@ -11,22 +11,26 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
+import { useTranslations } from "next-intl"
 
-const navLinks: { title: string; href: string; icon: LucideIcon }[] = [
-  { title: "Dashboard", href: "/", icon: LayoutDashboard },
-  { title: "Applications", href: "/applications", icon: FileText },
-  { title: "Interviews", href: "/interviews", icon: Calendar },
-  { title: "Contacts", href: "/contacts", icon: Users },
-  { title: "Settings", href: "/settings", icon: Settings },
-]
+type NavLink = { title: string; href: string; icon: LucideIcon }
 
 export default function SidebarNav() {
   const pathname = usePathname()
+  const t = useTranslations("nav")
+
+  const navLinks: NavLink[] = [
+    { title: t("dashboard"), href: "/", icon: LayoutDashboard },
+    { title: t("applications"), href: "/applications", icon: FileText },
+    { title: t("interviews"), href: "/interviews", icon: Calendar },
+    { title: t("contacts"), href: "/contacts", icon: Users },
+    { title: t("settings"), href: "/settings", icon: Settings },
+  ]
 
   return (
     <SidebarMenu>
       {navLinks.map((link) => (
-        <SidebarMenuItem key={link.title}>
+        <SidebarMenuItem key={link.href}>
           <SidebarMenuButton asChild isActive={link.href === pathname}>
             <Link
               href={link.href}

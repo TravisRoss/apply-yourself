@@ -1,3 +1,5 @@
+"use client"
+
 import { useDeleteInterview } from "@/hooks/useInterviews"
 import { useSession } from "@/lib/auth-client"
 import { MoreHorizontal } from "lucide-react"
@@ -11,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import EditInterviewSheet from "./EditInterviewSheet"
+import { useTranslations } from "next-intl"
 
 type InterviewKebabMenuProps = {
   interviewId: string
@@ -24,6 +27,8 @@ export default function InterviewKebabMenu({
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editSheetOpen, setEditSheetOpen] = useState(false)
   const { mutate: deleteInterview } = useDeleteInterview(userId)
+  const t = useTranslations("interviews.kebab")
+  const tCommon = useTranslations("common")
 
   function handleEdit() {
     setEditSheetOpen(true)
@@ -41,14 +46,14 @@ export default function InterviewKebabMenu({
             variant="ghost"
             size="icon"
             className="h-8 w-8 text-muted-foreground"
-            aria-label="Open menu"
+            aria-label={tCommon("openMenu")}
           >
             <MoreHorizontal />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={handleEdit}>Edit</DropdownMenuItem>
-          <DropdownMenuItem onSelect={handleDelete}>Delete</DropdownMenuItem>
+          <DropdownMenuItem onSelect={handleEdit}>{tCommon("edit")}</DropdownMenuItem>
+          <DropdownMenuItem onSelect={handleDelete}>{tCommon("delete")}</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <EditInterviewSheet
@@ -60,8 +65,8 @@ export default function InterviewKebabMenu({
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         onDelete={() => deleteInterview(interviewId)}
-        title="Delete this interview?"
-        description="This action cannot be undone. This will permanently delete the interview."
+        title={t("deleteTitle")}
+        description={t("deleteDescription")}
       />
     </>
   )

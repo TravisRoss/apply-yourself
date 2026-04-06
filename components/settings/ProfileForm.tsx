@@ -3,6 +3,7 @@
 import { changeEmail, updateUser, useSession } from "@/lib/auth-client"
 import { ProfileFormData, profileSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -14,6 +15,8 @@ import { Skeleton } from "../ui/skeleton"
 export default function ProfileForm() {
   const { data: session, isPending } = useSession()
   const user = session?.user
+  const t = useTranslations("settings.profile")
+  const tToasts = useTranslations("settings.toasts")
 
   const {
     register,
@@ -41,7 +44,7 @@ export default function ProfileForm() {
     if (nameChanged) {
       const { error } = await updateUser({ name: formData.name })
       if (error !== null) {
-        toast.error(error.message ?? "Failed to update name")
+        toast.error(error.message ?? tToasts("profileNameFailed"))
         return
       }
     }
@@ -49,12 +52,12 @@ export default function ProfileForm() {
     if (emailChanged) {
       const { error } = await changeEmail({ newEmail: formData.email })
       if (error !== null) {
-        toast.error(error.message ?? "Failed to update email")
+        toast.error(error.message ?? tToasts("profileEmailFailed"))
         return
       }
     }
 
-    toast.success("Profile updated")
+    toast.success(tToasts("profileUpdated"))
   }
 
   if (isPending) {
@@ -77,21 +80,21 @@ export default function ProfileForm() {
     <form onSubmit={handleSubmit(handleSaveProfile)}>
       <FieldGroup>
         <Field data-invalid={!!errors.name}>
-          <FieldLabel htmlFor="name">Full Name</FieldLabel>
-          <Input id="name" placeholder="Jane Smith" {...register("name")} />
+          <FieldLabel htmlFor="name">{t("name")}</FieldLabel>
+          <Input id="name" placeholder={t("namePlaceholder")} {...register("name")} />
           <FieldError errors={[errors.name]} />
         </Field>
         <Field data-invalid={!!errors.email}>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldLabel htmlFor="email">{t("email")}</FieldLabel>
           <Input
             id="email"
-            placeholder="example@example.com"
+            placeholder={t("emailPlaceholder")}
             {...register("email")}
           />
           <FieldError errors={[errors.email]} />
         </Field>
         <Button type="submit" className="w-fit">
-          Save Profile
+          {t("save")}
         </Button>
       </FieldGroup>
     </form>

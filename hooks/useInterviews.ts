@@ -10,6 +10,7 @@ import {
 import { queryKeys } from "@/lib/query-keys"
 import { InterviewFormData } from "@/lib/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 export function useInterview(interviewId: string | undefined) {
@@ -38,14 +39,15 @@ export function useInterviewsThisWeek(userId: string | undefined) {
 
 export function useDeleteInterview(userId: string | undefined) {
   const queryClient = useQueryClient()
+  const t = useTranslations("interviews.toasts")
 
   return useMutation({
     mutationFn: (interviewId: string) => deleteInterview(interviewId),
     onSuccess: () => {
-      toast("Interview deleted.")
+      toast(t("deleted"))
     },
     onError: (error) => {
-      toast("Interview could not be deleted.")
+      toast(t("deleteFailed"))
       console.error("Interview deletion failed with error: ", error)
     },
     onSettled: () => {
@@ -56,6 +58,7 @@ export function useDeleteInterview(userId: string | undefined) {
 
 export function useCreateInterview(userId: string | undefined) {
   const queryClient = useQueryClient()
+  const t = useTranslations("interviews.toasts")
 
   return useMutation({
     mutationFn: (formData: InterviewFormData) => createInterview(formData),
@@ -79,10 +82,10 @@ export function useCreateInterview(userId: string | undefined) {
       return { previous }
     },
     onSuccess: () => {
-      toast("Added interview successfully")
+      toast(t("created"))
     },
     onError: (error, _vars, context) => {
-      toast("Interview could not be added.")
+      toast(t("createFailed"))
       console.error("Interview addition failed with error: ", error)
       queryClient.setQueryData(queryKeys.interviews(userId!), context?.previous)
     },
@@ -94,6 +97,7 @@ export function useCreateInterview(userId: string | undefined) {
 
 export function useUpdateInterview(userId: string | undefined) {
   const queryClient = useQueryClient()
+  const t = useTranslations("interviews.toasts")
 
   return useMutation({
     mutationFn: async ({
@@ -129,10 +133,10 @@ export function useUpdateInterview(userId: string | undefined) {
       return { previous }
     },
     onSuccess: () => {
-      toast("Updated interview successfully")
+      toast(t("updated"))
     },
     onError: (error, _vars, context) => {
-      toast("Interview could not be updated.")
+      toast(t("updateFailed"))
       console.error("Interview update failed with error: ", error)
       queryClient.setQueryData(queryKeys.interviews(userId!), context?.previous)
     },

@@ -5,6 +5,7 @@ import { useApplications } from "@/hooks/useApplications"
 import { useInterview, useUpdateInterview } from "@/hooks/useInterviews"
 import { useSession } from "@/lib/auth-client"
 import { InterviewFormData } from "@/lib/zod"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { Button } from "../ui/button"
 import {
@@ -35,6 +36,8 @@ export default function EditInterviewSheet({
   const updateInterviewMutation = useUpdateInterview(userId)
   const isMobile = useIsMobile()
   const [isFormDirty, setIsFormDirty] = useState(false)
+  const t = useTranslations("interviews")
+  const tCommon = useTranslations("common")
 
   async function handleSubmit(formData: InterviewFormData) {
     await updateInterviewMutation.mutateAsync({ interviewId, formData })
@@ -63,8 +66,8 @@ export default function EditInterviewSheet({
         className={isMobile ? "max-h-[85dvh]" : undefined}
       >
         <SheetHeader className="px-4">
-          <SheetTitle className="text-lg">Edit interview</SheetTitle>
-          <SheetDescription>Make changes to the interview.</SheetDescription>
+          <SheetTitle className="text-lg">{t("edit.title")}</SheetTitle>
+          <SheetDescription>{t("edit.description")}</SheetDescription>
         </SheetHeader>
         {defaultValues !== undefined && (
           <InterviewForm
@@ -76,10 +79,10 @@ export default function EditInterviewSheet({
         )}
         <SheetFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {tCommon("cancel")}
           </Button>
           <Button variant="default" type="submit" form="add-interview-form" disabled={!isFormDirty}>
-            Save
+            {tCommon("save")}
           </Button>
         </SheetFooter>
       </SheetContent>

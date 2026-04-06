@@ -1,3 +1,5 @@
+"use client"
+
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
@@ -14,6 +16,7 @@ import DatePicker from "../shared/DatePicker"
 import { Controller, useForm } from "react-hook-form"
 import { InterviewFormData, InterviewFormValues, interviewFormSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 
 type Application = { id: string; company: string; position: string }
@@ -31,6 +34,9 @@ export default function InterviewForm({
   defaultValues,
   onDirtyChange,
 }: InterviewFormProps) {
+  const t = useTranslations("interviews.form")
+  const tCommon = useTranslations("common")
+
   const {
     register,
     control,
@@ -64,14 +70,14 @@ export default function InterviewForm({
       >
         <FieldGroup>
           <Field data-invalid={!!errors.applicationId}>
-            <FieldLabel>Application</FieldLabel>
+            <FieldLabel>{t("application")}</FieldLabel>
             <Controller
               name="applicationId"
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full" aria-invalid={!!errors.applicationId}>
-                    <SelectValue placeholder="Select application" />
+                    <SelectValue placeholder={t("applicationPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {applications.map((app) => (
@@ -86,7 +92,7 @@ export default function InterviewForm({
             <FieldError errors={[errors.applicationId]} />
           </Field>
           <Field data-invalid={!!errors.date}>
-            <FieldLabel>Date</FieldLabel>
+            <FieldLabel>{t("date")}</FieldLabel>
             <Controller
               name="date"
               control={control}
@@ -97,7 +103,7 @@ export default function InterviewForm({
             <FieldError errors={[errors.date]} />
           </Field>
           <Field data-invalid={!!errors.time}>
-            <FieldLabel htmlFor="time">Time</FieldLabel>
+            <FieldLabel htmlFor="time">{t("time")}</FieldLabel>
             <Input
               id="time"
               type="time"
@@ -107,14 +113,14 @@ export default function InterviewForm({
             <FieldError errors={[errors.time]} />
           </Field>
           <Field data-invalid={!!errors.type}>
-            <FieldLabel>Type</FieldLabel>
+            <FieldLabel>{t("type")}</FieldLabel>
             <Controller
               name="type"
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full" aria-invalid={!!errors.type}>
-                    <SelectValue placeholder="Select type" />
+                    <SelectValue placeholder={t("typePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {Object.values(InterviewType).map((type) => (
@@ -129,14 +135,14 @@ export default function InterviewForm({
             <FieldError errors={[errors.type]} />
           </Field>
           <Field data-invalid={!!errors.round}>
-            <FieldLabel>Round</FieldLabel>
+            <FieldLabel>{t("round")}</FieldLabel>
             <Controller
               name="round"
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="w-full" aria-invalid={!!errors.round}>
-                    <SelectValue placeholder="Select round" />
+                    <SelectValue placeholder={t("roundPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {Object.values(InterviewRound).map((round) => (
@@ -151,10 +157,10 @@ export default function InterviewForm({
             <FieldError errors={[errors.round]} />
           </Field>
           <Field data-invalid={!!errors.notes}>
-            <FieldLabel htmlFor="notes">Notes</FieldLabel>
+            <FieldLabel htmlFor="notes">{tCommon("notes")}</FieldLabel>
             <Textarea
               id="notes"
-              placeholder="Any additional notes..."
+              placeholder={tCommon("notesPlaceholder")}
               aria-invalid={!!errors.notes}
               {...register("notes")}
             />

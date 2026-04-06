@@ -1,4 +1,5 @@
 "use client"
+
 import { useApplication } from "@/hooks/useApplications"
 import {
   Sheet,
@@ -8,8 +9,7 @@ import {
   SheetTitle,
 } from "../ui/sheet"
 import Initials from "../shared/Initials"
-import { Badge } from "../ui/badge"
-import { cn, formatDate, STATUS_CLASSES } from "@/lib/utils"
+import { cn, formatDate } from "@/lib/utils"
 import SheetRow from "../shared/SheetRow"
 import {
   Calendar,
@@ -23,6 +23,7 @@ import {
 import { Button } from "../ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
 import StatusBadge from "../shared/StatusBadge"
+import { useTranslations } from "next-intl"
 
 type ViewApplicationSheetProps = {
   userId: string
@@ -41,6 +42,8 @@ export default function ViewApplicationSheet({
 }: ViewApplicationSheetProps) {
   const { data: application } = useApplication(userId, applicationId)
   const isMobile = useIsMobile()
+  const t = useTranslations("applications")
+  const tCommon = useTranslations("common")
 
   if (!application) return null
 
@@ -60,7 +63,7 @@ export default function ViewApplicationSheet({
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Status</span>
+                <span className="text-muted-foreground">{t("table.status")}</span>
                 <StatusBadge status={application.status} />
               </div>
             </div>
@@ -70,7 +73,7 @@ export default function ViewApplicationSheet({
           <SheetRow icon={MapPin} label={application.location} />
           <SheetRow
             icon={Calendar}
-            label={`Applied on ${formatDate(application.appliedDate)}`}
+            label={t("view.appliedOn", { date: formatDate(application.appliedDate) })}
           />
           <SheetRow icon={CircleDollarSign} label={application.salary} />
           <SheetRow icon={FileText} label={application.url} />
@@ -86,7 +89,7 @@ export default function ViewApplicationSheet({
               onEditSheetOpen(true)
             }}
           >
-            Edit Application
+            {t("view.editButton")}
           </Button>
         </SheetFooter>
       </SheetContent>

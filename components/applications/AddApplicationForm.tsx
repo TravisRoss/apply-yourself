@@ -18,6 +18,7 @@ import DatePicker from "../shared/DatePicker"
 import { Controller, useForm } from "react-hook-form"
 import { ApplicationFormData, applicationSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 
 type AddApplicationFormProps = {
@@ -31,6 +32,9 @@ export default function AddApplicationForm({
   application,
   onDirtyChange,
 }: AddApplicationFormProps) {
+  const t = useTranslations("applications.form")
+  const tCommon = useTranslations("common")
+
   const {
     register,
     control,
@@ -62,10 +66,10 @@ export default function AddApplicationForm({
       >
         <FieldGroup>
           <Field data-invalid={!!errors.company}>
-            <FieldLabel htmlFor="company">Company</FieldLabel>
+            <FieldLabel htmlFor="company">{t("company")}</FieldLabel>
             <Input
               id="company"
-              placeholder="e.g. Stripe"
+              placeholder={t("companyPlaceholder")}
               type="text"
               aria-invalid={!!errors.company}
               {...register("company")}
@@ -73,10 +77,10 @@ export default function AddApplicationForm({
             <FieldError errors={[errors.company]} />
           </Field>
           <Field data-invalid={!!errors.position}>
-            <FieldLabel htmlFor="position">Position</FieldLabel>
+            <FieldLabel htmlFor="position">{t("position")}</FieldLabel>
             <Input
               id="position"
-              placeholder="e.g. Software Engineer"
+              placeholder={t("positionPlaceholder")}
               type="text"
               aria-invalid={!!errors.position}
               {...register("position")}
@@ -84,7 +88,7 @@ export default function AddApplicationForm({
             <FieldError errors={[errors.position]} />
           </Field>
           <Field data-invalid={!!errors.status}>
-            <FieldLabel>Status</FieldLabel>
+            <FieldLabel>{t("status")}</FieldLabel>
             <Controller
               name="status"
               control={control}
@@ -109,7 +113,7 @@ export default function AddApplicationForm({
             <FieldError errors={[errors.status]} />
           </Field>
           <Field data-invalid={!!errors.appliedDate}>
-            <FieldLabel htmlFor="appliedDate">Applied date</FieldLabel>
+            <FieldLabel htmlFor="appliedDate">{t("appliedDate")}</FieldLabel>
             <Controller
               name="appliedDate"
               control={control}
@@ -120,7 +124,7 @@ export default function AddApplicationForm({
             <FieldError errors={[errors.appliedDate]} />
           </Field>
           <Field data-invalid={!!errors.jobType}>
-            <FieldLabel>Job type</FieldLabel>
+            <FieldLabel>{t("jobType")}</FieldLabel>
             <Controller
               name="jobType"
               control={control}
@@ -142,11 +146,10 @@ export default function AddApplicationForm({
                 </Select>
               )}
             />
-
             <FieldError errors={[errors.jobType]} />
           </Field>
           <Field data-invalid={!!errors.source}>
-            <FieldLabel>Source</FieldLabel>
+            <FieldLabel>{t("source")}</FieldLabel>
             <Controller
               name="source"
               control={control}
@@ -156,7 +159,7 @@ export default function AddApplicationForm({
                     className="w-full"
                     aria-invalid={!!errors.source}
                   >
-                    <SelectValue placeholder="Select source" />
+                    <SelectValue placeholder={t("sourcePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {Object.values(Source).map((source) => (
@@ -171,28 +174,28 @@ export default function AddApplicationForm({
             <FieldError errors={[errors.source]} />
           </Field>
           <Field>
-            <FieldLabel htmlFor="location">Location</FieldLabel>
+            <FieldLabel htmlFor="location">{t("location")}</FieldLabel>
             <Input
               id="location"
-              placeholder="e.g. Remote"
+              placeholder={t("locationPlaceholder")}
               type="text"
               {...register("location")}
             />
           </Field>
           <Field>
-            <FieldLabel htmlFor="salary">Salary</FieldLabel>
+            <FieldLabel htmlFor="salary">{t("salary")}</FieldLabel>
             <Input
               id="salary"
-              placeholder="e.g. $120,000 - $150,000"
+              placeholder={t("salaryPlaceholder")}
               type="text"
               {...register("salary")}
             />
           </Field>
           <Field data-invalid={!!errors.url}>
-            <FieldLabel htmlFor="url">URL</FieldLabel>
+            <FieldLabel htmlFor="url">{t("url")}</FieldLabel>
             <Input
               id="url"
-              placeholder="e.g. https://stripe.com/jobs/123"
+              placeholder={t("urlPlaceholder")}
               type="url"
               aria-invalid={!!errors.url}
               {...register("url")}
@@ -200,10 +203,10 @@ export default function AddApplicationForm({
             <FieldError errors={[errors.url]} />
           </Field>
           <Field data-invalid={!!errors.notes}>
-            <FieldLabel htmlFor="notes">Notes</FieldLabel>
+            <FieldLabel htmlFor="notes">{tCommon("notes")}</FieldLabel>
             <Textarea
               id="notes"
-              placeholder="Any additional notes..."
+              placeholder={tCommon("notesPlaceholder")}
               aria-invalid={!!errors.notes}
               {...register("notes")}
             />

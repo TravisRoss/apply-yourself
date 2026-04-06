@@ -18,19 +18,12 @@ import StatusBadge from "../shared/StatusBadge"
 import { sortApplications, SortKey, SortDirection } from "@/lib/sort"
 import { searchApplications, filterByStatus, filterByDatePreset, DatePreset } from "@/lib/filter"
 import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 type Column = {
   label: string
   sortKey?: SortKey
 }
-
-const columns: Column[] = [
-  { label: "Company", sortKey: "company" },
-  { label: "Position" },
-  { label: "Location" },
-  { label: "Status" },
-  { label: "Applied", sortKey: "appliedDate" },
-]
 
 function SortIcon({
   column,
@@ -81,6 +74,15 @@ export default function ApplicationsTable({
   const { data: applications } = useApplications(userId)
   const deleteApplicationMutation = useDeleteApplication(userId)
   const [pageSize, setPageSize] = useState(5)
+  const t = useTranslations("applications")
+
+  const columns: Column[] = [
+    { label: t("table.company"), sortKey: "company" },
+    { label: t("table.position") },
+    { label: t("table.location") },
+    { label: t("table.status") },
+    { label: t("table.applied"), sortKey: "appliedDate" },
+  ]
 
   const allApplications = applications ?? []
   const afterSearch = searchApplications(allApplications, search)
@@ -133,7 +135,7 @@ export default function ApplicationsTable({
                 colSpan={columns.length + 1}
                 className="py-8 text-center text-muted-foreground"
               >
-                No applications found
+                {t("noResults")}
               </TableCell>
             </TableRow>
           ) : (

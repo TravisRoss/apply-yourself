@@ -6,12 +6,14 @@ import ContactCard from "@/components/contacts/ContactCard"
 import { PageShell } from "@/components/layout/PageShell"
 import { useContacts } from "@/hooks/useContacts"
 import { useSession } from "@/lib/auth-client"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 export default function ContactsPage() {
   const { data: session } = useSession()
   const userId = session?.user.id
   const { data: contacts, isPending } = useContacts(userId ?? "")
+  const t = useTranslations("contacts")
   const [searchTerm, setSearchTerm] = useState("")
 
   const filteredContacts = contacts?.filter((contact) => {
@@ -26,18 +28,18 @@ export default function ContactsPage() {
 
   return (
     <>
-      <PageShell title="Contacts" action={<AddContactSheet userId={userId!} />}>
+      <PageShell title={t("title")} action={<AddContactSheet userId={userId!} />}>
         {!isPending && contacts?.length === 0 && (
-          <p>You have no contacts yet.</p>
+          <p>{t("empty")}</p>
         )}
         <SearchBar
           input={searchTerm}
           onInputChange={setSearchTerm}
-          placeholder="Search contacts..."
+          placeholder={t("searchPlaceholder")}
           className="mb-4"
         />
         {searchTerm !== "" && filteredContacts?.length === 0 && (
-          <p className="text-muted-foreground text-sm">No contacts found matching your search.</p>
+          <p className="text-muted-foreground text-sm">{t("noResults")}</p>
         )}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {filteredContacts?.map((contact) => (

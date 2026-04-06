@@ -31,12 +31,15 @@ import { signUp } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { signInWithProvider } from "@/lib/sign-in"
 import { Eye, EyeOff } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+  const t = useTranslations("auth.signup")
+
   const {
     register,
     handleSubmit,
@@ -59,14 +62,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         },
         onError: (context) => {
           if (context.error.status === 422) {
-            setError("email", {
-              message: "An account with this email already exists.",
-            })
+            setError("email", { message: t("emailExists") })
           } else {
             setError("root", {
-              message:
-                context.error.message ??
-                "Something went wrong. Please try again.",
+              message: context.error.message ?? t("error"),
             })
           }
         },
@@ -77,40 +76,37 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   return (
     <Card {...props}>
       <CardHeader>
-        <CardTitle>Create an account</CardTitle>
-        <CardDescription>
-          Enter your information below to create your account
-        </CardDescription>
+        <CardTitle>{t("title")}</CardTitle>
+        <CardDescription>{t("subtitle")}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <FieldGroup>
             <Field data-invalid={!!errors.name}>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
+              <FieldLabel htmlFor="name">{t("name")}</FieldLabel>
               <Input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder={t("namePlaceholder")}
                 aria-invalid={!!errors.name}
                 {...register("name")}
               />
               <FieldError errors={[errors.name]} />
             </Field>
             <Field data-invalid={!!errors.email}>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="email">{t("email")}</FieldLabel>
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder={t("emailPlaceholder")}
                 required
                 aria-invalid={!!errors.email}
                 {...register("email")}
               />
-
               <FieldError errors={[errors.email]} />
             </Field>
             <Field data-invalid={!!errors.password}>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
+              <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
               <InputGroup>
                 <InputGroupInput
                   id="password"
@@ -122,9 +118,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     size="icon-xs"
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
+                    aria-label={showPassword ? t("hidePassword") : t("showPassword")}
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff /> : <Eye />}
@@ -134,9 +128,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               <FieldError errors={[errors.password]} />
             </Field>
             <Field data-invalid={!!errors.confirmPassword}>
-              <FieldLabel htmlFor="confirm-password">
-                Confirm Password
-              </FieldLabel>
+              <FieldLabel htmlFor="confirm-password">{t("confirmPassword")}</FieldLabel>
               <InputGroup>
                 <InputGroupInput
                   id="confirm-password"
@@ -148,11 +140,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     size="icon-xs"
-                    aria-label={
-                      showConfirmPassword
-                        ? "Hide confirm password"
-                        : "Show confirm password"
-                    }
+                    aria-label={showConfirmPassword ? t("hideConfirmPassword") : t("showConfirmPassword")}
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? <EyeOff /> : <Eye />}
@@ -165,7 +153,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               <Field>
                 {errors.root && <FieldError>{errors.root.message}</FieldError>}
                 <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Creating account..." : "Create Account"}
+                  {isSubmitting ? t("creating") : t("submit")}
                 </Button>
                 <Button
                   variant="outline"
@@ -177,10 +165,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   }}
                   disabled={isGoogleLoading}
                 >
-                  {isGoogleLoading ? "Signing in with Google..." : "Sign in with Google"}
+                  {isGoogleLoading ? t("googleLoading") : t("google")}
                 </Button>
                 <FieldDescription className="px-6 text-center">
-                  Already have an account? <Link href="/sign-in">Sign in</Link>
+                  {t("hasAccount")} <Link href="/sign-in">{t("signIn")}</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

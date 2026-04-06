@@ -6,12 +6,14 @@ import { PageShell } from "@/components/layout/PageShell"
 import { useApplications } from "@/hooks/useApplications"
 import { useInterviews } from "@/hooks/useInterviews"
 import { useSession } from "@/lib/auth-client"
+import { useTranslations } from "next-intl"
 
 export default function InterviewsPage() {
   const { data: session } = useSession()
   const userId = session?.user.id
   const { data: applications = [] } = useApplications(userId)
   const { data: interviews = [] } = useInterviews(userId)
+  const t = useTranslations("interviews")
   const currentTime = new Date().getTime()
 
   const pastInterviews = interviews.filter(
@@ -23,29 +25,23 @@ export default function InterviewsPage() {
   )
 
   return (
-    <PageShell title="Interviews" action={<AddInterviewSheet />}>
+    <PageShell title={t("title")} action={<AddInterviewSheet />}>
       {interviews.length === 0 ? (
-        <p className="text-center text-muted-foreground">
-          No interviews yet. Add your first interview to get started!
-        </p>
+        <p className="text-center text-muted-foreground">{t("empty")}</p>
       ) : (
         <>
-          <h2 className="mb-4">Upcoming</h2>
+          <h2 className="mb-4">{t("upcoming")}</h2>
           {upcomingInterviews.length === 0 ? (
-            <p className="text-muted-foreground text-sm">
-              Currently no upcoming interviews.
-            </p>
+            <p className="text-muted-foreground text-sm">{t("upcomingEmpty")}</p>
           ) : (
             <InterviewsList
               interviews={upcomingInterviews}
               applications={applications}
             />
           )}
-          <h2 className="mt-4 mb-4">Past</h2>
+          <h2 className="mt-4 mb-4">{t("past")}</h2>
           {pastInterviews.length === 0 ? (
-            <p className="text-muted-foreground">
-              You don&apos;t have any past interviews.
-            </p>
+            <p className="text-muted-foreground">{t("pastEmpty")}</p>
           ) : (
             <InterviewsList
               interviews={pastInterviews}

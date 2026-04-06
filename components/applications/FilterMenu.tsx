@@ -13,14 +13,9 @@ import { applicationStatusLabels } from "@/lib/labels"
 import { DatePreset } from "@/lib/filter"
 import { applicationStatusSchema } from "@/lib/zod"
 import { Filter } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 const STATUSES = applicationStatusSchema.options
-
-const DATE_PRESETS: { label: string; value: DatePreset }[] = [
-  { label: "Last 7 days", value: "7d" },
-  { label: "Last 30 days", value: "30d" },
-  { label: "Last 90 days", value: "90d" },
-]
 
 type FilterMenuProps = {
   selectedStatuses: string[]
@@ -35,6 +30,14 @@ export default function FilterMenu({
   datePreset,
   onDatePresetChange,
 }: FilterMenuProps) {
+  const t = useTranslations("applications.filter")
+
+  const datePresets: { label: string; value: DatePreset }[] = [
+    { label: t("last7Days"), value: "7d" },
+    { label: t("last30Days"), value: "30d" },
+    { label: t("last90Days"), value: "90d" },
+  ]
+
   function toggleStatus(status: string) {
     if (selectedStatuses.includes(status)) {
       onStatusesChange(selectedStatuses.filter((s) => s !== status))
@@ -55,11 +58,11 @@ export default function FilterMenu({
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
           <Filter />
-          <span>Filter{activeCount > 0 ? ` (${activeCount})` : ""}</span>
+          <span>{t("trigger")}{activeCount > 0 ? ` (${activeCount})` : ""}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>Status</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("status")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {STATUSES.map((status) => (
           <DropdownMenuCheckboxItem
@@ -71,9 +74,9 @@ export default function FilterMenu({
           </DropdownMenuCheckboxItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuLabel>Applied date</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("appliedDate")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {DATE_PRESETS.map(({ label, value }) => (
+        {datePresets.map(({ label, value }) => (
           <DropdownMenuCheckboxItem
             key={value}
             checked={datePreset === value}
@@ -88,7 +91,7 @@ export default function FilterMenu({
           <>
             <DropdownMenuSeparator />
             <DropdownMenuCheckboxItem checked={false} onCheckedChange={clearAll}>
-              Clear filters
+              {t("clearFilters")}
             </DropdownMenuCheckboxItem>
           </>
         )}

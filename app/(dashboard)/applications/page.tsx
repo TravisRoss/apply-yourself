@@ -8,15 +8,23 @@ import FilterMenu from "@/components/applications/FilterMenu"
 import { useSession } from "@/lib/auth-client"
 import { DatePreset } from "@/lib/filter"
 import { SortDirection, SortKey } from "@/lib/sort"
+import { useTranslations } from "next-intl"
 import { redirect } from "next/navigation"
 import { useState } from "react"
 
 export default function ApplicationsPage() {
   const { data: sessionData } = useSession()
+  const t = useTranslations("applications")
   const [search, setSearch] = useState("")
   const [statusFilter, setStatusFilter] = useState<string[]>([])
   const [datePreset, setDatePreset] = useState<DatePreset>(null)
   const [pageIndex, setPageIndex] = useState(0)
+  const [sortKey, setSortKey] = useState<SortKey>("appliedDate")
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
+
+  if (!sessionData) {
+    redirect("/sign-in")
+  }
 
   function handleSearchChange(value: string) {
     setSearch(value)
@@ -26,12 +34,6 @@ export default function ApplicationsPage() {
   function handleStatusesChange(statuses: string[]) {
     setStatusFilter(statuses)
     setPageIndex(0)
-  }
-  const [sortKey, setSortKey] = useState<SortKey>("appliedDate")
-  const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
-
-  if (!sessionData) {
-    redirect("/sign-in")
   }
 
   function handleSortChange(key: SortKey) {
@@ -47,11 +49,15 @@ export default function ApplicationsPage() {
 
   return (
     <PageShell
-      title="Applications"
+      title={t("title")}
       action={<AddApplicationSheet userId={userId!} />}
     >
       <div className="flex items-center gap-2">
-        <SearchBar onInputChange={handleSearchChange} input={search} />
+        <SearchBar
+          onInputChange={handleSearchChange}
+          input={search}
+          placeholder={t("search")}
+        />
         <FilterMenu
           selectedStatuses={statusFilter}
           onStatusesChange={handleStatusesChange}

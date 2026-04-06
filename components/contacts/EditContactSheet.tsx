@@ -4,6 +4,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { useContact, useUpdateContact } from "@/hooks/useContacts"
 import { useSession } from "@/lib/auth-client"
 import { ContactFormData } from "@/lib/zod"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { Button } from "../ui/button"
 import {
@@ -33,6 +34,8 @@ export default function EditContactSheet({
   const updateContactMutation = useUpdateContact(userId!)
   const isMobile = useIsMobile()
   const [isFormDirty, setIsFormDirty] = useState(false)
+  const t = useTranslations("contacts")
+  const tCommon = useTranslations("common")
 
   async function handleSubmit(formData: ContactFormData) {
     await updateContactMutation.mutateAsync({ contactId, formData })
@@ -57,8 +60,8 @@ export default function EditContactSheet({
         className={isMobile ? "max-h-[85dvh]" : undefined}
       >
         <SheetHeader className="px-4">
-          <SheetTitle className="text-lg">Edit Contact</SheetTitle>
-          <SheetDescription>Make changes to the contact.</SheetDescription>
+          <SheetTitle className="text-lg">{t("edit.title")}</SheetTitle>
+          <SheetDescription>{t("edit.description")}</SheetDescription>
         </SheetHeader>
         {defaultValues !== undefined && (
           <ContactForm
@@ -69,7 +72,7 @@ export default function EditContactSheet({
         )}
         <SheetFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {tCommon("cancel")}
           </Button>
           <Button
             variant="default"
@@ -77,7 +80,7 @@ export default function EditContactSheet({
             form="contact-form"
             disabled={!isFormDirty}
           >
-            Save
+            {tCommon("save")}
           </Button>
         </SheetFooter>
       </SheetContent>

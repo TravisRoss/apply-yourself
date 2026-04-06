@@ -1,6 +1,9 @@
+"use client"
+
 import { useCreateContact } from "@/hooks/useContacts"
 import { ContactFormData } from "@/lib/zod"
 import { PlusIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { Button } from "../ui/button"
 import {
@@ -20,6 +23,8 @@ type AddContactSheetProps = {
 export default function AddContactSheet({ userId }: AddContactSheetProps) {
   const [sheetOpen, setSheetOpen] = useState(false)
   const addContactMutation = useCreateContact(userId)
+  const t = useTranslations("contacts")
+  const tCommon = useTranslations("common")
 
   function handleSubmit(formData: ContactFormData) {
     addContactMutation.mutateAsync({ formData, userId })
@@ -30,20 +35,20 @@ export default function AddContactSheet({ userId }: AddContactSheetProps) {
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild>
         <Button onClick={() => setSheetOpen(true)}>
-          <PlusIcon /> Add Contact
+          <PlusIcon /> {t("add.trigger")}
         </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Add Contact</SheetTitle>
+          <SheetTitle>{t("add.title")}</SheetTitle>
         </SheetHeader>
         <ContactForm onHandleSubmit={handleSubmit} />
         <SheetFooter>
           <Button variant="outline" onClick={() => setSheetOpen(false)}>
-            Cancel
+            {tCommon("cancel")}
           </Button>
           <Button variant="default" type="submit" form="contact-form">
-            Save
+            {tCommon("save")}
           </Button>
         </SheetFooter>
       </SheetContent>

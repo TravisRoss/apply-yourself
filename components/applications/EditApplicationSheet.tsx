@@ -13,6 +13,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import AddApplicationForm from "./AddApplicationForm"
 import { useApplication, useUpdateApplication } from "@/hooks/useApplications"
 import { ApplicationFormData } from "@/lib/zod"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 type EditApplicationSheetProps = {
@@ -31,6 +32,8 @@ export default function EditApplicationSheet({
   const editApplicationMutation = useUpdateApplication(userId)
   const { data: application } = useApplication(userId, applicationId)
   const [isFormDirty, setIsFormDirty] = useState(false)
+  const t = useTranslations("applications")
+  const tCommon = useTranslations("common")
 
   function handleSubmit(formData: ApplicationFormData) {
     editApplicationMutation.mutateAsync({ applicationId, formData })
@@ -59,8 +62,8 @@ export default function EditApplicationSheet({
         className={useIsMobile() ? "max-h-[85dvh]" : undefined}
       >
         <SheetHeader className="px-4">
-          <SheetTitle className="text-lg">Edit application</SheetTitle>
-          <SheetDescription>Make changes to the application.</SheetDescription>
+          <SheetTitle className="text-lg">{t("edit.title")}</SheetTitle>
+          <SheetDescription>{t("edit.description")}</SheetDescription>
         </SheetHeader>
         {formData && (
           <AddApplicationForm
@@ -71,7 +74,7 @@ export default function EditApplicationSheet({
         )}
         <SheetFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {tCommon("cancel")}
           </Button>
           <Button
             variant="default"
@@ -79,7 +82,7 @@ export default function EditApplicationSheet({
             form="add-application-form"
             disabled={!isFormDirty}
           >
-            Save
+            {tCommon("save")}
           </Button>
         </SheetFooter>
       </SheetContent>

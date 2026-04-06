@@ -1,0 +1,252 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "openMenu": "Open menu",
+    "notes": "Notes",
+    "notesPlaceholder": "Any additional notes..."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "applications": "Applications",
+    "interviews": "Interviews",
+    "contacts": "Contacts",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "recentApplications": "Recent Applications",
+    "viewAll": "View all",
+    "fromLastMonth": "from last month"
+  },
+  "applications": {
+    "title": "Applications",
+    "noResults": "No applications found",
+    "search": "Search...",
+    "table": {
+      "company": "Company",
+      "position": "Position",
+      "location": "Location",
+      "status": "Status",
+      "applied": "Applied"
+    },
+    "add": {
+      "trigger": "Add application",
+      "title": "Add application",
+      "description": "Add a new application."
+    },
+    "edit": {
+      "title": "Edit application",
+      "description": "Make changes to the application."
+    },
+    "view": {
+      "editButton": "Edit Application",
+      "appliedOn": "Applied on {date}"
+    },
+    "filter": {
+      "trigger": "Filter",
+      "status": "Status",
+      "appliedDate": "Applied date",
+      "last7Days": "Last 7 days",
+      "last30Days": "Last 30 days",
+      "last90Days": "Last 90 days",
+      "clearFilters": "Clear filters"
+    },
+    "kebab": {
+      "viewDetails": "View details",
+      "deleteTitle": "Delete selected application?",
+      "deleteDescription": "This action cannot be undone. This will permanently delete the selected application."
+    },
+    "pagination": {
+      "rowsPerPage": "Rows per page",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "form": {
+      "company": "Company",
+      "companyPlaceholder": "e.g. Stripe",
+      "position": "Position",
+      "positionPlaceholder": "e.g. Software Engineer",
+      "status": "Status",
+      "appliedDate": "Applied date",
+      "jobType": "Job type",
+      "source": "Source",
+      "sourcePlaceholder": "Select source",
+      "location": "Location",
+      "locationPlaceholder": "e.g. Remote",
+      "salary": "Salary",
+      "salaryPlaceholder": "e.g. $120,000 - $150,000",
+      "url": "URL",
+      "urlPlaceholder": "e.g. https://stripe.com/jobs/123"
+    },
+    "toasts": {
+      "created": "Application created successfully.",
+      "createFailed": "Failed to create application: {error}",
+      "deleteFailed": "Failed to delete application: {error}",
+      "updated": "Application updated successfully."
+    }
+  },
+  "interviews": {
+    "title": "Interviews",
+    "empty": "No interviews yet. Add your first interview to get started!",
+    "upcoming": "Upcoming",
+    "upcomingEmpty": "Currently no upcoming interviews.",
+    "past": "Past",
+    "pastEmpty": "You don't have any past interviews.",
+    "add": {
+      "trigger": "Schedule interview",
+      "title": "Schedule interview",
+      "description": "Schedule a new interview.",
+      "noApplications": "You need at least one application before you can schedule an interview.",
+      "goToApplications": "Go to Applications"
+    },
+    "edit": {
+      "title": "Edit interview",
+      "description": "Make changes to the interview."
+    },
+    "form": {
+      "application": "Application",
+      "applicationPlaceholder": "Select application",
+      "date": "Date",
+      "time": "Time",
+      "type": "Type",
+      "typePlaceholder": "Select type",
+      "round": "Round",
+      "roundPlaceholder": "Select round"
+    },
+    "kebab": {
+      "deleteTitle": "Delete this interview?",
+      "deleteDescription": "This action cannot be undone. This will permanently delete the interview."
+    },
+    "toasts": {
+      "created": "Added interview successfully.",
+      "createFailed": "Interview could not be added.",
+      "deleted": "Interview deleted.",
+      "deleteFailed": "Interview could not be deleted.",
+      "updated": "Updated interview successfully.",
+      "updateFailed": "Interview could not be updated."
+    }
+  },
+  "contacts": {
+    "title": "Contacts",
+    "empty": "You have no contacts yet.",
+    "searchPlaceholder": "Search contacts...",
+    "noResults": "No contacts found matching your search.",
+    "add": {
+      "trigger": "Add Contact",
+      "title": "Add Contact"
+    },
+    "edit": {
+      "title": "Edit Contact",
+      "description": "Make changes to the contact."
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Jane Smith",
+      "company": "Company",
+      "companyPlaceholder": "Acme Corp",
+      "role": "Role",
+      "rolePlaceholder": "Select role",
+      "email": "Email",
+      "emailPlaceholder": "jane@acme.com",
+      "linkedin": "LinkedIn URL",
+      "linkedinPlaceholder": "https://linkedin.com/in/janesmith"
+    },
+    "card": {
+      "email": "Email",
+      "linkedin": "LinkedIn"
+    },
+    "kebab": {
+      "deleteTitle": "Delete selected contact?",
+      "deleteDescription": "This action cannot be undone. This will permanently delete the selected contact."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": {
+      "title": "Profile",
+      "name": "Full Name",
+      "namePlaceholder": "Jane Smith",
+      "email": "Email",
+      "emailPlaceholder": "example@example.com",
+      "save": "Save Profile"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "interviewReminders": "Interview reminders",
+      "interviewRemindersDescription": "Get reminded 24 hours before interviews",
+      "weeklySummary": "Weekly summary",
+      "weeklySummaryDescription": "Receive a weekly summary of your job search",
+      "save": "Save Notifications"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "darkMode": "Dark mode",
+      "darkModeDescription": "Toggle between light and dark mode"
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "deleteAccount": "Delete account",
+      "deleteAccountDescription": "Permanently delete your account and all data. You will be automatically signed out.",
+      "delete": "Delete",
+      "deleteTitle": "Delete account?",
+      "deleteDescription": "This action cannot be undone. This will permanently delete your account and all data."
+    },
+    "toasts": {
+      "notificationsSaved": "Notification preferences saved.",
+      "notificationsFailed": "Failed to save preferences. Please try again.",
+      "deleteAccountFailed": "Failed to delete account. Please try again.",
+      "profileUpdated": "Profile updated.",
+      "profileNameFailed": "Failed to update name.",
+      "profileEmailFailed": "Failed to update email."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login to your account",
+      "subtitle": "Enter your email below to login to your account",
+      "email": "Email",
+      "emailPlaceholder": "m@example.com",
+      "password": "Password",
+      "hidePassword": "Hide password",
+      "showPassword": "Show password",
+      "loggingIn": "Logging in...",
+      "submit": "Login",
+      "googleLoading": "Logging in with Google...",
+      "google": "Login with Google",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "signup": {
+      "title": "Create an account",
+      "subtitle": "Enter your information below to create your account",
+      "name": "Full Name",
+      "namePlaceholder": "John Doe",
+      "email": "Email",
+      "emailPlaceholder": "m@example.com",
+      "password": "Password",
+      "hidePassword": "Hide password",
+      "showPassword": "Show password",
+      "confirmPassword": "Confirm Password",
+      "hideConfirmPassword": "Hide confirm password",
+      "showConfirmPassword": "Show confirm password",
+      "creating": "Creating account...",
+      "submit": "Create Account",
+      "googleLoading": "Signing in with Google...",
+      "google": "Sign in with Google",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "emailExists": "An account with this email already exists.",
+      "error": "Something went wrong. Please try again."
+    },
+    "signOut": {
+      "trigger": "Sign out",
+      "title": "Sign out?",
+      "description": "You will be returned to the sign in page.",
+      "cancel": "Cancel",
+      "confirm": "Sign out"
+    }
+  }
+}

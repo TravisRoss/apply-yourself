@@ -14,9 +14,11 @@ import {
 import { LogOut } from "lucide-react"
 import { signOut } from "@/lib/auth-client"
 import { Button } from "../ui/button"
+import { useTranslations } from "next-intl"
 
 export default function SignOutDialog() {
   const router = useRouter()
+  const t = useTranslations("auth.signOut")
 
   async function handleSignOut() {
     await signOut()
@@ -31,15 +33,13 @@ export default function SignOutDialog() {
           className="w-full justify-start text-muted-foreground hover:text-foreground"
         >
           <LogOut className="h-4 w-4" />
-          Sign out
+          {t("trigger")}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Sign out?</DialogTitle>
-          <DialogDescription>
-            You will be returned to the sign in page.
-          </DialogDescription>
+          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
@@ -47,11 +47,11 @@ export default function SignOutDialog() {
               variant="outline"
               className="text-muted-foreground hover:text-foreground"
             >
-              Cancel
+              {t("cancel")}
             </Button>
           </DialogClose>
           <Button variant="destructive" onClick={handleSignOut}>
-            Sign out
+            {t("confirm")}
           </Button>
         </DialogFooter>
       </DialogContent>

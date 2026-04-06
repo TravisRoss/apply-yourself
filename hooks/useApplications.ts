@@ -14,6 +14,7 @@ import { getOffersByUserId } from "@/lib/data/offers"
 import { queryKeys } from "@/lib/query-keys"
 import { ApplicationFormData } from "@/lib/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 export function useApplications(userId: string | undefined) {
@@ -31,6 +32,7 @@ export function useApplicationsThisWeek(userId: string | undefined) {
     enabled: !!userId,
   })
 }
+
 export function useApplicationsForMonth(
   userId: string | undefined,
   date: Date
@@ -79,6 +81,7 @@ export function useStatusApplied(userId: string | undefined) {
 
 export function useCreateApplication(userId: string) {
   const queryClient = useQueryClient()
+  const t = useTranslations("applications.toasts")
 
   return useMutation({
     mutationFn: (formData: ApplicationFormData) =>
@@ -111,15 +114,14 @@ export function useCreateApplication(userId: string) {
       return { previousApplications }
     },
     onSuccess: async () => {
-      toast("Application created successfully.")
+      toast(t("created"))
     },
     onError: (error, _formData, context) => {
-      // restore the applications from snapshot
       queryClient.setQueryData(
         queryKeys.applications(userId),
         context?.previousApplications
       )
-      toast(`Failed to create application: ${error.message}`)
+      toast(t("createFailed", { error: error.message }))
     },
     onSettled: () => {
       queryClient.invalidateQueries({
@@ -132,6 +134,7 @@ export function useCreateApplication(userId: string) {
 
 export function useDeleteApplication(userId: string) {
   const queryClient = useQueryClient()
+  const t = useTranslations("applications.toasts")
 
   return useMutation({
     mutationFn: (applicationId: string) => deleteApplication(applicationId),
@@ -156,7 +159,7 @@ export function useDeleteApplication(userId: string) {
         queryKeys.applications(userId),
         context?.previousApplications
       )
-      toast(`Failed to delete application: ${error.message}`)
+      toast(t("deleteFailed", { error: error.message }))
     },
     onSettled: () => {
       queryClient.invalidateQueries({
@@ -168,6 +171,7 @@ export function useDeleteApplication(userId: string) {
 
 export function useUpdateApplication(userId: string) {
   const queryClient = useQueryClient()
+  const t = useTranslations("applications.toasts")
 
   return useMutation({
     mutationFn: async ({
@@ -189,7 +193,6 @@ export function useUpdateApplication(userId: string) {
         queryKeys.applications(userId)
       )
 
-      //optimistically update applications
       queryClient.setQueryData(
         queryKeys.applications(userId),
         (prev: Application[] = []) =>
@@ -213,7 +216,7 @@ export function useUpdateApplication(userId: string) {
       return { previousApplications }
     },
     onSuccess: () => {
-      toast("Application updated successfully")
+      toast(t("updated"))
     },
     onError: (_error, _variables, context) => {
       queryClient.setQueryData(
