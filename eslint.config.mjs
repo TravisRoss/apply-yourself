@@ -21,6 +21,8 @@ const eslintConfig = defineConfig([
     // Playwright generated output:
     "playwright-report/**",
     "test-results/**",
+    // Prisma generated client:
+    "generated/prisma/**",
   ]),
 ])
 
