@@ -33,7 +33,7 @@ export default function EditInterviewSheet({
   const userId = sessionData?.user.id
   const { data: interview } = useInterview(interviewId)
   const { data: applications = [] } = useApplications(userId)
-  const updateInterviewMutation = useUpdateInterview(userId)
+  const updateInterviewMutation = useUpdateInterview()
   const isMobile = useIsMobile()
   const [isFormDirty, setIsFormDirty] = useState(false)
   const t = useTranslations("interviews")

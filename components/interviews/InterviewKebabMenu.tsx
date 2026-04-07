@@ -1,8 +1,8 @@
 "use client"
 
 import { useDeleteInterview } from "@/hooks/useInterviews"
-import { useSession } from "@/lib/auth-client"
 import { MoreHorizontal } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import DeleteConfirmationDialog from "../shared/DeleteConfirmationDialog"
 import { Button } from "../ui/button"
@@ -13,7 +13,6 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import EditInterviewSheet from "./EditInterviewSheet"
-import { useTranslations } from "next-intl"
 
 type InterviewKebabMenuProps = {
   interviewId: string
@@ -22,11 +21,9 @@ type InterviewKebabMenuProps = {
 export default function InterviewKebabMenu({
   interviewId,
 }: InterviewKebabMenuProps) {
-  const { data: session } = useSession()
-  const userId = session?.user.id
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editSheetOpen, setEditSheetOpen] = useState(false)
-  const { mutate: deleteInterview } = useDeleteInterview(userId)
+  const { mutate: deleteInterview } = useDeleteInterview()
   const t = useTranslations("interviews.kebab")
   const tCommon = useTranslations("common")
 
@@ -52,8 +49,12 @@ export default function InterviewKebabMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={handleEdit}>{tCommon("edit")}</DropdownMenuItem>
-          <DropdownMenuItem onSelect={handleDelete}>{tCommon("delete")}</DropdownMenuItem>
+          <DropdownMenuItem onSelect={handleEdit}>
+            {tCommon("edit")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={handleDelete}>
+            {tCommon("delete")}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <EditInterviewSheet

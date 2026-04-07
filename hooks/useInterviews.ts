@@ -17,27 +17,25 @@ export function useInterview(interviewId: string | undefined) {
   return useQuery({
     queryKey: queryKeys.interview(interviewId!),
     queryFn: () => getInterviewById(interviewId!),
-    enabled: !!interviewId,
+    enabled: interviewId !== undefined,
   })
 }
 
-export function useInterviews(userId: string | undefined) {
+export function useInterviews() {
   return useQuery({
-    queryKey: queryKeys.interviews(userId!),
-    queryFn: () => getInterviewsByUserId(userId!),
-    enabled: !!userId,
+    queryKey: queryKeys.interviews(),
+    queryFn: () => getInterviewsByUserId(),
   })
 }
 
-export function useInterviewsThisWeek(userId: string | undefined) {
+export function useInterviewsThisWeek() {
   return useQuery({
-    queryKey: queryKeys.interviewsThisWeek(userId!),
-    queryFn: () => getInterviewsThisWeek(userId!),
-    enabled: !!userId,
+    queryKey: queryKeys.interviewsThisWeek(),
+    queryFn: () => getInterviewsThisWeek(),
   })
 }
 
-export function useDeleteInterview(userId: string | undefined) {
+export function useDeleteInterview() {
   const queryClient = useQueryClient()
   const t = useTranslations("interviews.toasts")
 
@@ -51,12 +49,12 @@ export function useDeleteInterview(userId: string | undefined) {
       console.error("Interview deletion failed with error: ", error)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.interviews(userId!) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.interviews() })
     },
   })
 }
 
-export function useCreateInterview(userId: string | undefined) {
+export function useCreateInterview() {
   const queryClient = useQueryClient()
   const t = useTranslations("interviews.toasts")
 
@@ -64,14 +62,13 @@ export function useCreateInterview(userId: string | undefined) {
     mutationFn: (formData: InterviewFormData) => createInterview(formData),
     onMutate: async (formData: InterviewFormData) => {
       await queryClient.cancelQueries({
-        queryKey: queryKeys.interviews(userId!),
+        queryKey: queryKeys.interviews(),
       })
-      const previous = queryClient.getQueryData<Interview[]>([
-        "interviews",
-        userId,
-      ])
+      const previous = queryClient.getQueryData<Interview[]>(
+        queryKeys.interviews()
+      )
       queryClient.setQueryData(
-        queryKeys.interviews(userId!),
+        queryKeys.interviews(),
         (existing: Interview[] = []) => [
           ...existing,
           {
@@ -87,15 +84,15 @@ export function useCreateInterview(userId: string | undefined) {
     onError: (error, _vars, context) => {
       toast(t("createFailed"))
       console.error("Interview addition failed with error: ", error)
-      queryClient.setQueryData(queryKeys.interviews(userId!), context?.previous)
+      queryClient.setQueryData(queryKeys.interviews(), context?.previous)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.interviews(userId!) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.interviews() })
     },
   })
 }
 
-export function useUpdateInterview(userId: string | undefined) {
+export function useUpdateInterview() {
   const queryClient = useQueryClient()
   const t = useTranslations("interviews.toasts")
 
@@ -115,14 +112,13 @@ export function useUpdateInterview(userId: string | undefined) {
       formData: InterviewFormData
     }) => {
       await queryClient.cancelQueries({
-        queryKey: queryKeys.interviews(userId!),
+        queryKey: queryKeys.interviews(),
       })
-      const previous = queryClient.getQueryData<Interview[]>([
-        "interviews",
-        userId,
-      ])
+      const previous = queryClient.getQueryData<Interview[]>(
+        queryKeys.interviews()
+      )
       queryClient.setQueryData(
-        queryKeys.interviews(userId!),
+        queryKeys.interviews(),
         (existing: Interview[] = []) =>
           existing.map((interview) =>
             interview.id === interviewId
@@ -138,10 +134,10 @@ export function useUpdateInterview(userId: string | undefined) {
     onError: (error, _vars, context) => {
       toast(t("updateFailed"))
       console.error("Interview update failed with error: ", error)
-      queryClient.setQueryData(queryKeys.interviews(userId!), context?.previous)
+      queryClient.setQueryData(queryKeys.interviews(), context?.previous)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.interviews(userId!) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.interviews() })
     },
   })
 }

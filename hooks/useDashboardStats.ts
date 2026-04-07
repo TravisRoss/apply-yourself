@@ -21,11 +21,11 @@ export function useDashboardStats(userId: string | undefined) {
   const previousMonth = new Date(now.getFullYear(), now.getMonth() - 1)
 
   const { data: applications } = useApplications(userId)
-  const { data: interviews } = useInterviews(userId)
+  const { data: interviews } = useInterviews()
   const { data: offers } = useOffers(userId)
   const { data: statusApplied } = useStatusApplied(userId)
   const { data: applicationsThisWeek } = useApplicationsThisWeek(userId)
-  const { data: interviewsThisWeek } = useInterviewsThisWeek(userId)
+  const { data: interviewsThisWeek } = useInterviewsThisWeek()
   const { data: responsesThisWeek } = useResponsesThisWeek(userId)
   const { data: applicationsThisMonth } = useApplicationsForMonth(userId, now)
   const { data: applicationsLastMonth } = useApplicationsForMonth(

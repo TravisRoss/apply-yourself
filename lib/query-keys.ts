@@ -11,11 +11,10 @@ export const queryKeys = {
   offers: (userId: string) => ["applications", userId, "offers"] as const,
   statusApplied: (userId: string) =>
     ["applications", userId, "applied"] as const,
-  interviews: (userId: string) => ["interviews", userId] as const,
+  interviews: () => ["interviews"] as const,
   interview: (interviewId: string) =>
     ["interviews", "interview", interviewId] as const,
-  interviewsThisWeek: (userId: string) =>
-    ["interviews", userId, "this_week"] as const,
+  interviewsThisWeek: () => ["interviews", "this_week"] as const,
   contacts: (userId: string) => ["contacts", userId] as const,
   contact: (contactId: string) => ["contacts", "contact", contactId] as const,
   notificationPreferences: (userId: string) =>
