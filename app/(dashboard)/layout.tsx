@@ -17,7 +17,7 @@ export default async function DashboardLayout({
       <div className="flex h-screen w-full overflow-hidden">
         <AppSidebar />
         <main className="flex-1 overflow-y-auto">
-          <SidebarTrigger />
+          <SidebarTrigger className="size-16 md:size-7 [&_svg]:size-8 md:[&_svg]:size-4" />
           {children}
         </main>
       </div>

@@ -15,7 +15,7 @@ export function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center gap-2 pl-2">
           <LogoIcon />
-          <span>Apply Yourself</span>
+          <span className="text-base md:text-sm">Apply Yourself</span>
         </div>
       </SidebarHeader>
       <SidebarContent>

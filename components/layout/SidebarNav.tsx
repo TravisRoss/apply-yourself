@@ -40,6 +40,7 @@ export default function SidebarNav() {
           <SidebarMenuButton
             asChild
             isActive={link.href === pathname}
+            size={isMobile ? "lg" : "default"}
             onClick={() => {
               if (isMobile) setOpenMobile(false)
             }}
