@@ -17,20 +17,18 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 type EditApplicationSheetProps = {
-  userId: string
   applicationId: string
   open: boolean
   onOpenChange: (open: boolean) => void
 }
 
 export default function EditApplicationSheet({
-  userId,
   applicationId,
   open,
   onOpenChange,
 }: EditApplicationSheetProps) {
-  const editApplicationMutation = useUpdateApplication(userId)
-  const { data: application } = useApplication(userId, applicationId)
+  const editApplicationMutation = useUpdateApplication()
+  const { data: application } = useApplication(applicationId)
   const [isFormDirty, setIsFormDirty] = useState(false)
   const t = useTranslations("applications")
   const tCommon = useTranslations("common")

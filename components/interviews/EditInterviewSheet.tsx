@@ -3,7 +3,6 @@
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useApplications } from "@/hooks/useApplications"
 import { useInterview, useUpdateInterview } from "@/hooks/useInterviews"
-import { useSession } from "@/lib/auth-client"
 import { InterviewFormData } from "@/lib/zod"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -29,10 +28,8 @@ export default function EditInterviewSheet({
   open,
   onOpenChange,
 }: EditInterviewSheetProps) {
-  const { data: sessionData } = useSession()
-  const userId = sessionData?.user.id
   const { data: interview } = useInterview(interviewId)
-  const { data: applications = [] } = useApplications(userId)
+  const { data: applications = [] } = useApplications()
   const updateInterviewMutation = useUpdateInterview()
   const isMobile = useIsMobile()
   const [isFormDirty, setIsFormDirty] = useState(false)

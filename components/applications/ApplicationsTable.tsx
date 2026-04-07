@@ -52,7 +52,6 @@ function MutedTableCell({ children }: { children: React.ReactNode }) {
 }
 
 type ApplicationsTableProps = {
-  userId: string
   withPagination?: boolean
   className?: string
   search?: string
@@ -66,7 +65,6 @@ type ApplicationsTableProps = {
 }
 
 export default function ApplicationsTable({
-  userId,
   withPagination = false,
   className,
   search = "",
@@ -78,8 +76,8 @@ export default function ApplicationsTable({
   pageIndex = 0,
   onPageIndexChange,
 }: ApplicationsTableProps) {
-  const { data: applications } = useApplications(userId)
-  const deleteApplicationMutation = useDeleteApplication(userId)
+  const { data: applications } = useApplications()
+  const deleteApplicationMutation = useDeleteApplication()
   const [pageSize, setPageSize] = useState(5)
   const t = useTranslations("applications")
 
@@ -171,7 +169,6 @@ export default function ApplicationsTable({
                   <KebabMenu
                     onDelete={() => handleDelete(application.id)}
                     applicationId={application.id}
-                    userId={userId}
                   />
                 </MutedTableCell>
               </TableRow>

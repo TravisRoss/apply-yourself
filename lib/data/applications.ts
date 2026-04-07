@@ -1,20 +1,33 @@
 "use server"
 
+import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { calcMonthStartAndEndForDate, getCurrentWeekForDate } from "@/lib/utils"
 import { ApplicationFormData } from "@/lib/zod"
+import { headers } from "next/headers"
 
-export async function getApplicationsByUserId(userId: string) {
+async function getUserId(): Promise<string | null> {
+  const session = await auth.api.getSession({ headers: await headers() })
+  return session?.user?.id ?? null
+}
+
+export async function getApplicationsByUserId() {
+  const userId = await getUserId()
+  if (userId === null) return []
   return await prisma.application.findMany({ where: { userId } })
 }
 
-export async function getApplictionsWhereStatusApplied(userId: string) {
+export async function getApplictionsWhereStatusApplied() {
+  const userId = await getUserId()
+  if (userId === null) return []
   return await prisma.application.findMany({
     where: { userId, status: "applied" },
   })
 }
 
-export async function getApplicationsThisWeek(userId: string) {
+export async function getApplicationsThisWeek() {
+  const userId = await getUserId()
+  if (userId === null) return []
   const currentWeek = getCurrentWeekForDate(new Date())
 
   return await prisma.application.findMany({
@@ -25,10 +38,9 @@ export async function getApplicationsThisWeek(userId: string) {
   })
 }
 
-export async function getApplicationsForMonth(
-  userId: string,
-  date: Date = new Date()
-) {
+export async function getApplicationsForMonth(date: Date = new Date()) {
+  const userId = await getUserId()
+  if (userId === null) return []
   const { monthStart, monthEnd } = calcMonthStartAndEndForDate(date)
 
   return await prisma.application.findMany({
@@ -36,7 +48,9 @@ export async function getApplicationsForMonth(
   })
 }
 
-export async function getResponsesThisWeek(userId: string) {
+export async function getResponsesThisWeek() {
+  const userId = await getUserId()
+  if (userId === null) return []
   const currentWeek = getCurrentWeekForDate(new Date())
 
   return await prisma.statusHistory.findMany({
@@ -53,10 +67,9 @@ export async function getApplicationById(applicationId: string) {
   return await prisma.application.findUnique({ where: { id: applicationId } })
 }
 
-export async function createApplication(
-  userId: string,
-  formData: ApplicationFormData
-) {
+export async function createApplication(formData: ApplicationFormData) {
+  const userId = await getUserId()
+  if (userId === null) return
   return await prisma.application.create({
     data: {
       userId,

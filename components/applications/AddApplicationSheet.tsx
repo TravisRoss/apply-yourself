@@ -18,9 +18,9 @@ import { useCreateApplication } from "@/hooks/useApplications"
 import { ApplicationFormData } from "@/lib/zod"
 import { useTranslations } from "next-intl"
 
-export default function AddApplicationSheet({ userId }: { userId: string }) {
+export default function AddApplicationSheet() {
   const [sheetOpen, setSheetOpen] = useState(false)
-  const createApplicationMutation = useCreateApplication(userId)
+  const createApplicationMutation = useCreateApplication()
   const t = useTranslations("applications")
   const tCommon = useTranslations("common")
 

@@ -1,16 +1,15 @@
 export const queryKeys = {
-  applications: (userId: string) => ["applications", userId] as const,
-  applicationsThisWeek: (userId: string) =>
-    ["applications", userId, "applications_this_week"] as const,
-  applicationsForMonth: (userId: string, year: number, month: number) =>
-    ["applications", userId, "month", year, month] as const,
-  responsesThisWeek: (userId: string) =>
-    ["applications", userId, "responses_this_week"] as const,
-  application: (userId: string, applicationId: string) =>
-    ["applications", userId, "application", applicationId] as const,
-  offers: (userId: string) => ["applications", userId, "offers"] as const,
-  statusApplied: (userId: string) =>
-    ["applications", userId, "applied"] as const,
+  applications: () => ["applications"] as const,
+  applicationsThisWeek: () =>
+    ["applications", "applications_this_week"] as const,
+  applicationsForMonth: (year: number, month: number) =>
+    ["applications", "month", year, month] as const,
+  responsesThisWeek: () =>
+    ["applications", "responses_this_week"] as const,
+  application: (applicationId: string) =>
+    ["applications", "application", applicationId] as const,
+  offers: () => ["applications", "offers"] as const,
+  statusApplied: () => ["applications", "applied"] as const,
   interviews: () => ["interviews"] as const,
   interview: (interviewId: string) =>
     ["interviews", "interview", interviewId] as const,

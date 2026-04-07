@@ -17,13 +17,11 @@ import { useTranslations } from "next-intl"
 type KebabMenuProps = {
   onDelete: () => void
   applicationId: string
-  userId: string
 }
 
 export default function KebabMenu({
   onDelete,
   applicationId,
-  userId,
 }: KebabMenuProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editSheetOpen, setEditSheetOpen] = useState(false)
@@ -64,14 +62,12 @@ export default function KebabMenu({
         </DropdownMenuContent>
       </DropdownMenu>
       <ViewApplicationSheet
-        userId={userId}
         applicationId={applicationId}
         open={viewSheetOpen}
         onOpenChange={setViewSheetOpen}
         onEditSheetOpen={setEditSheetOpen}
       />
       <EditApplicationSheet
-        userId={userId}
         applicationId={applicationId}
         open={editSheetOpen}
         onOpenChange={setEditSheetOpen}

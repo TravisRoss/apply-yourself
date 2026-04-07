@@ -6,14 +6,11 @@ import InterviewsList from "@/components/interviews/InterviewsList"
 import { PageShell } from "@/components/layout/PageShell"
 import { useApplications } from "@/hooks/useApplications"
 import { useInterviews } from "@/hooks/useInterviews"
-import { useSession } from "@/lib/auth-client"
 import { useTranslations } from "next-intl"
 
 export default function InterviewsPage() {
-  const { data: session } = useSession()
-  const userId = session?.user.id
-  const { data: applications = [] } = useApplications(userId)
-  const { data: interviews = [], isLoading } = useInterviews()
+  const { data: applications = [] } = useApplications()
+  const { data: interviews = [], isPending } = useInterviews()
   const t = useTranslations("interviews")
   const currentTime = new Date().getTime()
 
@@ -28,9 +25,9 @@ export default function InterviewsPage() {
   return (
     <PageShell title={t("title")} action={<AddInterviewSheet />}>
       <h2 className="mb-4">{t("upcoming")}</h2>
-      {isLoading && <InterviewItemSkeleton />}
+      {isPending && <InterviewItemSkeleton />}
 
-      {!isLoading && interviews.length === 0 && (
+      {!isPending && interviews.length === 0 && (
         <p className="text-center text-muted-foreground">{t("empty")}</p>
       )}
 

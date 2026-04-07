@@ -2,18 +2,15 @@
 
 import AddApplicationSheet from "@/components/applications/AddApplicationSheet"
 import ApplicationsTable from "@/components/applications/ApplicationsTable"
-import { PageShell } from "@/components/layout/PageShell"
-import SearchBar from "@/components/applications/SearchBar"
 import FilterMenu from "@/components/applications/FilterMenu"
-import { useSession } from "@/lib/auth-client"
+import SearchBar from "@/components/applications/SearchBar"
+import { PageShell } from "@/components/layout/PageShell"
 import { DatePreset } from "@/lib/filter"
 import { SortDirection, SortKey } from "@/lib/sort"
 import { useTranslations } from "next-intl"
-import { redirect } from "next/navigation"
 import { useState } from "react"
 
 export default function ApplicationsPage() {
-  const { data: sessionData } = useSession()
   const t = useTranslations("applications")
   const [search, setSearch] = useState("")
   const [statusFilter, setStatusFilter] = useState<string[]>([])
@@ -21,10 +18,6 @@ export default function ApplicationsPage() {
   const [pageIndex, setPageIndex] = useState(0)
   const [sortKey, setSortKey] = useState<SortKey>("appliedDate")
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
-
-  if (!sessionData) {
-    redirect("/sign-in")
-  }
 
   function handleSearchChange(value: string) {
     setSearch(value)
@@ -45,13 +38,8 @@ export default function ApplicationsPage() {
     }
   }
 
-  const userId = sessionData.user.id
-
   return (
-    <PageShell
-      title={t("title")}
-      action={<AddApplicationSheet userId={userId!} />}
-    >
+    <PageShell title={t("title")} action={<AddApplicationSheet />}>
       <div className="flex items-center gap-2">
         <SearchBar
           onInputChange={handleSearchChange}
@@ -67,7 +55,6 @@ export default function ApplicationsPage() {
       </div>
 
       <ApplicationsTable
-        userId={userId!}
         withPagination={true}
         className="mt-4"
         search={search}

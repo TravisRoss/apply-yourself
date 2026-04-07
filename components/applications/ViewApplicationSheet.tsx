@@ -26,7 +26,6 @@ import StatusBadge from "../shared/StatusBadge"
 import { useTranslations } from "next-intl"
 
 type ViewApplicationSheetProps = {
-  userId: string
   applicationId: string
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -34,13 +33,12 @@ type ViewApplicationSheetProps = {
 }
 
 export default function ViewApplicationSheet({
-  userId,
   applicationId,
   open,
   onOpenChange,
   onEditSheetOpen,
 }: ViewApplicationSheetProps) {
-  const { data: application } = useApplication(userId, applicationId)
+  const { data: application } = useApplication(applicationId)
   const isMobile = useIsMobile()
   const t = useTranslations("applications")
   const tCommon = useTranslations("common")

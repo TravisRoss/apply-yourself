@@ -3,7 +3,6 @@
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useApplications } from "@/hooks/useApplications"
 import { useCreateInterview } from "@/hooks/useInterviews"
-import { useSession } from "@/lib/auth-client"
 import { InterviewFormData } from "@/lib/zod"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
@@ -23,11 +22,9 @@ import InterviewForm from "./InterviewForm"
 import { useTranslations } from "next-intl"
 
 export default function AddInterviewSheet() {
-  const { data: sessionData } = useSession()
-  const userId = sessionData?.user.id
   const [sheetOpen, setSheetOpen] = useState(false)
   const createInterviewMutation = useCreateInterview()
-  const { data: applications = [] } = useApplications(userId)
+  const { data: applications = [] } = useApplications()
   const isMobile = useIsMobile()
   const hasApplications = applications.length > 0
   const t = useTranslations("interviews")

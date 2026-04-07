@@ -15,23 +15,20 @@ import {
 import { Calendar, FileText, Gift, TrendingUp } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-export function useDashboardStats(userId: string | undefined) {
+export function useDashboardStats() {
   const t = useTranslations("dashboard.stats")
   const now = new Date()
   const previousMonth = new Date(now.getFullYear(), now.getMonth() - 1)
 
-  const { data: applications } = useApplications(userId)
+  const { data: applications } = useApplications()
   const { data: interviews } = useInterviews()
-  const { data: offers } = useOffers(userId)
-  const { data: statusApplied } = useStatusApplied(userId)
-  const { data: applicationsThisWeek } = useApplicationsThisWeek(userId)
+  const { data: offers } = useOffers()
+  const { data: statusApplied } = useStatusApplied()
+  const { data: applicationsThisWeek } = useApplicationsThisWeek()
   const { data: interviewsThisWeek } = useInterviewsThisWeek()
-  const { data: responsesThisWeek } = useResponsesThisWeek(userId)
-  const { data: applicationsThisMonth } = useApplicationsForMonth(userId, now)
-  const { data: applicationsLastMonth } = useApplicationsForMonth(
-    userId,
-    previousMonth
-  )
+  const { data: responsesThisWeek } = useResponsesThisWeek()
+  const { data: applicationsThisMonth } = useApplicationsForMonth(now)
+  const { data: applicationsLastMonth } = useApplicationsForMonth(previousMonth)
 
   const { monthStart: thisMonthStart, monthEnd: thisMonthEnd } =
     calcMonthStartAndEndForDate(now)
