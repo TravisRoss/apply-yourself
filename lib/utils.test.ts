@@ -146,8 +146,8 @@ describe("calcMonthStartAndEndForDate", () => {
 })
 
 describe("calcPercentageGain", () => {
-  it("returns 0 when previous is 0", () => {
-    expect(calcPercentageGain(10, 0)).toBe(0)
+  it("returns undefined when previous is 0", () => {
+    expect(calcPercentageGain(10, 0)).toBeUndefined()
   })
 
   it("returns 100 when current is double previous", () => {

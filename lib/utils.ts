@@ -14,8 +14,11 @@ export function calculateResponseRate(
   return Math.round((1 - pendingCount / total) * 100)
 }
 
-export function calcPercentageGain(current: number, previous: number): number {
-  if (previous === 0) return 0
+export function calcPercentageGain(
+  current: number,
+  previous: number
+): number | undefined {
+  if (previous === 0) return undefined
   return Math.round(((current - previous) / previous) * 100)
 }
 

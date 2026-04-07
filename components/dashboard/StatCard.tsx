@@ -1,6 +1,12 @@
-import { type LucideIcon } from "lucide-react"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { percentageGainDisplay } from "@/lib/utils"
+import { type LucideIcon } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card"
 
 type StatCardProps = {
   title: string
