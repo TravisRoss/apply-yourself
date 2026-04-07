@@ -41,7 +41,7 @@ export default async function RootLayout({
           <ThemeProvider>
             <QueryProvider>
               <TooltipProvider>{children}</TooltipProvider>
-              <Toaster position="bottom-center" />
+              <Toaster position="bottom-right" />
             </QueryProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
