@@ -12,7 +12,7 @@ import SignOutDialog from "../shared/SignOutDialog"
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader>
+      <SidebarHeader className="mt-2">
         <div className="flex items-center gap-2 pl-2">
           <LogoIcon />
           <span className="text-base md:text-sm">Apply Yourself</span>
