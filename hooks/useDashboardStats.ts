@@ -20,15 +20,39 @@ export function useDashboardStats() {
   const now = new Date()
   const previousMonth = new Date(now.getFullYear(), now.getMonth() - 1)
 
-  const { data: applications } = useApplications()
-  const { data: interviews } = useInterviews()
-  const { data: offers } = useOffers()
-  const { data: statusApplied } = useStatusApplied()
-  const { data: applicationsThisWeek } = useApplicationsThisWeek()
-  const { data: interviewsThisWeek } = useInterviewsThisWeek()
-  const { data: responsesThisWeek } = useResponsesThisWeek()
-  const { data: applicationsThisMonth } = useApplicationsForMonth(now)
-  const { data: applicationsLastMonth } = useApplicationsForMonth(previousMonth)
+  const { data: applications, isLoading: isLoadingApplications } =
+    useApplications()
+  const { data: interviews, isLoading: isLoadingInterviews } = useInterviews()
+  const { data: offers, isLoading: isLoadingOffers } = useOffers()
+  const { data: statusApplied, isLoading: isLoadingStatusApplied } =
+    useStatusApplied()
+  const {
+    data: applicationsThisWeek,
+    isLoading: isLoadingApplicationsThisWeek,
+  } = useApplicationsThisWeek()
+  const { data: interviewsThisWeek, isLoading: isLoadingInterviewsThisWeek } =
+    useInterviewsThisWeek()
+  const { data: responsesThisWeek, isLoading: isLoadingResponsesThisWeek } =
+    useResponsesThisWeek()
+  const {
+    data: applicationsThisMonth,
+    isLoading: isLoadingApplicationsThisMonth,
+  } = useApplicationsForMonth(now)
+  const {
+    data: applicationsLastMonth,
+    isLoading: isLoadingApplicationsLastMonth,
+  } = useApplicationsForMonth(previousMonth)
+
+  const isLoading =
+    isLoadingApplications ||
+    isLoadingInterviews ||
+    isLoadingOffers ||
+    isLoadingStatusApplied ||
+    isLoadingApplicationsThisWeek ||
+    isLoadingInterviewsThisWeek ||
+    isLoadingResponsesThisWeek ||
+    isLoadingApplicationsThisMonth ||
+    isLoadingApplicationsLastMonth
 
   const { monthStart: thisMonthStart, monthEnd: thisMonthEnd } =
     calcMonthStartAndEndForDate(now)
@@ -68,55 +92,58 @@ export function useDashboardStats() {
 
   const fromLastMonth = useTranslations("dashboard")("fromLastMonth")
 
-  return [
-    {
-      title: t("totalApplied"),
-      icon: FileText,
-      total: applications?.length ?? 0,
-      count: applicationsThisWeek?.length ?? 0,
-      countLabel: t("thisWeek"),
-      percentageGain: calcPercentageGain(
-        applicationsThisMonth?.length ?? 0,
-        applicationsLastMonth?.length ?? 0
-      ),
-      percentageGainLabel: fromLastMonth,
-    },
-    {
-      title: t("interviews"),
-      icon: Calendar,
-      total: interviews?.length ?? 0,
-      count: interviewsThisWeek?.length ?? 0,
-      countLabel: t("thisWeek"),
-      percentageGain: calcPercentageGain(
-        interviewsThisMonth?.length ?? 0,
-        interviewsLastMonth?.length ?? 0
-      ),
-      percentageGainLabel: fromLastMonth,
-    },
-    {
-      title: t("offers"),
-      icon: Gift,
-      total: offers?.length ?? 0,
-      count: statusApplied?.length ?? 0,
-      countLabel: t("pendingResponse"),
-      percentageGain: calcPercentageGain(
-        offersThisMonth?.length ?? 0,
-        offersLastMonth?.length ?? 0
-      ),
-      percentageGainLabel: fromLastMonth,
-    },
-    {
-      title: t("responseRate"),
-      icon: TrendingUp,
-      total: responseRate,
-      isPercentage: true,
-      count: responsesThisWeek?.length ?? 0,
-      countLabel: t("thisWeek"),
-      percentageGain: calcPercentageGain(
-        responseRateThisMonth,
-        responseRateLastMonth
-      ),
-      percentageGainLabel: fromLastMonth,
-    },
-  ]
+  return {
+    isLoading,
+    stats: [
+      {
+        title: t("totalApplied"),
+        icon: FileText,
+        total: applications?.length ?? 0,
+        count: applicationsThisWeek?.length ?? 0,
+        countLabel: t("thisWeek"),
+        percentageGain: calcPercentageGain(
+          applicationsThisMonth?.length ?? 0,
+          applicationsLastMonth?.length ?? 0
+        ),
+        percentageGainLabel: fromLastMonth,
+      },
+      {
+        title: t("interviews"),
+        icon: Calendar,
+        total: interviews?.length ?? 0,
+        count: interviewsThisWeek?.length ?? 0,
+        countLabel: t("thisWeek"),
+        percentageGain: calcPercentageGain(
+          interviewsThisMonth?.length ?? 0,
+          interviewsLastMonth?.length ?? 0
+        ),
+        percentageGainLabel: fromLastMonth,
+      },
+      {
+        title: t("offers"),
+        icon: Gift,
+        total: offers?.length ?? 0,
+        count: statusApplied?.length ?? 0,
+        countLabel: t("pendingResponse"),
+        percentageGain: calcPercentageGain(
+          offersThisMonth?.length ?? 0,
+          offersLastMonth?.length ?? 0
+        ),
+        percentageGainLabel: fromLastMonth,
+      },
+      {
+        title: t("responseRate"),
+        icon: TrendingUp,
+        total: responseRate,
+        isPercentage: true,
+        count: responsesThisWeek?.length ?? 0,
+        countLabel: t("thisWeek"),
+        percentageGain: calcPercentageGain(
+          responseRateThisMonth,
+          responseRateLastMonth
+        ),
+        percentageGainLabel: fromLastMonth,
+      },
+    ],
+  }
 }

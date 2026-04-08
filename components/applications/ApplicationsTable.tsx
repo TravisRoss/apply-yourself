@@ -11,8 +11,9 @@ import { sortApplications, SortDirection, SortKey } from "@/lib/sort"
 import { cn, formatDate } from "@/lib/utils"
 import { ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react"
 import { useTranslations } from "next-intl"
-import React, { useState } from "react"
+import { useState } from "react"
 import Initials from "../shared/Initials"
+import SkeletonRow from "../shared/SkeletonRow"
 import StatusBadge from "../shared/StatusBadge"
 import {
   Table,
@@ -47,10 +48,6 @@ function SortIcon({
   )
 }
 
-function MutedTableCell({ children }: { children: React.ReactNode }) {
-  return <TableCell className="text-muted-foreground">{children}</TableCell>
-}
-
 type ApplicationsTableProps = {
   withPagination?: boolean
   className?: string
@@ -62,6 +59,7 @@ type ApplicationsTableProps = {
   onSortChange?: (key: SortKey) => void
   pageIndex?: number
   onPageIndexChange?: (page: number) => void
+  isLoading?: boolean
 }
 
 export default function ApplicationsTable({
@@ -75,6 +73,7 @@ export default function ApplicationsTable({
   onSortChange,
   pageIndex = 0,
   onPageIndexChange,
+  isLoading = false,
 }: ApplicationsTableProps) {
   const { data: applications } = useApplications()
   const deleteApplicationMutation = useDeleteApplication()
@@ -139,7 +138,11 @@ export default function ApplicationsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {displayApplications.length === 0 ? (
+          {isLoading && displayApplications.length === 0 ? (
+            Array.from({ length: 3 }).map((_, index) => (
+              <SkeletonRow key={index} />
+            ))
+          ) : displayApplications.length === 0 ? (
             <TableRow>
               <TableCell
                 colSpan={columns.length + 1}
@@ -158,19 +161,21 @@ export default function ApplicationsTable({
                   </div>
                 </TableCell>
                 <TableCell>{application.position}</TableCell>
-                <MutedTableCell>{application.location}</MutedTableCell>
-                <MutedTableCell>
+                <TableCell className="text-muted-foreground">
+                  {application.location}
+                </TableCell>
+                <TableCell className="text-muted-foreground">
                   <StatusBadge status={application.status} />
-                </MutedTableCell>
-                <MutedTableCell>
+                </TableCell>
+                <TableCell className="text-muted-foreground">
                   {formatDate(application.appliedDate)}
-                </MutedTableCell>
-                <MutedTableCell>
+                </TableCell>
+                <TableCell className="text-muted-foreground">
                   <KebabMenu
                     onDelete={() => handleDelete(application.id)}
                     applicationId={application.id}
                   />
-                </MutedTableCell>
+                </TableCell>
               </TableRow>
             ))
           )}

@@ -16,9 +16,10 @@ type Stat = {
 
 type StatCardsProps = {
   stats: Stat[]
+  isLoading?: boolean
 }
 
-export default function StatCards({ stats }: StatCardsProps) {
+export default function StatCards({ stats, isLoading }: StatCardsProps) {
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
       {stats.map((stat) => (
@@ -32,6 +33,7 @@ export default function StatCards({ stats }: StatCardsProps) {
           countLabel={stat.countLabel}
           percentageGain={stat.percentageGain}
           percentageGainLabel={stat.percentageGainLabel}
+          isLoading={isLoading}
         />
       ))}
     </div>

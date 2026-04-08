@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card"
+import { Skeleton } from "../ui/skeleton"
 
 type StatCardProps = {
   title: string
@@ -17,6 +18,7 @@ type StatCardProps = {
   countLabel?: string
   percentageGain?: number | null
   percentageGainLabel?: string
+  isLoading?: boolean
 }
 
 export default function StatCard({
@@ -28,6 +30,7 @@ export default function StatCard({
   countLabel,
   percentageGain,
   percentageGainLabel,
+  isLoading = false,
 }: StatCardProps) {
   return (
     <Card className="w-full bg-card">
@@ -38,26 +41,38 @@ export default function StatCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="text-2xl font-semibold">
-        <p>{isPercentage ? `${total}%` : total}</p>
+        {isLoading ? (
+          <Skeleton className="h-8 w-16" />
+        ) : (
+          <p>{isPercentage ? `${total}%` : total}</p>
+        )}
       </CardContent>
       <CardFooter className="text-xs text-muted-foreground">
         <div className="flex flex-col gap-2">
-          <p>
-            {count} {countLabel ? countLabel : ""}
-          </p>
-
-          {percentageGain !== undefined && percentageGainLabel && (
-            <p
-              className={
-                percentageGain === null
-                  ? "text-muted-foreground"
-                  : percentageGain > 0
-                    ? "text-green-500"
-                    : "text-red-500"
-              }
-            >
-              {percentageGainDisplay(percentageGain, percentageGainLabel)}
-            </p>
+          {isLoading ? (
+            <>
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-4 w-24" />
+            </>
+          ) : (
+            <>
+              <p>
+                {count} {countLabel ? countLabel : ""}
+              </p>
+              {percentageGain !== undefined && percentageGainLabel && (
+                <p
+                  className={
+                    percentageGain === null
+                      ? "text-muted-foreground"
+                      : percentageGain > 0
+                        ? "text-green-500"
+                        : "text-red-500"
+                  }
+                >
+                  {percentageGainDisplay(percentageGain, percentageGainLabel)}
+                </p>
+              )}
+            </>
           )}
         </div>
       </CardFooter>
