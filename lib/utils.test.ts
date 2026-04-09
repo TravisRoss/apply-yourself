@@ -150,6 +150,10 @@ describe("calcPercentageGain", () => {
     expect(calcPercentageGain(10, 0)).toBeUndefined()
   })
 
+  it("returns undefined when current is 0", () => {
+    expect(calcPercentageGain(0, 10)).toBeUndefined()
+  })
+
   it("returns 100 when current is double previous", () => {
     expect(calcPercentageGain(10, 5)).toBe(100)
   })
@@ -164,6 +168,14 @@ describe("calcPercentageGain", () => {
 
   it("rounds to the nearest integer", () => {
     expect(calcPercentageGain(10, 3)).toBe(233)
+  })
+
+  it("handles a gain", () => {
+    expect(calcPercentageGain(7, 2)).toBe(250)
+  })
+
+  it("handles a loss", () => {
+    expect(calcPercentageGain(2, 7)).toBe(-71)
   })
 })
 

@@ -18,7 +18,7 @@ export function calcPercentageGain(
   current: number,
   previous: number
 ): number | undefined {
-  if (previous === 0) return undefined
+  if (current === 0 || previous === 0) return undefined
   return Math.round(((current - previous) / previous) * 100)
 }
 
