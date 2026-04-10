@@ -125,4 +125,7 @@
   html {
     @apply font-sans;
   }
+  main * {
+    touch-action: pan-y;
+  }
 }

@@ -1,9 +1,10 @@
 "use client"
 
+import { useScrollGuard } from "@/hooks/useScrollGuard"
 import { useDeleteInterview } from "@/hooks/useInterviews"
 import { MoreHorizontal } from "lucide-react"
-import { useTranslations } from "next-intl"
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import DeleteConfirmationDialog from "../shared/DeleteConfirmationDialog"
 import { Button } from "../ui/button"
 import {
@@ -21,38 +22,33 @@ type InterviewKebabMenuProps = {
 export default function InterviewKebabMenu({
   interviewId,
 }: InterviewKebabMenuProps) {
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editSheetOpen, setEditSheetOpen] = useState(false)
   const { mutate: deleteInterview } = useDeleteInterview()
   const t = useTranslations("interviews.kebab")
   const tCommon = useTranslations("common")
-
-  function handleEdit() {
-    setEditSheetOpen(true)
-  }
-
-  function handleDelete() {
-    setDialogOpen(true)
-  }
+  const scrollGuard = useScrollGuard(() => setDropdownOpen(true))
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-muted-foreground"
+            className="h-8 w-8 touch-none text-muted-foreground"
             aria-label={tCommon("openMenu")}
+            {...scrollGuard}
           >
             <MoreHorizontal />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={handleEdit}>
+          <DropdownMenuItem onSelect={() => setEditSheetOpen(true)}>
             {tCommon("edit")}
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={handleDelete}>
+          <DropdownMenuItem onSelect={() => setDialogOpen(true)}>
             {tCommon("delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>

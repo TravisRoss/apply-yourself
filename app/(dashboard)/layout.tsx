@@ -14,9 +14,13 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full overflow-hidden">
+      <div className="flex h-dvh w-full">
         <AppSidebar />
-        <main className="flex-1 overflow-y-auto">
+
+        <main
+          className="min-h-0 flex-1 overflow-y-auto pb-[env(safe-area-inset-bottom)]"
+          style={{ touchAction: "pan-y" }}
+        >
           <SidebarTrigger className="size-12 md:size-7 [&_svg]:size-6! md:[&_svg]:size-4!" />
           {children}
         </main>

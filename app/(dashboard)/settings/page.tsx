@@ -66,14 +66,17 @@ export default function SettingsPage() {
 
   return (
     <PageShell title={t("title")}>
-      <div className="max-w-lg space-y-4">
+      <div className="max-w-lg touch-pan-y space-y-4">
         <h2>{t("profile.title")}</h2>
         <ProfileForm />
 
         <Separator />
 
         <h2>{t("notifications.title")}</h2>
-        <form onSubmit={handleSubmit(handleSaveNotifications)}>
+        <form
+          className="touch-pan-y"
+          onSubmit={handleSubmit(handleSaveNotifications)}
+        >
           <div className="flex flex-col gap-2">
             {isLoading ? (
               <>

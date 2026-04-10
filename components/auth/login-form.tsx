@@ -132,7 +132,7 @@ export function LoginForm({
                   {isGoogleLoading ? t("googleLoading") : t("google")}
                 </Button>
                 <FieldDescription className="text-center">
-                  {t("noAccount")}
+                  {t("noAccount")}{" "}
                   <Link href="/sign-up">{t("signUp")}</Link>
                 </FieldDescription>
               </Field>

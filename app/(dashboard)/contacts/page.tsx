@@ -28,20 +28,23 @@ export default function ContactsPage() {
 
   return (
     <>
-      <PageShell title={t("title")} action={<AddContactSheet userId={userId!} />}>
-        {!isPending && contacts?.length === 0 && (
-          <p>{t("empty")}</p>
+      <PageShell
+        title={t("title")}
+        action={<AddContactSheet userId={userId!} />}
+      >
+        {!isPending && contacts?.length === 0 && <p>{t("empty")}</p>}
+        {contacts && contacts.length > 0 && (
+          <SearchBar
+            input={searchTerm}
+            onInputChange={setSearchTerm}
+            placeholder={t("searchPlaceholder")}
+            className="mb-4"
+          />
         )}
-        <SearchBar
-          input={searchTerm}
-          onInputChange={setSearchTerm}
-          placeholder={t("searchPlaceholder")}
-          className="mb-4"
-        />
         {searchTerm !== "" && filteredContacts?.length === 0 && (
-          <p className="text-muted-foreground text-sm">{t("noResults")}</p>
+          <p className="text-sm text-muted-foreground">{t("noResults")}</p>
         )}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid touch-pan-y grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {filteredContacts?.map((contact) => (
             <ContactCard
               key={contact.id}

@@ -13,7 +13,7 @@ export default function InterviewsList({
   currentTime,
 }: InterviewsListProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 touch-pan-y">
       {interviews.map((interview) => {
         const application = applications.find(
           (app) => app.id === interview.applicationId

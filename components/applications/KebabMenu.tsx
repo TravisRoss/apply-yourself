@@ -1,6 +1,10 @@
 "use client"
 
+import { useScrollGuard } from "@/hooks/useScrollGuard"
 import { MoreHorizontal } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
+import DeleteConfirmationDialog from "../shared/DeleteConfirmationDialog"
 import { Button } from "../ui/button"
 import {
   DropdownMenu,
@@ -8,26 +12,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import { useState } from "react"
-import DeleteConfirmationDialog from "../shared/DeleteConfirmationDialog"
 import EditApplicationSheet from "./EditApplicationSheet"
 import ViewApplicationSheet from "./ViewApplicationSheet"
-import { useTranslations } from "next-intl"
 
 type KebabMenuProps = {
   onDelete: () => void
   applicationId: string
 }
 
-export default function KebabMenu({
-  onDelete,
-  applicationId,
-}: KebabMenuProps) {
+export default function KebabMenu({ onDelete, applicationId }: KebabMenuProps) {
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editSheetOpen, setEditSheetOpen] = useState(false)
   const [viewSheetOpen, setViewSheetOpen] = useState(false)
   const t = useTranslations("applications.kebab")
   const tCommon = useTranslations("common")
+  const scrollGuard = useScrollGuard(() => setDropdownOpen(true))
 
   function handleDelete(event: Event) {
     // Prevents Radix from auto-closing the dropdown, letting the dialog's
@@ -38,13 +38,14 @@ export default function KebabMenu({
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-muted-foreground"
+            className="h-8 w-8 touch-none text-muted-foreground"
             aria-label={tCommon("openMenu")}
+            {...scrollGuard}
           >
             <MoreHorizontal />
           </Button>
