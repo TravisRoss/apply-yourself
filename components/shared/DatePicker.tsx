@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { Button } from "../ui/button"
-import { CalendarIcon } from "lucide-react"
-import { Calendar } from "../ui/calendar"
 import { formatDate } from "@/lib/utils"
+import { CalendarIcon } from "lucide-react"
+import { useState } from "react"
+import { Button } from "../ui/button"
+import { Calendar } from "../ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 
 type DatePickerProps = {
   value: Date
@@ -27,7 +27,7 @@ export default function DatePicker({ value: date, onChange }: DatePickerProps) {
           {date ? formatDate(date, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-autop-0">
+      <PopoverContent align="start" collisionPadding={20} className="w-auto p-0">
         <Calendar
           mode="single"
           selected={date}
