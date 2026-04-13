@@ -10,7 +10,6 @@ import { Button } from "../ui/button"
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -59,9 +58,8 @@ export default function EditContactSheet({
         side={isMobile ? "bottom" : "right"}
         className={isMobile ? "max-h-[85dvh]" : undefined}
       >
-        <SheetHeader className="px-4">
-          <SheetTitle className="text-lg">{t("edit.title")}</SheetTitle>
-          <SheetDescription>{t("edit.description")}</SheetDescription>
+        <SheetHeader>
+          <SheetTitle>{t("edit.title")}</SheetTitle>
         </SheetHeader>
         {defaultValues !== undefined && (
           <ContactForm

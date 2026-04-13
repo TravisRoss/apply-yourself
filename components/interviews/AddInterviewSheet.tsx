@@ -11,7 +11,6 @@ import { Button } from "../ui/button"
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -46,9 +45,8 @@ export default function AddInterviewSheet() {
         side={isMobile ? "bottom" : "right"}
         className={isMobile ? "max-h-[85dvh]" : undefined}
       >
-        <SheetHeader className="px-4">
-          <SheetTitle className="text-lg">{t("add.title")}</SheetTitle>
-          <SheetDescription>{t("add.description")}</SheetDescription>
+        <SheetHeader>
+          <SheetTitle>{t("add.title")}</SheetTitle>
         </SheetHeader>
         {hasApplications ? (
           <>

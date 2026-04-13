@@ -1,20 +1,19 @@
 "use client"
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "../ui/sheet"
-import { Button } from "../ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
-import AddApplicationForm from "./AddApplicationForm"
 import { useApplication, useUpdateApplication } from "@/hooks/useApplications"
 import { ApplicationFormData } from "@/lib/zod"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
+import { Button } from "../ui/button"
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "../ui/sheet"
+import AddApplicationForm from "./AddApplicationForm"
 
 type EditApplicationSheetProps = {
   applicationId: string
@@ -59,9 +58,8 @@ export default function EditApplicationSheet({
         side={useIsMobile() ? "bottom" : "right"}
         className={useIsMobile() ? "max-h-[85dvh]" : undefined}
       >
-        <SheetHeader className="px-4">
-          <SheetTitle className="text-lg">{t("edit.title")}</SheetTitle>
-          <SheetDescription>{t("edit.description")}</SheetDescription>
+        <SheetHeader>
+          <SheetTitle>{t("edit.title")}</SheetTitle>
         </SheetHeader>
         {formData && (
           <AddApplicationForm
