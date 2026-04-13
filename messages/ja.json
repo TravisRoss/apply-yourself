@@ -126,6 +126,8 @@
       "applicationPlaceholder": "応募を選択",
       "date": "日付",
       "time": "時間",
+      "hour": "時",
+      "minute": "分",
       "type": "種類",
       "typePlaceholder": "種類を選択",
       "round": "ラウンド",

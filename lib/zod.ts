@@ -86,7 +86,8 @@ export function createInterviewFormSchema(t: ValidationT) {
     type: z.enum(interviewTypeSchema.options, { error: t("typeRequired") }),
     round: z.enum(interviewRoundSchema.options, { error: t("roundRequired") }),
     notes: z.string().optional(),
-    time: z.string().regex(/^\d{2}:\d{2}$/, t("timeRequired")),
+    hour: z.string().min(1, t("timeRequired")),
+    minute: z.string().min(1, t("timeRequired")),
   })
 }
 
@@ -143,7 +144,7 @@ export const notificationPreferencesSchema = z.object({
 export type ApplicationFormData = z.infer<
   ReturnType<typeof createApplicationSchema>
 >
-export type InterviewFormData = Omit<InterviewFormValues, "time">
+export type InterviewFormData = Omit<InterviewFormValues, "hour" | "minute">
 export type InterviewFormValues = z.infer<
   ReturnType<typeof createInterviewFormSchema>
 >

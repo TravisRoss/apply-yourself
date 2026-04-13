@@ -120,6 +120,8 @@
       "applicationPlaceholder": "Bewerbung auswählen",
       "date": "Datum",
       "time": "Uhrzeit",
+      "hour": "Stunde",
+      "minute": "Minute",
       "type": "Art",
       "typePlaceholder": "Art auswählen",
       "round": "Runde",

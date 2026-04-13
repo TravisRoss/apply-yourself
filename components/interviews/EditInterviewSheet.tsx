@@ -48,11 +48,8 @@ export default function EditInterviewSheet({
         type: interview.type,
         round: interview.round,
         notes: interview.notes ?? "",
-        time: new Date(interview.date).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }),
+        hour: String(new Date(interview.date).getHours()).padStart(2, "0"),
+        minute: String(new Date(interview.date).getMinutes()).padStart(2, "0"),
       }
     : undefined
 

@@ -126,6 +126,8 @@
       "applicationPlaceholder": "Select application",
       "date": "Date",
       "time": "Time",
+      "hour": "Hour",
+      "minute": "Minute",
       "type": "Type",
       "typePlaceholder": "Select type",
       "round": "Round",

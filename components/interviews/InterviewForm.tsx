@@ -12,7 +12,6 @@ import { useEffect } from "react"
 import { Controller, useForm } from "react-hook-form"
 import DatePicker from "../shared/DatePicker"
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field"
-import { Input } from "../ui/input"
 import {
   Select,
   SelectContent,
@@ -21,6 +20,11 @@ import {
   SelectValue,
 } from "../ui/select"
 import { Textarea } from "../ui/textarea"
+
+const HOURS = Array.from({ length: 24 }, (_, index) =>
+  String(index).padStart(2, "0")
+)
+const MINUTES = ["00", "15", "30", "45"]
 
 type Application = { id: string; company: string; position: string }
 
@@ -43,15 +47,16 @@ export default function InterviewForm({
   const tValidation = useTranslations("validation")
 
   const {
-    register,
     control,
+    register,
     formState: { errors, isDirty },
     handleSubmit,
   } = useForm<InterviewFormValues>({
     resolver: zodResolver(createInterviewFormSchema(tValidation)),
     defaultValues: defaultValues ?? {
       date: new Date(),
-      time: "09:00",
+      hour: "09",
+      minute: "00",
     },
   })
 
@@ -59,15 +64,14 @@ export default function InterviewForm({
     onDirtyChange?.(isDirty)
   }, [isDirty, onDirtyChange])
 
-  function handleFormSubmit({ time, date, ...rest }: InterviewFormValues) {
-    const [hours, minutes] = time.split(":").map(Number)
+  function handleFormSubmit({ hour, minute, date, ...rest }: InterviewFormValues) {
     const dateWithTime = new Date(date)
-    dateWithTime.setHours(hours, minutes, 0, 0)
+    dateWithTime.setHours(Number(hour), Number(minute), 0, 0)
     onHandleSubmit({ ...rest, date: dateWithTime })
   }
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-2">
+    <div className="min-w-0 flex-1 overflow-y-auto px-4 py-2 text-base sm:text-sm">
       <form
         id="add-interview-form"
         onSubmit={handleSubmit(handleFormSubmit)}
@@ -114,15 +118,55 @@ export default function InterviewForm({
             />
             <FieldError errors={[errors.date]} />
           </Field>
-          <Field data-invalid={!!errors.time}>
-            <FieldLabel htmlFor="time">{t("time")}</FieldLabel>
-            <Input
-              id="time"
-              type="time"
-              aria-invalid={!!errors.time}
-              {...register("time")}
-            />
-            <FieldError errors={[errors.time]} />
+          <Field data-invalid={!!(errors.hour || errors.minute)}>
+            <FieldLabel>{t("time")}</FieldLabel>
+            <div className="flex gap-2">
+              <Controller
+                name="hour"
+                control={control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger
+                      className="w-full"
+                      aria-invalid={!!errors.hour}
+                      aria-label={t("hour")}
+                    >
+                      <SelectValue placeholder="HH" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {HOURS.map((hour) => (
+                        <SelectItem key={hour} value={hour}>
+                          {hour}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              <Controller
+                name="minute"
+                control={control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger
+                      className="w-full"
+                      aria-invalid={!!errors.minute}
+                      aria-label={t("minute")}
+                    >
+                      <SelectValue placeholder="MM" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {MINUTES.map((minute) => (
+                        <SelectItem key={minute} value={minute}>
+                          {minute}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+            <FieldError errors={[errors.hour, errors.minute]} />
           </Field>
           <Field data-invalid={!!errors.type}>
             <FieldLabel>{t("type")}</FieldLabel>

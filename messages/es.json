@@ -126,6 +126,8 @@
       "applicationPlaceholder": "Seleccionar solicitud",
       "date": "Fecha",
       "time": "Hora",
+      "hour": "Hora",
+      "minute": "Minuto",
       "type": "Tipo",
       "typePlaceholder": "Seleccionar tipo",
       "round": "Ronda",
