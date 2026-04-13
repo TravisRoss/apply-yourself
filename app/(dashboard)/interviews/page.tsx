@@ -24,7 +24,9 @@ export default function InterviewsPage() {
 
   return (
     <PageShell title={t("title")} action={<AddInterviewSheet />}>
-      <h2 className="mb-4">{t("upcoming")}</h2>
+      {upcomingInterviews.length > 0 && (
+        <h2 className="mb-4">{t("upcoming")}</h2>
+      )}
       {isPending && <InterviewItemSkeleton />}
 
       {!isPending && interviews.length === 0 && (
