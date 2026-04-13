@@ -16,10 +16,10 @@ export default function ToggleRow({
   disabled,
 }: ToggleRowProps) {
   return (
-    <div className="flex items-center justify-between text-xs">
+    <div className="flex items-center justify-between">
       <div className="flex flex-col">
-        <p className="text-foreground">{title}</p>
-        <p className="text-muted-foreground">{description}</p>
+        <p className="text-sm text-foreground">{title}</p>
+        <p className="text-xs text-muted-foreground">{description}</p>
       </div>
       <Switch
         checked={checked}

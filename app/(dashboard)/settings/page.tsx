@@ -153,10 +153,10 @@ export default function SettingsPage() {
         <Separator />
 
         <h2 className="text-destructive">{t("dangerZone.title")}</h2>
-        <div className="flex items-center justify-between rounded-md border border-red-300 bg-red-50 p-4 text-xs dark:border-red-800 dark:bg-red-950">
+        <div className="flex items-center justify-between rounded-md border border-red-300 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950">
           <div className="flex flex-col">
-            <p className="text-foreground">{t("dangerZone.deleteAccount")}</p>
-            <p className="text-muted-foreground">
+            <p className="text-sm text-foreground">{t("dangerZone.deleteAccount")}</p>
+            <p className="text-xs text-muted-foreground">
               {t("dangerZone.deleteAccountDescription")}
             </p>
           </div>

@@ -71,7 +71,7 @@ export default function InterviewForm({
   }
 
   return (
-    <div className="min-w-0 flex-1 overflow-y-auto px-4 py-2 text-base sm:text-sm">
+    <div className="min-w-0 flex-1 overflow-y-auto px-4 py-2">
       <form
         id="add-interview-form"
         onSubmit={handleSubmit(handleFormSubmit)}

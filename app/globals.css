@@ -122,6 +122,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  h2 {
+    @apply text-sm font-medium;
+  }
   html {
     @apply font-sans;
   }

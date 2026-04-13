@@ -17,7 +17,7 @@ export default function DashboardPage() {
     <PageShell title={t("title")} action={<AddApplicationSheet />}>
       <StatCards stats={stats} isLoading={isLoading} />
       <div className="mt-8 mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">{t("recentApplications")}</h2>
+        <h2>{t("recentApplications")}</h2>
         <Button variant="ghost" className="text-muted-foreground">
           <Link href="/applications">{t("viewAll")}</Link>
         </Button>

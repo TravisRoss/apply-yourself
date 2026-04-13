@@ -21,13 +21,17 @@ export default function DatePicker({ value: date, onChange }: DatePickerProps) {
         <Button
           variant="outline"
           data-empty={!date}
-          className="w-[280px] justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
+          className="w-full justify-start text-left text-base font-normal data-[empty=true]:text-muted-foreground sm:text-sm"
         >
           <CalendarIcon />
           {date ? formatDate(date, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" collisionPadding={20} className="w-auto p-0">
+      <PopoverContent
+        align="start"
+        collisionPadding={20}
+        className="w-auto p-0"
+      >
         <Calendar
           mode="single"
           selected={date}

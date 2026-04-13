@@ -52,8 +52,8 @@ export default function ContactCard({
           <div className="flex items-center gap-4">
             <Initials title={name} className="h-10 w-10" />
             <div className="flex flex-col">
-              <CardTitle className="text-[1.05rem]">{name}</CardTitle>
-              <CardDescription className="text-[0.9rem] leading-tight">
+              <CardTitle className="text-sm">{name}</CardTitle>
+              <CardDescription className="text-xs leading-tight">
                 {t(`roles.${role}`)}
               </CardDescription>
             </div>
@@ -81,7 +81,7 @@ export default function ContactCard({
             )}
           </div>
         )}
-        {notes && <p className="text-muted-foreground">{notes}</p>}
+        {notes && <p className="text-xs text-muted-foreground">{notes}</p>}
       </CardContent>
     </Card>
   )
