@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   description: "Apply Yourself",
 }
 
+export const viewport = {
+  viewportFit: "cover",
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{

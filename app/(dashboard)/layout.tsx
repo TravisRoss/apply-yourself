@@ -14,7 +14,7 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex h-dvh w-full">
+      <div className="flex h-dvh w-full pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
         <AppSidebar />
 
         <main
