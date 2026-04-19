@@ -20,12 +20,28 @@ import InterviewForm from "./InterviewForm"
 
 import { useTranslations } from "next-intl"
 
-export default function AddInterviewSheet() {
-  const [sheetOpen, setSheetOpen] = useState(false)
+type Application = { id: string; company: string; position: string }
+
+type AddInterviewSheetProps = {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  lockedApplication?: Application
+}
+
+export default function AddInterviewSheet({
+  open,
+  onOpenChange,
+  lockedApplication,
+}: AddInterviewSheetProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
+  const sheetOpen = open ?? internalOpen
+  const setSheetOpen = onOpenChange ?? setInternalOpen
+
   const createInterviewMutation = useCreateInterview()
   const { data: applications = [] } = useApplications()
   const isMobile = useIsMobile()
-  const hasApplications = applications.length > 0
+  const hasApplications = lockedApplication !== undefined || applications.length > 0
+  const isControlled = open !== undefined
   const t = useTranslations("interviews")
   const tCommon = useTranslations("common")
 
@@ -36,11 +52,13 @@ export default function AddInterviewSheet() {
 
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-      <SheetTrigger asChild>
-        <Button variant="default" onClick={() => setSheetOpen(true)}>
-          <PlusIcon /> {t("add.trigger")}
-        </Button>
-      </SheetTrigger>
+      {!isControlled && (
+        <SheetTrigger asChild>
+          <Button variant="default" onClick={() => setSheetOpen(true)}>
+            <PlusIcon /> {t("add.trigger")}
+          </Button>
+        </SheetTrigger>
+      )}
       <SheetContent
         side={isMobile ? "bottom" : "right"}
         className={isMobile ? "max-h-[85dvh]" : undefined}
@@ -53,6 +71,7 @@ export default function AddInterviewSheet() {
             <InterviewForm
               applications={applications}
               onHandleSubmit={handleSubmit}
+              lockedApplication={lockedApplication}
             />
             <SheetFooter>
               <Button variant="outline" onClick={() => setSheetOpen(false)}>

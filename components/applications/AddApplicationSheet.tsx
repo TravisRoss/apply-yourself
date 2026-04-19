@@ -17,16 +17,29 @@ import {
 } from "../ui/sheet"
 import AddApplicationForm from "./AddApplicationForm"
 
-export default function AddApplicationSheet() {
+type Application = { id: string; company: string; position: string }
+
+type AddApplicationSheetProps = {
+  onApplicationCreated?: (application: Application) => void
+}
+
+export default function AddApplicationSheet({
+  onApplicationCreated,
+}: AddApplicationSheetProps) {
   const [sheetOpen, setSheetOpen] = useState(false)
+
   const createApplicationMutation = useCreateApplication()
   const t = useTranslations("applications")
   const tCommon = useTranslations("common")
   const isMobile = useIsMobile()
 
-  function handleSubmit(formData: ApplicationFormData) {
-    createApplicationMutation.mutateAsync(formData)
+  async function handleSubmit(formData: ApplicationFormData) {
+    const application = await createApplicationMutation.mutateAsync(formData)
     setSheetOpen(false)
+    if (application !== undefined && application.status === "interview") {
+      const created = { id: application.id, company: application.company, position: application.position }
+      setTimeout(() => onApplicationCreated?.(created), 200)
+    }
   }
 
   return (

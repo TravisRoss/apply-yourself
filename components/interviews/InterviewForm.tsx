@@ -33,6 +33,7 @@ type InterviewFormProps = {
   onHandleSubmit: (formData: InterviewFormData) => void
   defaultValues?: InterviewFormValues
   onDirtyChange?: (isDirty: boolean) => void
+  lockedApplication?: Application
 }
 
 export default function InterviewForm({
@@ -40,6 +41,7 @@ export default function InterviewForm({
   onHandleSubmit,
   defaultValues,
   onDirtyChange,
+  lockedApplication,
 }: InterviewFormProps) {
   const t = useTranslations("interviews.form")
   const tInterviews = useTranslations("interviews")
@@ -57,6 +59,7 @@ export default function InterviewForm({
       date: new Date(),
       hour: "09",
       minute: "00",
+      ...(lockedApplication !== undefined ? { applicationId: lockedApplication.id } : {}),
     },
   })
 
@@ -83,27 +86,33 @@ export default function InterviewForm({
             <Controller
               name="applicationId"
               control={control}
-              render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger
-                    className="w-full"
-                    aria-invalid={!!errors.applicationId}
-                  >
-                    <SelectValue placeholder={t("applicationPlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {applications.map((app) => (
-                      <SelectItem
-                        key={app.id}
-                        value={app.id}
-                        className="truncate"
-                      >
-                        {app.company} — {app.position}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
+              render={({ field }) =>
+                lockedApplication !== undefined ? (
+                  <div className="flex h-9 w-full items-center rounded-md border border-input bg-muted px-3 text-sm text-muted-foreground">
+                    {lockedApplication.company} — {lockedApplication.position}
+                  </div>
+                ) : (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger
+                      className="w-full"
+                      aria-invalid={!!errors.applicationId}
+                    >
+                      <SelectValue placeholder={t("applicationPlaceholder")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {applications.map((app) => (
+                        <SelectItem
+                          key={app.id}
+                          value={app.id}
+                          className="truncate"
+                        >
+                          {app.company} — {app.position}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )
+              }
             />
             <FieldError errors={[errors.applicationId]} />
           </Field>
